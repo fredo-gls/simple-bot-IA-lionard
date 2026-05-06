@@ -269,7 +269,10 @@ PROMPT;
 				<?php else : ?>
 					<span class="lsc-launcher__pulse" aria-hidden="true"></span>
 				<?php endif; ?>
-				<span class="lsc-launcher__label"><?php echo esc_html( $settings['launcher_label'] ); ?></span>
+				<div class="lsc-launcher__copy">
+					<span class="lsc-launcher__label"><?php echo esc_html( $settings['launcher_label'] ); ?></span>
+					<span class="lsc-launcher__subtitle"><?php echo esc_html( $settings['panel_subtitle'] ); ?></span>
+				</div>
 			</button>
 
 			<section id="lsc-panel" class="lsc-panel" hidden>

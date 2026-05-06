@@ -56,10 +56,23 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
+.lsc-launcher__copy {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
 .lsc-launcher__label {
   color: #fff;
   font-size: 15px;
   font-weight: 700;
+  line-height: 1.2;
+}
+
+.lsc-launcher__subtitle {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 12px;
+  font-weight: 400;
   line-height: 1.2;
 }
 
