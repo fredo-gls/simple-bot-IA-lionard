@@ -1,0 +1,21 @@
+﻿{
+  "intents": [
+    "intention_dette_generale",
+    "intention_carte_credit",
+    "intention_pret_etudiant",
+    "intention_dette_impot",
+    "intention_marge_credit",
+    "intention_pret_auto",
+    "intention_entreprise",
+    "intention_recouvrement",
+    "intention_rdv",
+    "intention_urgence_emotionnelle",
+    "intention_inconnu",
+    "intention_hors_contexte",
+    "intention_blague",
+    "intention_test_bot",
+    "intention_insulte_legere",
+    "intention_frustration",
+    "intention_retour_finances"
+  ]
+}

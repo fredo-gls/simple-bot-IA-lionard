@@ -1,0 +1,696 @@
+{
+    "entries":  [
+                    {
+                        "title":  "10. La faillite suspend-elle les procédures judiciaires ?",
+                        "content":  "➡️ Oui. Toutes les procédures sont automatiquement suspendues dès le dépôt (LFI art. 69.3), sauf exceptions (ex. : pension alimentaire)."
+                    },
+                    {
+                        "title":  "11. Quelles informations dois-je divulguer au syndic ?",
+                        "content":  "➡️ Tout. Revenus, biens, dettes, transferts d’actifs, créanciers, etc. (LFI art. 158, 159). La transparence est obligatoire."
+                    },
+                    {
+                        "title":  "12. Mon endosseur sera-t-il responsable ?",
+                        "content":  "➡️ Oui. La faillite ne libère pas l’endosseur. Il demeure entièrement responsable de la dette (principe de solidarité)."
+                    },
+                    {
+                        "title":  "13. Impact de la faillite sur mes impôts ?",
+                        "content":  "➡️ Deux déclarations fiscales. Une avant la faillite (préfaillite) et une après (postfaillite) (LFI art. 128(2)). Le syndic les produit."
+                    },
+                    {
+                        "title":  "14. Que se passe-t-il avec mes remboursements d’impôts ?",
+                        "content":  "➡️ Saisis par le syndic. Les remboursements fédéraux et provinciaux dus au moment ou pendant la faillite vont aux créanciers (LFI art. 67(1)c))."
+                    },
+                    {
+                        "title":  "15. Puis-je continuer à exercer une profession à mon compte si je déclare faillite ?",
+                        "content":  "➡️ Oui, mais sous conditions. Vous pouvez continuer, mais vous devez informer le syndic et vos créanciers. Certaines professions réglementées exigent des déclarations à l’ordre ou au syndicat professionnel. Votre nom personnel peut aussi être affecté si vous étiez immatriculé."
+                    },
+                    {
+                        "title":  "16. Est-il possible de déclarer faillite sans avoir un emploi ?",
+                        "content":  "➡️ Oui. L’emploi n’est pas requis pour faire faillite. Il suffit d’être insolvable (LFI art. 2) et d’avoir au moins 1 000 $ de dettes impayables."
+                    },
+                    {
+                        "title":  "8. Quel est l’impact de la faillite sur ma cote de crédit ?",
+                        "content":  "Réponse : Une faillite est inscrite à votre dossier de crédit pour 6 ans après la libération (1re faillite) chez Equifax et TransUnion. En cas de 2e faillite, l’inscription peut durer 14 ans. La cote de crédit devient un R9 (le pire score possible). Cependant, il est possible de rebâtir son crédit progressivement avec : Une carte de crédit sécurisée Des paiements stables (ex. : prêt REER garanti) Une bonne gestion post-faillite Sources : Politiques d’Equifax et TransUnion, LFI art. 170, directives OSB"
+                    },
+                    {
+                        "title":  "9. Les créanciers peuvent-ils refuser ma faillite ?",
+                        "content":  "➡️ Non. La faillite est un droit. Mais ils peuvent s\u0027opposer à votre libération (LFI art. 168, 173)."
+                    },
+                    {
+                        "title":  "C’est quoi la proposition de consommateur ?",
+                        "content":  "Il s\u0027agit d\u0027une entente officielle conclue avec vos créanciers en vertu de la Loi sur la faillite et l’insolvabilité (articles 66.11 à 66.4), vous permettant de rembourser une portion de vos dettes, souvent sans intérêts, sur une période pouvant aller jusqu’à cinq ans. Seul un syndic autorisé en insolvabilité (SAI) est habilité à administrer ce type d\u0027entente."
+                    },
+                    {
+                        "title":  "Combien coûte une faillite commerciale administrée par un syndic ?",
+                        "content":  "Les frais sont payés à même les actifs, selon le Tarif des honoraires (Règle 128, Règles générales sur la faillite). Aucun déboursé personnel n’est requis si l’entreprise n’a plus d’actif. Les honoraires et débours sont payés à même la réalisation des actifs dans le cadre de l’administration du dossier. Le syndic doit faireapprouverses honoraires par les inspecteurs (s’il y a lieu) et faire taxer ses honoraires et débours par le tribunal."
+                    },
+                    {
+                        "title":  "Combien coûte une faillite personnelle ?",
+                        "content":  "Les coûts incluent : Cotisations minimales : Montant mensuel fixé par le SAI pour couvrir les frais administratifs. Revenu excédentaire : Si le revenu du failli dépasse un certain seuil, une portion doit être versée à l\u0027actif de la faillite. Biens saisis : La valeur des biens saisissables remis au SAI.laws-lois.justice.gc.ca+1laws-lois.justice.gc.ca+1 Sources : LFI, art. 68 (revenu excédentaire)"
+                    },
+                    {
+                        "title":  "Combien coûte une proposition de consommateur ?",
+                        "content":  "Les frais sont inclus dans les paiements mensuels. Le SAI reçoit un pourcentage des montants versés (Directive 4R, LFI). Aucun paiement initial requis, et il n’y a pas de frais additionnels surprises."
+                    },
+                    {
+                        "title":  "Combien de temps dure une faillite commerciale ?",
+                        "content":  "Elle dure généralement entre 6 mois et 2 ans, selon la complexité de l’actif, des litiges éventuels, et la rapidité de la liquidation."
+                    },
+                    {
+                        "title":  "Combien de temps dure une faillite personnelle au Québec ?",
+                        "content":  "La durée dépend de la situation du failli : Première faillite sans revenu excédentaire : 9 mois Première faillite avec revenu excédentaire : 21 mois Deuxième faillite sans revenu excédentaire : 24 mois Deuxième faillite avec revenu excédentaire : 36 mois Troisième faillite ou plus : Libération uniquement sur ordonnance du tribunalmnpdettes.capierreroy.com+2roysyndic.ca+2girardavocats.com+2 Sources : LFI, art. 168.1 à 172 (libération du failli) avocatfisc.com+1avocatfisc.com+1"
+                    },
+                    {
+                        "title":  "Comment déclarer faillite personnelle au Québec ?",
+                        "content":  "La procédure comporte plusieurs étapes : Consultation initiale : Rencontre gratuite avec un SAI pour évaluer la situation financière. Préparation et dépôt des documents : Le SAI prépare les documents requis et les dépose auprès du BSF. Cession des biens : Les biens saisissables sont remis au SAI pour être liquidés. Notification aux créanciers : Les créanciers sont informés de la faillite. Réunions et examens : Une assemblée des créanciers peut être convoquée ; le BSF peut également interroger le failli. Séances de consultations : Le failli doit assister à deux séances obligatoires sur la gestion financière. Rapport du SAI : Le SAI soumet un rapport sur la conduite du failli. Libération : Le failli peut être libéré de ses dettes après une période déterminée, sauf si opposition du syndic ou d’un créancier.ised-isde.canada.ca Sources : LFI, art. 49 (cession volontaire), art. 170 (rapport du syndic)"
+                    },
+                    {
+                        "title":  "Comment déposer un avis d’intention ?",
+                        "content":  "On doit fournir la liste de nos créanciers au SAI qui prépare les documents en la forme prescrite. Lorsque signé, le SAI dépose l’avis auprès du Bureau du surintendant des faillites (BSF) et du tribunal. Une copie est envoyée aux créanciers dans les 5 jours suivant le dépôt. Dansles 10 jours suivant le dépôt on l’on déposer un état de l’évolution de l’encaisse."
+                    },
+                    {
+                        "title":  "Comment est calculé le revenu excédentaire ?",
+                        "content":  "Le revenu excédentaire est la portion du revenu familial net qui dépasse les seuils établis par le BSF. Le failli doit verser 50 % de ce montant à l\u0027actif de la faillite.laws-lois.justice.gc.ca+1laws-lois.justice.gc.ca+1 Sources : LFI, art. 68"
+                    },
+                    {
+                        "title":  "Comment éviter la faillite personnelle ?",
+                        "content":  "Alternatives à considérer :publications.gc.ca+5ajbm.qc.ca+5qweri.lexum.com+5 Révision budgétaire : Ajuster les dépenses et les revenus. Négociation avec les créanciers : Tenter d\u0027obtenir des ententes de paiement. Consolidation de dettes : Regrouper les dettes en un seul prêt. Dépôt volontaire : Effectuer des paiements mensuels au tribunal pour rembourser les dettes. Proposition de consommateur : Offrir un plan de remboursement partiel aux créanciers.ised-isde.canada.calaws-lois.justice.gc.ca Sources : LFI, art. 66.11 (proposition de consommateur)"
+                    },
+                    {
+                        "title":  "Comment fonctionne la consolidation de dettes?",
+                        "content":  "Elle consiste à contracter un nouveau prêt personnel, soit auprès d\u0027une institution financière traditionnelle (banque ou caisse), soit auprès d’un prêteur alternatif. Ce prêt sert à rembourser l’ensemble des créanciers. Par la suite, l’emprunteur n’a plus qu’un seul créancier à rembourser, selon des modalités déterminées à l’avance (montant, durée, taux). Le déboursement des fonds peut se faire de deux façons : Versement au débiteur, qui devra lui-même rembourser ses créanciers. Paiement direct aux créanciers par le prêteur, ce qui réduit le risque d’utilisation abusive des fonds. Il est essentiel de bien valider cette modalité avec votre prêteur."
+                    },
+                    {
+                        "title":  "Comment les créanciers sont-ils payés dans une proposition ?",
+                        "content":  "Selon unplan de remboursement fixé dans la proposition, habituellement mensuel ou en paiements échelonnés, les sommes versées sont réparties au prorata entre les créanciers selon leurs réclamations prouvées."
+                    },
+                    {
+                        "title":  "Comment prouve-t-on l’insolvabilité ?",
+                        "content":  "Par une analyse des revenus, actifs et dettes, ainsi que les indices d’actes de faillite (paiements suspendus, jugements impayés).Base légale : LFI, art. 42(1) — énumère les actes de faillite.Jurisprudence :Samson c. Larivière, [1997] J.Q. no 2719 – l’acte de faillite doit être prouvé selon la prépondérance des probabilités."
+                    },
+                    {
+                        "title":  "Comment puis-je effectuer mes paiements?",
+                        "content":  "En espèces Par carte de débit ou crédit Mandat-poste Chèque certifié"
+                    },
+                    {
+                        "title":  "Comment refaire son crédit après une proposition au consommateur ?",
+                        "content":  "Respecter les paiements de la proposition, Obtenir une carte garantie, Payer toutes les nouvelles dettes à temps, Éviter les demandes multiples de crédit."
+                    },
+                    {
+                        "title":  "Comment sont traitées les créances gouvernementales ? PAS AU BON ENDROIT DANS E TEXTE",
+                        "content":  "Les créances gouvernementales relativement aux retenues à la source (ex. : D.A.S.) doivent être payées intégralement dans les 6 mois suivant l’approbation de la proposition.Les sommes dues pour les taxes (TPS/TVQ) et les impôts corporatifsseront remboursés au prorata au même titre que les créanciers ordinaires."
+                    },
+                    {
+                        "title":  "Comment sont traitées les dettes alimentaires?",
+                        "content":  "Taux de saisie augmenté à 50 % Versements prioritaires Si pas visé par la Loi facilitant le paiement des pensions alimentaires, 20 % du revenu brut après exemption est d’abord affecté au créancier alimentaire. Est-ce que mon dépôt volontaire peut être contesté? Oui, par un créancier, dans les 15 jours suivant l’avis, pour des motifs comme : Fausse déclaration de dettes ou revenus Créance non déclarée Aucune source de revenus saisissables"
+                    },
+                    {
+                        "title":  "Comment un syndic obtient-il sa licence ?",
+                        "content":  "Le syndic doit réussir les examens de qualification, satisfaire aux exigences du Bureau du surintendant des faillites (BSF), faire un stage supervisé, et maintenir une assurance responsabilité.Base légale : Règlement sur les SAI, LFI art. 13–15; Directive No. 13R7."
+                    },
+                    {
+                        "title":  "Dois-je tenir une assemblée des créanciers ?",
+                        "content":  "Oui, dans les 21 jours suivant le dépôt de la proposition (art. 51, LFI), sauf si l’avis d’intention est utilisé. Les créanciers votent alors sur l’acceptation ou non de l’offre, mais peuvent également négocier des amendements à la proposition et voter sur une proposition amendée."
+                    },
+                    {
+                        "title":  "Est-ce qu’un refus de prêt de consolidation affecte ma cote de crédit?",
+                        "content":  "Oui, légèrement. Chaque demande entraîne une enquête de crédit (dure) qui peut faire baisser temporairement la cote, surtout si plusieurs demandes sont faites en peu de temps."
+                    },
+                    {
+                        "title":  "Est-ce qu’une proposition de consommateur protège contre la saisie de salaire ?",
+                        "content":  "Oui. Dès le dépôt, la suspension automatique des procédures empêche les saisies (art. 69(1), LFI), sauf exceptions comme pension alimentaire."
+                    },
+                    {
+                        "title":  "Est-ce que faire faillite me libérera de mes dettes fiscales (impôt personnel, TPS/TVQ, retenues à la source) ?",
+                        "content":  "Oui, en grande partie, mais des nuances importantes s’appliquent selon le type de dette fiscale : 1. Impôt sur le revenu (fédéral et provincial) C’est une dette libérable en vertu de l’article 178(1) de la LFI, sauf si elle découle de fraude, déclaration mensongère ou s’il s’agit d’une créance prioritaire exceptionnelle (ex. : art. 222 LIR si un avis a été déposé). Les dettes d’impôt personnelles sont traitées comme des dettes ordinaires non garanties. 2. Taxes de vente – TPS et TVQ Lorsqu’un particulier ou une entreprise déclare faillite, les soldes de TPS/TVQ déclarés mais non versés deviennent des créances libérables, sauf si les montants étaient détenus en fiducie, ce qui dépend des faits. Si le failli est un administrateur d\u0027une société, il peut être personnellement responsable pour ces dettes en vertu de : LTA, art. 323 (TPS), LTVQ, art. 24 et suivants (TVQ). 3. Retenues à la source (ex. : DAS – déductions à la source) Ces montants sont présumés détenus en fiducie au profit des autorités fiscales (LIR, art. 227(4), LTA, art. 222(3)). Elles sont prioritaires sur la plupart des autres créances, même en faillite, et peuvent survivre à la faillite si elles sont déterminées comme étant détenues en fiducie. ❗ Exception notable : Si le montant des retenues à la source est reconnu comme dû mais n\u0027est pas fiduciaire au sens strict, il peut être inclus dans la faillite. Sinon, il est exclu de la libération. 🧠 Avis professionnel : Ces situations doivent être analysées au cas par cas, surtout pour les travailleurs autonomes, administrateurs de sociétés et dirigeants, en raison des implications pénales et civiles possibles. Sources : LFI, art. 178(1)(g), (h), LIR, art. 227(4), (10), LTA, art. 222(3), LTVQ, art. 24-26, Jurisprudence : Canada (Revenu national) c. Simard, 2004 CAF 255."
+                    },
+                    {
+                        "title":  "Est-ce que Groupe Leblanc Syndic inc. offre des prêts de consolidation?",
+                        "content":  "Non.Groupe Leblanc Syndic inc. est un cabinet de syndics autorisés en insolvabilité. Nous n’offrons pas de prêts, mais nous évaluons votre situation financière pour vous orienter vers la meilleure solution, y compris la consolidation bancaire ou une option légale comme la proposition de consommateur."
+                    },
+                    {
+                        "title":  "Est-ce que je peux consolider une dette garantie, comme un prêt-auto?",
+                        "content":  "Non. Les dettes garanties ne peuvent être consolidées dans un prêt personnel standard. Elles doivent être remboursées selon leur propre entente. En cas d’insolvabilité, ces dettes sont traitées à part selon leur rang prioritaire (LFI, art. 136)."
+                    },
+                    {
+                        "title":  "Est-ce que je peux continuer à travailler de manière indépendante durant ma proposition de consommateur ?",
+                        "content":  "Il est généralement possible de poursuivre une activité professionnelle autonome pendant une proposition de consommateur."
+                    },
+                    {
+                        "title":  "Est-ce que la consolidation annule mes dettes?",
+                        "content":  "Non. Elle ne fait que remplacer plusieurs créanciers par un seul, sans réduction du capital, sauf si vous obtenez des conditions très avantageuses. Seule une proposition de consommateur ou une faillite peut effacer légalement une portion des dettes."
+                    },
+                    {
+                        "title":  "Est-ce que la consolidation de dettes est la même chose qu’une proposition de consommateur?",
+                        "content":  "Non. La consolidation est un produit de crédit privé offert par un prêteur. La proposition de consommateur est une procédure légale encadrée par la LFI (art. 66.02 ss), administrée uniquement par un syndic autorisé en insolvabilité. Elle réduit le montant total à rembourser, bloque les intérêts et protège légalement contre les créanciers."
+                    },
+                    {
+                        "title":  "Est-ce que mes dettes d’un cautionnement personnel (ex. prêt d’entreprise) peuvent être incluses ?",
+                        "content":  "Oui, si vous êtes personnellement responsable et que la dette estnon garantie. Les créanciers peuvent déposer une preuve dans votre proposition."
+                    },
+                    {
+                        "title":  "Est-ce que mon véhicule est saisi si je déclare faillite personnelle au Québec ?",
+                        "content":  "Réponse : Cela dépend de la valeur du véhicule et s’il est grevé d’une dette : Si votre véhicule est nécessaire à votre travail ou à vos déplacements essentiels, et que sa valeur nette est faible, le syndic peut le laisser au failli (ex. : entente ou rachat de l’équité). Si le véhicule est entièrement financé et la valeur est inférieure au solde du prêt, il n’a pas d’équité saisissable. Si vous possédez un véhicule de grande valeur libre de dettes, il pourra être saisi et vendu. Exemptions : En vertu du Code de procédure civile du Québec, art. 694(10), un véhicule jusqu’à 7 000 $ peut être exempt de saisie s’il est nécessaire au travail. Sources : LFI art. 67(1), Code de procédure civile du Québec, art. 694(10)"
+                    },
+                    {
+                        "title":  "Est-ce que tous les créanciers doivent accepter la proposition ?",
+                        "content":  "Non, seulement la majorité des créanciers (en valeur des réclamations) doit accepter. Une fois acceptée, elle lie tous les créanciers non garantis (art. 66.18, LFI)."
+                    },
+                    {
+                        "title":  "Intent - appels_creanciers_recouvrement",
+                        "content":  "Description: Le visiteur reÃ§oit des appels, pressions ou menaces de crÃ©anciers.\\nQualification: qualified_potential\\nProchaine action: reassure_and_offer_rdv\\nPages recommandees: https://www.dettes.ca/solutions-endettement/proposition-de-consommateur/, https://www.dettes.ca/solutions-endettement/entente-avec-vos-creanciers/\\nExemples: les crÃ©anciers m\u0027appellent tout le temps | je reÃ§ois des appels de recouvrement | on menace de saisir mon salaire"
+                    },
+                    {
+                        "title":  "Intent - calculer_taux_endettement",
+                        "content":  "Description: Le visiteur veut calculer son taux d\u0027endettement.\\nQualification: educational\\nProchaine action: recommend_debt_ratio_tool\\nPages recommandees: https://www.dettes.ca/nos-outils/evaluation-taux-dendettement/\\nExemples: je veux calculer mon taux d\u0027endettement | mon ratio de dettes est-il trop Ã©levÃ© ?"
+                    },
+                    {
+                        "title":  "Intent - creer_budget",
+                        "content":  "Description: Le visiteur veut crÃ©er ou ajuster un budget.\\nQualification: educational_or_potential\\nProchaine action: recommend_budget_tool\\nPages recommandees: https://www.dettes.ca/nos-outils/budget-personnel-en-ligne/, https://www.dettes.ca/solutions-endettement/ajustement-de-budget-personnel-et-familial/\\nExemples: je veux faire mon budget | je n\u0027arrive pas Ã gÃ©rer mes dÃ©penses | comment organiser mes revenus et dÃ©penses ?"
+                    },
+                    {
+                        "title":  "Intent - demande_pret_financement",
+                        "content":  "Description: Le visiteur cherche un prÃªt, un emprunt ou du financement.\\nQualification: not_qualified_for_loan\\nProchaine action: clarify_no_loan_offer\\nReponse recommandee: Je prÃ©fÃ¨re Ãªtre clair : dettes.ca n\u0027offre pas de prÃªt ni de financement. Par contre, si votre besoin vient d\u0027une pression liÃ©e aux dettes, on peut vous orienter vers des solutions pour allÃ©ger votre situation.\\nExemples: je veux emprunter de l\u0027argent | faites-vous des prÃªts ? | j\u0027ai besoin d\u0027un financement rapide | pouvez-vous me prÃªter de l\u0027argent ?"
+                    },
+                    {
+                        "title":  "Intent - demande_rdv_ambigu",
+                        "content":  "Description: Le visiteur demande un rendez-vous sans expliquer le sujet.\\nQualification: unknown\\nProchaine action: triage_debt_vs_loan\\nReponse recommandee: Bien sÃ»r. Avant de vous orienter vers le bon rendez-vous, est-ce que votre demande concerne des dettes Ã rÃ©gler, une question sur une solution d\u0027endettement, ou autre chose ?\\nExemples: je veux un rdv | je veux parler Ã quelqu\u0027un | puis-je prendre un rendez-vous ?"
+                    },
+                    {
+                        "title":  "Intent - demande_rdv_avec_dettes",
+                        "content":  "Description: Le visiteur demande un rendez-vous et mentionne dÃ©jÃ des dettes ou une difficultÃ© de paiement.\\nQualification: qualified_potential\\nProchaine action: ask_debt_type_or_amount\\nReponse recommandee: Je comprends. Vous n\u0027avez pas Ã porter Ã§a seul. Pour mieux vous orienter, est-ce que vos dettes sont surtout personnelles, liÃ©es Ã une entreprise, ou les deux ?\\nExemples: je veux un rdv, j\u0027en ai marre de mes dettes | je veux prendre rendez-vous pour mes dettes | je veux parler Ã quelqu\u0027un, je n\u0027arrive plus Ã payer | j\u0027ai trop de dettes et je veux de l\u0027aide"
+                    },
+                    {
+                        "title":  "Intent - detresse_urgence",
+                        "content":  "Description: Le visiteur exprime une dÃ©tresse intense, des idÃ©es suicidaires ou un danger immÃ©diat.\\nQualification: urgent_safety\\nProchaine action: crisis_redirect\\nReponse recommandee: Je suis vraiment dÃ©solÃ© que vous traversiez Ã§a. Si vous Ãªtes en danger immÃ©diat, appelez les services d\u0027urgence maintenant. Si vous Ãªtes au QuÃ©bec, contactez le 988 pour une aide immÃ©diate en santÃ© mentale. Je peux rester avec vous quelques instants, mais il faut contacter une aide humaine tout de suite.\\nExemples: je ne veux plus vivre | je vais me faire du mal | je suis au bout du rouleau"
+                    },
+                    {
+                        "title":  "Intent - dettes_entreprise",
+                        "content":  "Description: Le visiteur parle de dettes liÃ©es Ã une entreprise.\\nQualification: qualified_potential_business\\nProchaine action: orient_business_solution_or_rdv\\nPages recommandees: https://www.dettes.ca/entreprises/, https://www.dettes.ca/solutions-endettement/proposition-concordataire/, https://www.dettes.ca/solutions-endettement/faillite-commerciale/\\nExemples: mon entreprise a trop de dettes | je ne peux plus payer mes fournisseurs | je veux Ã©viter la faillite commerciale"
+                    },
+                    {
+                        "title":  "Intent - evaluer_situation_financiere",
+                        "content":  "Description: Le visiteur veut savoir s\u0027il est trop endettÃ© ou si sa situation est grave.\\nQualification: educational_or_potential\\nProchaine action: recommend_financial_evaluation_tool\\nPages recommandees: https://www.dettes.ca/nos-outils/evaluation-situation-financiere-en-ligne/\\nExemples: comment savoir si je suis trop endettÃ© ? | est-ce que ma situation est critique ? | je veux Ã©valuer ma situation"
+                    },
+                    {
+                        "title":  "Intent - question_consolidation",
+                        "content":  "Description: Le visiteur parle de consolidation de dettes.\\nQualification: maybe_qualified\\nProchaine action: explain_not_a_loan_provider_then_orient\\nPages recommandees: https://www.dettes.ca/solutions-endettement/consolidation-de-dettes/\\nExemples: je veux consolider mes dettes | est-ce que la consolidation est possible ? | je veux regrouper mes paiements"
+                    },
+                    {
+                        "title":  "Intent - question_faillite_personnelle",
+                        "content":  "Description: Le visiteur pose une question sur la faillite personnelle.\\nQualification: qualified_potential\\nProchaine action: explain_general_info_and_offer_rdv\\nPages recommandees: https://www.dettes.ca/solutions-endettement/faillite-personnelle/\\nExemples: comment fonctionne la faillite personnelle ? | est-ce que je vais tout perdre si je fais faillite ? | je pense faire faillite"
+                    },
+                    {
+                        "title":  "Intent - question_generale_education",
+                        "content":  "Description: Le visiteur cherche de l\u0027information gÃ©nÃ©rale sur les dettes ou les termes financiers.\\nQualification: educational\\nProchaine action: answer_with_general_info_and_relevant_page\\nPages recommandees: https://www.dettes.ca/syndic-autorise-en-insolvabilite/, https://www.dettes.ca/faq/, https://www.dettes.ca/lexique/\\nExemples: qu\u0027est-ce qu\u0027un syndic ? | c\u0027est quoi l\u0027insolvabilitÃ© ? | je veux comprendre mes options"
+                    },
+                    {
+                        "title":  "Intent - question_proposition_consommateur",
+                        "content":  "Description: Le visiteur veut comprendre la proposition de consommateur.\\nQualification: qualified_potential\\nProchaine action: explain_and_offer_rdv\\nPages recommandees: https://www.dettes.ca/solutions-endettement/proposition-de-consommateur/\\nExemples: c\u0027est quoi une proposition de consommateur ? | est-ce mieux que la faillite ? | je veux rÃ©duire mes dettes sans faire faillite"
+                    },
+                    {
+                        "title":  "Intent - trouver_bureau",
+                        "content":  "Description: Le visiteur veut trouver un bureau ou savoir si les services sont disponibles dans sa rÃ©gion.\\nQualification: potential\\nProchaine action: send_locations_or_online_rdv\\nPages recommandees: https://www.dettes.ca/nos-bureaux/\\nExemples: avez-vous un bureau prÃ¨s de moi ? | Ãªtes-vous Ã Terrebonne ? | Ãªtes-vous Ã Granby ? | je veux un rendez-vous en ligne"
+                    },
+                    {
+                        "title":  "Le syndic peut-il conseiller une faillite même si une proposition est possible ?",
+                        "content":  "Oui, mais il doit présenter toutes les options disponibles de manière impartiale. Le choix appartient au débiteur (Directive 6R3, art. 7).Risque : Une recommandation prématurée de faillite peut engager la responsabilité du syndic pour manquement à son devoir d\u0027information."
+                    },
+                    {
+                        "title":  "Le syndic peut-il être poursuivi ?",
+                        "content":  "Oui. En cas de faute professionnelle, négligence ou abus de pouvoir, il peut être poursuivi civilement (ex. : recours en dommages, radiation professionnelle).Base légale : LFI, art. 197; art. 1457 C.c.Q."
+                    },
+                    {
+                        "title":  "Le syndic peut-il m’aider à éviter la faillite ?",
+                        "content":  "Oui. Le SAI est légalement tenu d’examiner toutes les options, incluant la proposition, la restructuration ou la vente d’actifs hors faillite."
+                    },
+                    {
+                        "title":  "Le syndic peut-il refuser d’ouvrir un dossier ?",
+                        "content":  "Oui, s’il estime que le débiteur n’est pas admissible ou qu’il y a conflit d’intérêt, ou si les frais ne peuvent être couverts.Limite : Il doit expliquer sa décision et orienter vers d’autres ressources (Directive 6R3)."
+                    },
+                    {
+                        "title":  "Le syndic travaille-t-il pour le débiteur ou pour les créanciers ?",
+                        "content":  "Le syndic agit comme tiers neutre au bénéfice de l’ensemble des créanciers. Il doit respecter fidèlement la loi, les directives fédérales, et prioriser l’intérêt collectif — non celui du débiteur — tout en veillant à l’équité (LFI, art. 4.2, 16, 39) ."
+                    },
+                    {
+                        "title":  "Le syndic travaille-t-il pour moi ou pour les créanciers ?",
+                        "content":  "Le syndic est impartial. Il administre la faillite pour le bénéfice de l’ensemble des créanciers, mais il conseille aussi le débiteur dans le respect de la loi."
+                    },
+                    {
+                        "title":  "Les créanciers peuvent-ils contester la faillite ?",
+                        "content":  "Oui, notamment s’ils estiment que la faillite est frauduleuse ou abusive. Ils peuvent contester l’acte de faillite ou le comportement du débiteur (art. 173, LFI). Lors de l’assemblée des créanciers, dans le cas d’une faillite de compagnie, les créanciers peuvent questionner le représentant de la société et demander au syndic d’enquêter. Dans le cas de la faillite faite par un failli opérant une entreprise individuelle les créanciers peuvent s’opposer à sa libération. (art 173, LFI)"
+                    },
+                    {
+                        "title":  "Les dettes de pension alimentaire sont-elles libérables par la proposition ?",
+                        "content":  "Non. Elles sont expressément exclues et demeurent payables malgré une proposition ou faillite (art. 178(1)(b), LFI)."
+                    },
+                    {
+                        "title":  "Liens pratiques - Emploi Quebec",
+                        "content":  "Categorie: Emploi\nType: Gratuit\nDescription: Accedez directement a une banque d emplois et a des outils utiles pour la relance professionnelle.\nLien: https://www.emploiquebec.gouv.qc.ca"
+                    },
+                    {
+                        "title":  "Liens pratiques - Gouvernement du Quebec - Aide a l emploi",
+                        "content":  "Categorie: Emploi\nType: Officiel\nDescription: Site offrant les etapes de la recherche d emploi, l acces a l aide financiere et des centres locaux d emploi.\nLien: https://www.quebec.ca/emploi"
+                    },
+                    {
+                        "title":  "Liens pratiques - Infolettre Dettes.ca",
+                        "content":  "Titre: Infolettre Dettes.ca\nBonus: Guide gratuit - 7 bonnes pratiques financieres\nAvantages: Conseils mensuels pour une vie d abondance; Astuces pratiques pour le bien-etre financier et familial\nFormulaire: Prenom, Courriel\nLien: https://www.dettes.ca/infolettre"
+                    },
+                    {
+                        "title":  "Liens pratiques - Maison Monbourquette",
+                        "content":  "Categorie: Deuil\nType: Accompagnement\nDescription: Service d ecoute et de soutien destine aux personnes vivant un deuil ou une perte importante.\nContact: 1-888-533-3845\nLien: https://maisonmonbourquette.com"
+                    },
+                    {
+                        "title":  "Liens pratiques - Organisation et mentions",
+                        "content":  "Organisation: Dettes.ca - Groupe Leblanc Syndic Inc.\nMentions: Syndic autorise en insolvabilite; Tous droits reserves; Protection des renseignements personnels; Preferences de consentement\nLien: https://www.dettes.ca"
+                    },
+                    {
+                        "title":  "Liens pratiques - Outils gratuits",
+                        "content":  "Outils: NOVAPLAN; Personnalite financiere; Calculateur de pret avec interets; Calcul de revenu excedentaire en faillite; Evaluation taux d endettement; Budget personnel en ligne; Calcul carte de credit; Modules de consultations en insolvabilite; Capsules-videos\nPage source: https://www.dettes.ca/liens-pratiques"
+                    },
+                    {
+                        "title":  "Liens pratiques - Passeport sante",
+                        "content":  "Categorie: Sante mentale\nType: Soutien\nDescription: Repertoire d organismes et associations pour trouver du soutien selon votre situation.\nLien: https://www.passeportsante.net"
+                    },
+                    {
+                        "title":  "Liens pratiques - Separation et divorce (Quebec)",
+                        "content":  "Categorie: Separation\nType: Officiel\nDescription: Guides pratiques sur les droits, obligations et ressources utiles en cas de separation ou divorce.\nLien: https://www.quebec.ca/famille/separation-divorce"
+                    },
+                    {
+                        "title":  "Liens pratiques - Service Canada",
+                        "content":  "Categorie: Services\nType: Officiel\nDescription: Informations gouvernementales sur les prestations, l assurance-emploi et d autres services essentiels.\nLien: https://www.canada.ca/fr/services/emploi.html"
+                    },
+                    {
+                        "title":  "Liens pratiques - Solutions d endettement",
+                        "content":  "Solutions: Faillite personnelle; Proposition de consommateur; Consolidation de dettes; Depot volontaire; Negociation avec les creanciers; Ajustement de budget personnel et familial; Dettes d entreprise\nPage source: https://www.dettes.ca/liens-pratiques"
+                    },
+                    {
+                        "title":  "Liens pratiques - Suicide Action Montreal",
+                        "content":  "Categorie: Aide immediate\nType: Urgence\nDescription: Disponible 24h/24 et 7j/7 pour detresse emotionnelle urgente.\nContact: 1-866-277-3553\nAlternatives: Services d urgence regionaux; 811 Info-Social (option 2)\nLien: https://suicideactionmontreal.org"
+                    },
+                    {
+                        "title":  "Page - Ã€ propos",
+                        "content":  "Resume: PrÃ©sente pourquoi choisir Groupe Leblanc Syndic : expÃ©rience, accompagnement humain, expertise en insolvabilitÃ© et solutions adaptÃ©es.\\nIntentions: pourquoi_dettes_ca, rassurance, credibilite\\nMots cles: Groupe Leblanc Syndic, 20 ans, syndic autorisÃ©, accompagnement"
+                    },
+                    {
+                        "title":  "Page - Accueil",
+                        "content":  "Resume: PrÃ©sente Groupe Leblanc Syndic, les bÃ©nÃ©fices d\u0027un nouveau dÃ©part, les Ã©tapes d\u0027accompagnement, les solutions principales, les outils gratuits, les tÃ©moignages et les bureaux.\\nIntentions: comprendre_dettes_ca, demande_rdv_ambigu, chercher_solution_dettes\\nMots cles: dettes, nouveau dÃ©part, consultation gratuite, QuÃ©bÃ©cois accompagnÃ©s, syndic autorisÃ©\\nCTA: Prendre rendez-vous -\u003e https://www.dettes.ca/clinique-liberte | Faire mon auto-diagnostic -\u003e https://www.dettes.ca/profil-financier/"
+                    },
+                    {
+                        "title":  "Page - Bureaux",
+                        "content":  "Resume: PrÃ©sente les bureaux et la possibilitÃ© d\u0027obtenir de l\u0027aide partout au QuÃ©bec, en ligne, par tÃ©lÃ©phone ou en visioconfÃ©rence.\\nIntentions: trouver_bureau, service_pres_de_moi, rdv_en_ligne\\nMots cles: bureaux, Terrebonne, Granby, QuÃ©bec, visioconfÃ©rence"
+                    },
+                    {
+                        "title":  "Page - CarriÃ¨res",
+                        "content":  "Resume: Page carriÃ¨res.\\nIntentions: emploi_carriere\\nMots cles: carriÃ¨res, emploi, recrutement"
+                    },
+                    {
+                        "title":  "Page - Contact",
+                        "content":  "Resume: Page pour contacter dettes.ca.\\nIntentions: contacter_dettes_ca, coordonnees\\nMots cles: nous joindre, contact, tÃ©lÃ©phone"
+                    },
+                    {
+                        "title":  "Page - Outils",
+                        "content":  "Resume: Regroupe les outils gratuits : situation financiÃ¨re, personnalitÃ© financiÃ¨re, taux d\u0027endettement, budget, calculateur de prÃªt, carte de crÃ©dit, capsules et modules de consultation.\\nIntentions: chercher_outil, auto_diagnostic, education_financiere\\nMots cles: outils gratuits, simulateur, Ã©valuation, budget, taux d\u0027endettement"
+                    },
+                    {
+                        "title":  "Page - Rendez-vous",
+                        "content":  "Resume: Page de prise de rendez-vous pour une consultation gratuite et confidentielle.\\nIntentions: demande_rdv_avec_dettes, demande_rdv_ambigu\\nMots cles: rendez-vous, consultation, Clinique LibertÃ©, confidentiel"
+                    },
+                    {
+                        "title":  "Page - Solutions",
+                        "content":  "Resume: Hub des solutions pour les dettes personnelles : proposition de consommateur, faillite personnelle, consolidation, dÃ©pÃ´t volontaire, nÃ©gociation, ajustement de budget.\\nIntentions: chercher_solution_dettes, comparer_solutions, dettes_personnelles\\nMots cles: solutions, dettes personnelles, proposition de consommateur, faillite personnelle, consolidation, dÃ©pÃ´t volontaire"
+                    },
+                    {
+                        "title":  "Peut-on changer de syndic pendant la procédure ?",
+                        "content":  "Oui, avec l’approbation du tribunal et du surintendant (LFI, art. 14.01). Cela doit servir l’intérêt des créanciers.Jurisprudence :Larose c. Turcotte, 2011 QCCQ 6378 – changement autorisé pour perte de confiance motivée."
+                    },
+                    {
+                        "title":  "Peut-on être insolvable sans dettes en souffrance ?",
+                        "content":  "Oui. L’insolvabilité est une situation financière, non une question de défaut immédiat. Une personne peut être techniquement insolvable si elle n’a pas la capacité de faire face à ses dettes futures prévisibles.Interprétation : La jurisprudence reconnaît l’insolvabilité \"prévisible\" (voir Re RedstoneCapital, 2008)."
+                    },
+                    {
+                        "title":  "Pourquoi rencontrer un syndic avant de faire une consolidation bancaire?",
+                        "content":  "Parce que toute solution de crédit non accompagnée d’un diagnostic complet peut aggraver votre situation.Nous vous offrons une évaluation gratuite et confidentielle, pour déterminer si une consolidation est réaliste ou s’il existe une solution légale plus avantageuse selon la Loi sur la faillite et l’insolvabilité (LFI)."
+                    },
+                    {
+                        "title":  "Protocole crise emotionnelle - priorite securite",
+                        "content":  "Si la personne exprime une detresse extreme ou un risque de passage a l acte (suicide, automutilation, envie de mourir, je suis en danger), la priorite absolue est la securite immediate. Suspendre la qualification commerciale et orienter vers aide humaine urgente sans delai."
+                    },
+                    {
+                        "title":  "Puis-je avoir un compte bancaire ?",
+                        "content":  "Oui. Vous avez droit à un compte bancaire (Loi sur les banques, art. 627.02). La banque ne peut pas fermer un compte simplement pour cause d’insolvabilité."
+                    },
+                    {
+                        "title":  "Puis-je changer de syndic pendant la faillite ?",
+                        "content":  "Oui, mais cela nécessite l’approbation des créanciers et parfois celle du tribunal (art. 29, LFI). Seul les créanciers et/ou les inspecteurs peuvent demander la substitution d’un syndic au dossier."
+                    },
+                    {
+                        "title":  "Puis-je conserver une carte de crédit pendant une proposition de consommateur ?",
+                        "content":  "Non. Toutes les cartes doivent être remises au SAI (Directive 6R3, parag. 11). Vous pouvez ensuite en obtenir une carte prépayée ou garantie. Aucune obligation de remettre en proposition, par contre les comptes seront probablement fermés lorsque les créanciers recevront la documentation de la proposition."
+                    },
+                    {
+                        "title":  "Puis-je consolider une dette conjointe?",
+                        "content":  "Oui, mais sous conditions. Il faut que tous les co-emprunteurs soient admissibles et cosignent le nouveau prêt. Sinon, le créancier peut refuser la consolidation ou exiger des garanties."
+                    },
+                    {
+                        "title":  "Puis-je continuer à opérer l’entreprise après le dépôt ?",
+                        "content":  "Non, sauf si autorisé expressément par le syndic ou le tribunal. Le syndic prend le contrôle des opérations dès la faillite (art. 71, LFI)."
+                    },
+                    {
+                        "title":  "Puis-je faire une deuxième proposition si j’en ai déjà fait une par le passé ?",
+                        "content":  "Oui. Il est possible de faire une deuxième proposition si vous êtes toujours admissible. Il est possible de déposer une 2e proposition mais n’incluant aucune dette prévue dans la première."
+                    },
+                    {
+                        "title":  "Puis-je faire une proposition pour certaines dettes seulement ?",
+                        "content":  "Non. La proposition doit inclure tous les créanciers non garantis (art. 66.12(3), LFI). Il est interdit de favoriser certains créanciers ou d’en exclure."
+                    },
+                    {
+                        "title":  "Puis-je inclure mes dettes fiscales (ex. : Revenu Québec, ARC) dans une consolidation?",
+                        "content":  "Non. Les dettes fiscales ne sont généralement pas admissibles dans un prêt de consolidation bancaire. Elles peuvent toutefois être incluses dans une proposition de consommateur ou une faillite, sous certaines conditions (LFI, art. 178, jurisprudence : Morin (Re), 2013 QCCS 2459)."
+                    },
+                    {
+                        "title":  "Puis-je inclure mes dettes garanties dans la proposition ?",
+                        "content":  "Non, sauf si le créancier garanti y consent expressément. Sinon, les dettes garanties demeurent en dehors de la proposition (art. 60(1.3), LFI)."
+                    },
+                    {
+                        "title":  "Puis-je inclure un prêt étudiant dans une consolidation?",
+                        "content":  "Parfois. Prêts étudiants privés : oui, s\u0027ils sont hors du Programme canadien. Prêts étudiants gouvernementaux : non consolidables via un prêt personnel. Pour qu’ils soient libérables via une faillite ou une proposition, il faut respecter un délai de 7 ans depuis la fin des études (LFI, art. 178(1)(g))."
+                    },
+                    {
+                        "title":  "Puis-je redémarrer une nouvelle entreprise après la faillite ?",
+                        "content":  "Oui. Rien dans la LFI n’interdit à une personne de relancer une entreprise, sauf si une ordonnance du tribunal ou une autorité réglementaire l’empêche."
+                    },
+                    {
+                        "title":  "Puis-je vendre des actifs avant de déclarer faillite ?",
+                        "content":  "Non, pas sans consulter un SAI. Une vente faite dans l’intention d’éviter les créanciers pourrait être annulée comme transaction révisable (art. 95-101, LFI). L’entreprise peut vendre ses actifs avant la faillite. Mais deux choses doivent être respectées. Les biens vendus doivent l’avoir été à leur juste valeur marchandeet le produit de disposition doit impérativement être déposé au compte de l’entreprise sans quoices transactions peuvent faire l’objet d’une révision et d’annulation. (art 95à 101, LFI)"
+                    },
+                    {
+                        "title":  "Qu’advient-il de mon héritage pendant une faillite ?",
+                        "content":  "Réponse : Tout bien reçu pendant une faillite devient automatiquement un bien saisissable au profit de la masse faillie. Ainsi : Si vous recevez un héritage pendant que vous êtes en faillite, cet héritage doit être remis au syndic (art. 67(1)c) LFI). Si l’héritage est reçu après votre libération, il ne fait plus partie de la faillite. Exception : Si l’héritage est conditionnel ou protégé par une fiducie discrétionnaire, il pourrait être exclu. Chaque situation doit être analysée selon les modalités du testament. Source : LFI art. 67(1)(c)"
+                    },
+                    {
+                        "title":  "Qu’arrive-t-il à ma maison si je fais faillite ?",
+                        "content":  "Réponse : Votre maison fait partie des biens à administrer par le syndic, mais son sort dépend de plusieurs facteurs : Si vous avez peu ou pas d’équité dans la maison (valeur marchande – hypothèque = faible ou négative), le syndic pourrait renoncer. Si vous avez de l’équité importante, le syndic devra soit : Vendre la maison, ou Vous permettre de \"rachat\" de l’équité pour la conserver (souvent par des paiements mensuels). Attention : La maison est un bien saisissable selon l\u0027article 67(1)a) LFI, sauf si vous êtes copropriétaire avec d\u0027autres et que des arrangements légaux existent. Source : LFI art. 67(1)(a), jurisprudence : Roy c. Roy, 2011 QCCQ 4236"
+                    },
+                    {
+                        "title":  "Qu’arrive-t-il à mon crédit en faisant faillite ?",
+                        "content":  "En déclarant faillite, votre cote de crédit passe à R9, soit la plus faible notation possible attribuée par les agences de crédit (Equifax, TransUnion). Cela signifie que vous avez fait faillite ou que votre dette a été remise à une agence de recouvrement. Cependant, si votre dossier de crédit est déjà affecté par des retards de paiements, des comptes en souffrance ou des poursuites, la faillite peut en réalité être le premier pas vers une réhabilitation financière. Sources : LFI, art. 168 à 172 (libération du failli), Equifax et TransUnion (politique d’affichage), Directive du BSF no 11R2 (revenu excédentaire et libération conditionnelle). Puis-je ouvrir un compte bancaire après une faillite ?Oui. Vous avez le droit d\u0027ouvrir un compte bancaire après avoir déclaré faillite, même si vous êtes failli non libéré. Selon le Règlement sur l\u0027accès aux services bancaires de base (DORS/2003-184) : Une institution financière ne peut refuser l\u0027ouverture d’un compte pour cause de faillite, sauf exceptions spécifiques (fausses déclarations, menaces, usage frauduleux). Vous pouvez être limité à un compte de dépôt de base, sans découvert ni carte de crédit. Source : Règlement sur l’accès aux services bancaires de base (Loi sur les banques), LFI art. 67(1) Puis-je conserver mes cartes de crédit lors d’une faillite ?Non. Lors de la déclaration de faillite : Vous devez remettre toutes vos cartes de créditou vous engager à les détruire (LFI art. 158(d)), même si elles ont un solde à zéro. Il est illégal de détenir ou utiliser une carte de crédit sans en informer l’émetteur que vous êtes failli (LFI art. 199). Après votre libération, vous pourrez faire une nouvelle demande de carte, mais l’émission dépendra de la politique du créancier et de votre cote de crédit. Sources : LFI art. 158(d), 199 Puis-je effectuer des achats avec ma carte de crédit avant de déclarer faillite ?Extrême prudence. Faire des achats juste avant une faillite peut être considéré comme frauduleux : Si les achats sont importants ou inhabituels, ou si vous saviez que vous alliez déclarer faillite, le créancier peut contester la libération de cette dette (LFI art. 178(1)(e), (e.1)). Le syndic est tenu d\u0027examiner les transactions dans les 3 mois précédant la faillite, et plus selon les circonstances. Recommandation : Ne pas utiliser de crédit en prévision d\u0027une faillite. Cela peut entraîner des conséquences civiles ou pénales. Sources : LFI art. 178(1)(e), (e.1), jurisprudence : Desjardins c. Bergeron, 2010 QCCQ 10395"
+                    },
+                    {
+                        "title":  "Qu’arrive-t-il à mon prêt étudiant en cas de faillite ?",
+                        "content":  "Réponse : Selon l\u0027article 178(1)(g) de la Loi sur la faillite et l’insolvabilité (LFI), les prêts étudiants ne sont pas libérables par une faillite si moins de 7 ans se sont écoulés depuis la fin des études. Autrement dit : Si moins de 7 ans se sont écoulés depuis la fin de vos études, la dette étudiante subsiste après la faillite. Si plus de 7 ans se sont écoulés depuis la fin de vos études à temps plein ou partiel, le prêt étudiant peut être libéré. Une libération anticipée peut être demandée après 5 ans (article 178(1.1) LFI), mais seulement dans des cas d\u0027extrême difficulté. Source : LFI art. 178(1)(g), 178(1.1)"
+                    },
+                    {
+                        "title":  "Qu’arrive-t-il aux contrats en cours lors de la faillite ?",
+                        "content":  "Le syndic peut résilier des contrats onéreux, avec approbation du tribunal si nécessaire. Les contreparties peuvent avoir un droit de réclamation pour résiliation. Les contratssont résiliés et des réclamations peuvent être admissibles."
+                    },
+                    {
+                        "title":  "Qu’est-ce qu’un avis d’intention de faire une proposition ?",
+                        "content":  "C’est un document déposé par un syndic autorisé en insolvabilité (SAI) auprès du séquestre officiel par lequel une personne insolvablesignifie son intention de faire une proposition à ses créanciers dans les 30 prochains jours. Ce qui suspend immédiatement les recours des créanciers, offrant un délai de 30 jours pour préparer une proposition."
+                    },
+                    {
+                        "title":  "Qu’est-ce qu’un syndic autorisé en insolvabilité ?",
+                        "content":  "C’est un professionnel titulaire d’une licence délivrée par le Surintendant des faillites (LFI, art. 13–15). Il est autorisé à administrer une faillite ou une proposition, protéger les droits des parties, liquider ou répartir l’actif, convoquer les créanciers, etc. laws-lois.justice.gc.ca+2laws-lois.justice.gc.ca+2laws-lois.justice.gc.ca+2."
+                    },
+                    {
+                        "title":  "Qu’est-ce que la cession volontaire en faillite ?",
+                        "content":  "La cession est une faillite initiée par le débiteur lui-même en signant une cession de ses biens au bénéfice de ses créanciers, administrée par un SAI (LFI, art. 49). Le dépôt est effectué au Bureau du surintendant des faillites.Base légale : LFI, art. 49 à 51."
+                    },
+                    {
+                        "title":  "Qu’est-ce que la consolidation de dettes?",
+                        "content":  "La consolidation de dettes est une solution financière visant à regrouper plusieurs dettes non garanties (cartes de crédit, marges de crédit, prêts personnels, etc.) en un seul prêt, assorti généralement d’un taux d’intérêt inférieur à ceux des dettes initiales. L’objectif est de simplifier la gestion financière, de réduire les coûts d’intérêt et de diminuer le risque de défaut de paiement."
+                    },
+                    {
+                        "title":  "Qu’est-ce que la faillite commerciale ?",
+                        "content":  "Une faillite est dite commerciale lorsque les actifs, les créances et les activités sont de nature commerciale. Il s’agit d’une procédure légale prévue par la Loi sur la faillite et l’insolvabilité (LFI) qui permet à une entreprise (individuelle ou personne morale) insolvable de céder ses actifs à un syndic autorisé en insolvabilité (SAI) pour qu’ils soient liquidés au profit des créanciers. Elle peut être : Volontaire : initiée par l’entreprise elle-même (art. 49 LFI), Forcée (assignation) : déclenchée par les créanciers devant le tribunal (art. 43 LFI)."
+                    },
+                    {
+                        "title":  "Qu’est-ce que la faillite personnelle ?",
+                        "content":  "La faillite personnelle est une procédure légale régie par la LFI qui permet à une personne insolvable de se libérer de la majorité de ses dettes en remettant ses biens saisissables à un syndic autorisé en insolvabilité (SAI). Ce processus offre une protection contre les créanciers et vise à permettre au débiteur de repartir sur de nouvelles bases financières.ajbm.qc.ca Sources : LFI, art. 2 (définitions), art. 67 (biens du failli) laws-lois.justice.gc.ca"
+                    },
+                    {
+                        "title":  "Qu’est-ce que le dépôt volontaire (ou Loi Lacombe) ? Le dépôt volontaire est un mécanisme légal qui permet à une personne endettée de verser une partie de son revenu au greffe de la Cour du Québec, pour qu’elle soit redistribuée à ses créan",
+                        "content":  "Sources : Code de procédure civile du Québec, art. 663 à 673 Taux d’intérêt légal : art. 663 (limité à 5 %) Puis-je m’inscrire au dépôt volontaire si je suis bénéficiaire de prestations sociales? Non. Vous devez avoir un revenu saisissable (ex. : emploi, CNESST, assurance-emploi). L’aide sociale n’est pas admissible. Puis-je déposer volontairement si j’ai une saisie en cours? Oui. L’inscription suspend automatiquement les saisies dès l’ouverture du dossier (C.p.c., art. 665). Est-ce que je peux être inscrit d’office par un créancier? Non. C’est une démarche strictement volontaire."
+                    },
+                    {
+                        "title":  "Qu’est-ce qui peut entraîner la fermeture de mon dossier?",
+                        "content":  "Non-respect des obligations Paiement intégral des dettes Retrait volontaire Faillite Décès Est-ce que cela affecte ma cote de crédit? Oui. Il y a une note au dossier indiquant un plan de remboursement judiciaire, mais moins grave qu’une faillite."
+                    },
+                    {
+                        "title":  "Quand dois-je effectuer mes versements?",
+                        "content":  "Salarié : dans les 5 jours suivant la paie Travailleur autonome : versements mensuels réguliers"
+                    },
+                    {
+                        "title":  "Quand la Cour effectue-t-elle les paiements?",
+                        "content":  "Février, mai, août, novembre (trimestriel) Mensuel pour les pensions alimentaires"
+                    },
+                    {
+                        "title":  "Quand la faillite disparaît-elle du dossier de crédit ?",
+                        "content":  "Selon les agences de crédit : Première faillite : 6 ans après la libération (Equifax), 7 ans (TransUnion) Deuxième faillite ou plus : 14 ans après la libération"
+                    },
+                    {
+                        "title":  "Quand la proposition de consommateur est-elle préférable à la faillite ?",
+                        "content":  "Lorsqu’une personne a une capacité de paiement, souhaite éviter la faillite, conserver ses actifs, ou réduire l’impact sur sa cote de crédit. Elle est souvent préférable si les dettes non garanties sont inférieures à 250 000 $ (excluant l’hypothèque sur la résidence principale)."
+                    },
+                    {
+                        "title":  "Quand une entreprise fait faillite, elle cesse ses opérations. À ce moment-là, plusieurs scénarios sont possibles concernant le bail du local commercial :",
+                        "content":  "Le syndic peut renoncer au bail Cela signifie qu’il choisit de ne pas poursuivre la location du local. Dans ce cas : Le locateur (propriétaire du local) peut faire une réclamation pour rupture de bail. La loi lui permet de réclamer jusqu’à un an de loyer impayé (voir article 65.2 de la LFI). Il peut aussi, dans certains cas, obtenir une priorité de paiement dans la faillite. Le syndic peut décider de garder le local temporairement Il peut s’entendre avec le locateur pour continuer à utiliser les lieux pendant la liquidation des biens (ex. : pour vendre l’équipement sur place). Dans ce cas, on parle de loyer d’occupation : c’est une entente temporaire pour utiliser le local sans relancer le bail à long terme. Le locateur est alors payé pour cette période d’occupation, en plus de pouvoir faire une réclamation pour rupture si le bail est ensuite abandonné."
+                    },
+                    {
+                        "title":  "Que deviennent mes cartes de crédit?",
+                        "content":  "Elles restent actives sauf si vous les fermez volontairement. Il est fortement recommandé de : Ne pas les utiliser, ou Les annuler pour éviter toute tentation."
+                    },
+                    {
+                        "title":  "Que deviennent mes employés lors d’une faillite commerciale ?",
+                        "content":  "Les contrats de travail prennent fin sauf indication contraire. Les employés peuvent réclamer leurs salaires impayés, vacances, et indemnités via le Programme de protection des salariés (PPS). Procédures"
+                    },
+                    {
+                        "title":  "Que faire si je ne suis pas admissible?",
+                        "content":  "Plan de gestion de dettes (via agence de crédit) : Entente volontaire avec les créanciers. Frais administratifs possibles. Proposition de consommateur : Encadrée par la Loi sur la faillite et l’insolvabilité (LFI). Réduction des dettes jusqu’à 80 %, arrêt des intérêts et des recours judiciaires. Faillite personnelle : Dernier recours. Libération complète de la majorité des dettes après 9 à 21 mois (LFI, art. 168 ss.)."
+                    },
+                    {
+                        "title":  "Que faire si ma proposition de consommateur est rejetée ?",
+                        "content":  "Vous pouvez : Négocier une nouvelle proposition, Faire faillite, Payer vos créanciers directement. Le SAI vous guide selon votre situation."
+                    },
+                    {
+                        "title":  "Que se passe-t-il en cas de baisse de revenus pendant la proposition ?",
+                        "content":  "On peut demander une modification (art. 66.37, LFI) avec l’aide du SAI. Si les paiements cessent (3 mois ou plus), la proposition est annulée automatiquement (art. 66.31(1))."
+                    },
+                    {
+                        "title":  "Que se passe-t-il en cas de non-respect des termes de la proposition ?",
+                        "content":  "Suite à la libération du syndic, les créanciers pourront reprendre des recours contre le débiteur ou ses biens. Le tribunal peut déclarer le débiteur en faillite sur demande des créanciers."
+                    },
+                    {
+                        "title":  "Que se passe-t-il si les créanciers ou le tribunal refusent la proposition ?",
+                        "content":  "Si les créanciers refusent la proposition Le débiteur est réputé avoir fait une cession, entraînant une faillite automatique. Si le Tribunal refuse d’homologuer la proposition, il peut déclarer que le débiteur est en faillite ou il peut lui ordonner de reprendre les négociations avec les créanciers ou de déposer une nouvelle proposition."
+                    },
+                    {
+                        "title":  "Que se passe-t-il si un créancier ne vote pas ?",
+                        "content":  "Les créanciers qui ne votent pas sont réputés accepter la décision de la majorité en valeur (art. 54, LFI)."
+                    },
+                    {
+                        "title":  "Quel est l’effet de l’annulation de la proposition ?",
+                        "content":  "Les créanciers recouvrent leurs droits initiaux, peuvent exiger le paiement intégral avec intérêts, et la protection légale cesse (art. 66.31(1), LFI)."
+                    },
+                    {
+                        "title":  "Quel est l’effet de la faillite sur les créanciers non garantis ?",
+                        "content":  "Une fois la faillite déclarée, une suspension automatique des procédures empêche les créanciers non garantis de poursuivre le failli ou de saisir ses biens. Le SAI devient l\u0027intermédiaire entre le failli et les créanciers. Sources : LFI, art. 69.1 (suspension des procédures)"
+                    },
+                    {
+                        "title":  "Quel est l’impact sur la cote de crédit?",
+                        "content":  "Prêt de consolidation bancaire : peut améliorer la cote, si bien remboursé. Proposition de consommateur (LFI, art. 66.03 ss.) : engendre une baisse temporaire, mais permet un redressement si bien gérée. Utilisation continue des cartes après consolidation : effet négatif, risque de rechute."
+                    },
+                    {
+                        "title":  "Quel est le rôle du syndic dans une faillite commerciale ?",
+                        "content":  "Le SAI agit comme officier de justice neutre. Il prend possession des biens, vérifie les réclamations, vend les actifs, répartit les sommes, et rend compte aux créanciers (art. 16-39, LFI)."
+                    },
+                    {
+                        "title":  "Quel est le taux d’intérêt pour une consolidation de dettes?",
+                        "content":  "Le taux varie en fonction de : La cote de crédit. Le revenu et l’endettement global. Le type de prêteur (banque, coopérative, prêteur alternatif). En général, il se situe entre 7 % et 12 %, comparativement à environ 19 % pour les cartes de crédit."
+                    },
+                    {
+                        "title":  "Quelle cote de crédit faut-il pour consolider?",
+                        "content":  "700 et plus : accès aux meilleurs taux. 650 à 699 : taux moyens, possible avec des conditions. Moins de 650 : difficile, envisagez d’autres options (voir ci-dessous)."
+                    },
+                    {
+                        "title":  "Quelle est l’alternative si le dépôt volontaire est insuffisant ?",
+                        "content":  "Proposition de consommateur (réduction des dettes, arrêt des intérêts, protection légale) Faillite personnelle (libération complète des dettes non garanties)"
+                    },
+                    {
+                        "title":  "Quelle est la différence entre insolvabilité et surendettement ?",
+                        "content":  "Surendettement : état où les dettes sont élevées mais encore payables. Insolvabilité : incapacité réelle de respecter les engagements financiers à échéance. Tous les insolvables sont surendettés, mais tous les surendettés ne sont pas insolvables.Base légale : LFI, art. 42."
+                    },
+                    {
+                        "title":  "Quelle est la différence entre une faillite commerciale et une proposition concordataire ?",
+                        "content":  "La faillite implique la cession des actifs à un syndic pour liquidation (art. 42,49, LFI), tandis que la proposition (art. 50) permet à l’entreprise de faire une offre de remboursement partiel à ses créanciers afin de continuer ses activités."
+                    },
+                    {
+                        "title":  "Quelle est la différence entre une proposition de consommateur et une consolidation de dettes ?",
+                        "content":  "La consolidation est une entente privée (souvent bancaire), sans protection légale, incluant un taux d’intérêt. La proposition est administrée par un syndic autorisé avec gel des intérêts, diminution des dettes et suspension des procédures en cours (art. 69 LFI)."
+                    },
+                    {
+                        "title":  "Quelle est la durée d’une proposition concordataire ?",
+                        "content":  "Généralement jusqu’à 5 ans (60 mois). Cependant la LFI ne prévoit pas de durée maximale et les créanciers ont l’autorité pour permettre des délais plus longs. Le tribunal peut accorder des prolongations si les créanciers y consentent."
+                    },
+                    {
+                        "title":  "Quelle est la durée moyenne d’un dépôt volontaire? Entre 24 et 48 mois, selon le revenu et les dettes.",
+                        "content":  "Puis-je retirer ma demande de dépôt volontaire? Oui, à tout moment. Cela met fin à la protection."
+                    },
+                    {
+                        "title":  "Quelles alternatives à la consolidation le Groupe Leblanc peut-il proposer?",
+                        "content":  "Proposition de consommateur (LFI, art. 66.02 et ss) : réduit le montant total des dettes, arrête les intérêts, protège contre les saisies. Faillite personnelle : option ultime si aucune autre solution n’est viable. Conseils budgétaires personnalisés pour reprendre le contrôle."
+                    },
+                    {
+                        "title":  "Quelles dettes ne sont pas effacées par une faillite ?",
+                        "content":  "Selon l\u0027article 178(1) de la LFI, les dettes non libérables incluent : Pensions alimentaires Prêts étudiants si les études ont été terminées depuis moins de 7 ans Dettes résultant de fraude ou de fausses déclarations Amendes et pénalités imposées par un tribunal Dettes non déclarées au syndic, sauf exceptionsised-isde.canada.cafoxautocredit.comlaws-lois.justice.gc.ca+3girardavocats.com+3pierreroy.com+3 Sources : LFI, art. 178(1)"
+                    },
+                    {
+                        "title":  "Quelles dettes ne sont pas libérables dans une proposition ordinaire ?",
+                        "content":  "Selon l’article 178(1) LFI, les dettes non libérables incluent : Amendes et pénalités imposées par un tribunal. Indemnités pour lésion corporelle ou décès. Pensions alimentaires. Dettes résultant de fraude. Prêts étudiants si moins de 7 ans se sont écoulés depuis la fin des études."
+                    },
+                    {
+                        "title":  "Quelles sont les causes fréquentes de la faillite d\u0027entreprise ?",
+                        "content":  "Mauvaise gestion financière, Surendettement, Pertes continues, Retards de paiement de clients, Conjoncture économique défavorable, Litiges coûteux, Fiscalité non gérée."
+                    },
+                    {
+                        "title":  "Quelles sont les conséquences d’une faillite personnelle ?",
+                        "content":  "Avantages : Protection contre les actions des créanciers Libération des dettes admissibles Possibilité de recommencer sur de nouvelles bases financièresstudocu.com Inconvénients : Impact négatif sur le dossier de crédit Possible perte de certains biens Certaines dettes non libérables subsistent Obligations financières pendant la période de faillitegirardavocats.com+2pierreroy.com+2ginsberg-gingras.com+2 Sources : LFI, art. 178 (dettes non libérables)"
+                    },
+                    {
+                        "title":  "Quelles sont les conséquences d’une proposition concordataire ?",
+                        "content":  "Cessation des paiements directs aux créanciers. Suspension des procédures de recouvrement. Possibilité de Possibilité de résilier tout contrat auquel il est parti à la date du dépôt de l’avis d’intentionou de la proposition Possibilité derésilier un bail commercial dans les 30 jours suivant le dépôt."
+                    },
+                    {
+                        "title":  "Quelles sont les conséquences de la faillite commerciale sur l’administrateur d’une entreprise individuelle ?",
+                        "content":  "Pour une entreprise opérée par un individu, ce dernier est personnellement responsable de toutes les dettes de l’entreprise. L’entreprise individuelle n’ayant pas de personnalité juridique propre, il s’agit donc d’une faillite personnelle de nature commerciale."
+                    },
+                    {
+                        "title":  "Quelles sont les conséquences de la faillite commerciale sur les administrateurs d’une personne morale à but lucratif ?",
+                        "content":  "La société étant une entité distincte, les administrateurs ne sont pas personnellement responsables des dettes sauf dans les cas mentionnés ci-dessus. Leurs obligations légales persistent malgré la faillite (art. 122 LCSA)tel que la responsabilité d’adfministrateur et le cautionnement."
+                    },
+                    {
+                        "title":  "Quelles sont les conséquences de la faillite commerciale sur les administrateurs de l’entreprise ?",
+                        "content":  "Les administrateurs peuvent être personnellement responsables pour : Les déductions à la source non remises (ex. DAS), Les taxes de vente non versées (TPS/TVQ), Certaines dettes contractées frauduleusement (Loi sur les impôts, jurisprudence : Agences du revenu c. Chrétien, QCCA 2016). Et les cautionnements que les administrateurs ont accordés afin que l’entreprise puisse obtenir du financement."
+                    },
+                    {
+                        "title":  "Quelles sont les deux catégories de faillites ?",
+                        "content":  "Conformément à la Loi sur la faillite et l’insolvabilité, il existe deux catégories de faillite. La faillite dite d’administration sommaire et la faillite dite ordinaire. La faillite d’administration sommaire ne peut être utilisée que par une personne physique dont les avoirs réalisables, déduction faite des réclamations des créanciers garantis, ne dépassent pas $ 15,000. Dans tous les autres cas il s’agira de faillite ordinaire ou commerciale si tel est le cas."
+                    },
+                    {
+                        "title":  "Quelles sont les différences entre faillite et liquidation ?",
+                        "content":  "Faillite : processus légal supervisé par un SAI en vertu de la LFI. Les recours sont suspendus. Liquidation volontaire :fermeture hors LFI, sans protection juridique, souvent sous la Loi canadienne sur les sociétés par actions (LCSA). Liquidation volontaire : c’est une procédure qui permet de mettre fin à l’existence d’une entreprise en vendant les actifs pour rembourser les passifs."
+                    },
+                    {
+                        "title":  "Quelles sont les étapes d’une proposition concordataire ?",
+                        "content":  "Consultation avec un syndic : analyse de votre situation. (Optionnel) Avis d’intention : protège temporairement contre les recours. Préparation et dépôt de la proposition : rédigée par le syndic avec l’aide du débiteur, signéepar le débiteur et déposée au BSF. Avis aux créanciers : convocation d’une assemblée dans les 21 jours. Vote des créanciers : une double majorité est requise.La proposition est réputée acceptée si les créanciers votent en faveur par une majorité en nombre (50 + 1) et des deux tiers en valeur des votes exprimés. Approbation du tribunal : rend la proposition exécutoire. Paiements selon la proposition : supervisés par le syndic. Tout montant payable aux termes de la proposition est payé au syndic et, après le paiement de tous les honoraires et dépenses convenables,distribué par lui aux créanciers. Libérationintégrale : lorsque toutes les dispositions prévues dans la proposition auront été complétéeset une fois les paiements complétés."
+                    },
+                    {
+                        "title":  "Quelles sont les étapes d’une proposition de consommateur ?",
+                        "content":  "Consultation avec un syndic autorisé en insolvabilité (SAI) Évaluation gratuite de votre situation et explication de vos options. Préparation et signature de la proposition Le SAI rédige une offre réaliste basée sur votre capacité de paiement. Dépôt officiel La proposition est déposée au Bureau du surintendant des faillites. Tous les recours sont suspendus (art. 69, LFI). Avis aux créanciers et vote Les créanciers ont 45 jours pour voter. L’acceptation par la majorité (50 % + 1 en valeur) lie tous les créanciers. Approbation du tribunal Si acceptée, le tribunal entérine la proposition (art. 66.22, LFI). Paiements mensuels et consultations Vous respectez les paiements convenus et assistez à deux séances de conseil financier. Fin de la proposition et libération Après le dernier paiement, vous êtes légalement libéré de vos dettes incluses."
+                    },
+                    {
+                        "title":  "Quelles sont les étapes de la faillite commerciale ?",
+                        "content":  "Consultation avec un SAI Signature des documents et dépôt auprès du bsf(volontaireou assignation)et nomination du syndic dans ses fonctions. Prise de possession des actifs. Suspension des procédures immédiate des recours (art. 69, LFI) Nomination du syndic et prise de possession des actifs Production de l’état des affaires Avis aux créanciers Assemblée des créanciers (si requise) et confirmation de la nomination du syndic. Vente des actifs et distribution selon l’ordre des priorités (art. 136, LFI)"
+                    },
+                    {
+                        "title":  "Quelles sont les obligations du débiteur après l’approbation ?",
+                        "content":  "Respecter les paiements, Fournir l’information demandée par le syndic, Ne pas faire de paiement direct à un créancier, Collaborer au suivi jusqu’à la libération intégrale."
+                    },
+                    {
+                        "title":  "Quels biens puis-je conserver en cas de faillite ?",
+                        "content":  "Les biens insaisissables varient selon la législation provinciale. Au Québec, ils incluent généralement : Meubles et effets personnels essentiels Outils nécessaires à l\u0027exercice d\u0027une profession Vêtements et linge de maison REER et FEER (sauf cotisations des 12 derniers mois) Certaines pensions et prestations gouvernementalesroysyndic.ca Sources : LFI, art. 67(1)"
+                    },
+                    {
+                        "title":  "Quels effets juridiques me protège le dépôt volontaire?",
+                        "content":  "Suspension des saisies. Arrêt des recours judiciaires. Application d’un taux d’intérêt légal fixe de 5 %. Répartition équitable des paiements à tous les créanciers. Est-ce que mon dossier est public? Oui, en partie. Une personne connaissant votre situation peut faire une demande au greffe pour consulter la liste des créanciers. Que faire si un créancier me harcèle malgré mon dépôt volontaire? C’est illégal. Toute tentative d’intimidation ou de menace peut être signalée : À la Cour du Québec Au Bureau de la protection du consommateur"
+                    },
+                    {
+                        "title":  "Quels paiements sont requis dans une proposition concordataire ?",
+                        "content":  "D.A.S. : à régler en totalité dans les 6 mois suivant l’approbation. Salaires impayés : jusqu’à 2 000 $ par employé (ou 3 000 $ dans certains cas). Réclamations privilégiées : selon l’ordre de priorité établi à l’article 136(1) LFI."
+                    },
+                    {
+                        "title":  "Quels revenus doivent être inclus dans mon revenu brut?",
+                        "content":  "Salaires, pourboires, commissions, bonis Rentes, pensions, indemnités, prestations régulièresExclus : remboursements de frais, cotisations, pensions alimentaires versées pour enfants à charge."
+                    },
+                    {
+                        "title":  "Quels sont les avantages d’une cession ?",
+                        "content":  "La faillite engendre la suspension des procédures. À compter de la faillite, les créanciers ne peuvent entreprendre ou poursuivre des procédures contre la personne insolvable."
+                    },
+                    {
+                        "title":  "Quels sont les avantages de la consolidation de dettes",
+                        "content":  "Un seul paiement mensuel, plus facile à gérer. Taux d’intérêt généralement inférieur à celui des dettes initiales (ex. : cartes de crédit). Possibilité de paiements mensuels réduits, en allongeant la durée du prêt. Réduction du stress financier et des appels de créanciers. Amélioration potentielle de la cote de crédit, si le prêt est bien géré. Favorise une meilleure gestion budgétaire."
+                    },
+                    {
+                        "title":  "Quels sont les documents nécessaires pour faire une demande de consolidation?",
+                        "content":  "Preuve de revenus (talons de paie, avis de cotisation). Relevés de dettes actuelles (cartes, prêts). Rapport de crédit (souvent consulté directement par le prêteur). Budget mensuel. Pièce d’identité."
+                    },
+                    {
+                        "title":  "Quels sont les effets d’un avis d’intention ?",
+                        "content":  "Suspension des procédures judiciaires et des saisies. Protection temporaire permettant de préparer une proposition réaliste. Prolongation possible jusqu’à un maximum de 6 mois, avec l’approbation du tribunal."
+                    },
+                    {
+                        "title":  "Quels sont les inconvénients de la consolidation de dettes",
+                        "content":  "Nécessite une bonne cote de crédit (souvent 650 et plus) pour accéder à un taux avantageux. N’élimine pas la cause du surendettement; sans changement dans les habitudes, un nouveau cycle d’endettement peut survenir. Durée plus longue = coût total plus élevé en intérêts, malgré un taux plus bas. Risques liés à la tentation de réutiliser les anciennes cartes de crédit, ce qui peut annuler les bénéfices de la consolidation."
+                    },
+                    {
+                        "title":  "Quels sont les rôles d’un syndic dans une proposition concordataire ?",
+                        "content":  "Évaluer la situation financière du débiteur. Conseiller sur les options légales disponibles. Préparer et déposer la proposition. Agir comme intermédiaire impartial entre le débiteur et les créanciers. Administrer les actifs, vérifier les réclamations, distribuer les sommes. Superviser l’exécution de la proposition ou de la faillite. Rendre compte au tribunal et aux créanciers."
+                    },
+                    {
+                        "title":  "Quels sont les signes qu’une personne est en situation d’insolvabilité ?",
+                        "content":  "Incapacité de payer ses dettes à l’échéance. Accumulation d’intérêts, paiements minimums récurrents, recours à l’endettement pour payer des dettes existantes. Recours à des emprunts non traditionnels (usuriers). Cession ou vente d’actifs à perte.Base légale : LFI, art. 42(1) — définit les actes de faillite qui incluent la cessation de paiements."
+                    },
+                    {
+                        "title":  "Qui peut faire une faillite personnelle ?",
+                        "content":  "Toute personne résidant, possédant des biens ou exerçant une activité commerciale au Canada, ayant des dettes d\u0027au moins 1 000 $ et étant insolvable, peut déclarer faillite. L\u0027insolvabilité se définit par l\u0027incapacité de payer ses dettes à échéance ou par un passif excédant l\u0027actif. Sources : LFI, art. 42(1) (conditions de faillite) studocu.com"
+                    },
+                    {
+                        "title":  "Qui peut faire une proposition concordataire ?",
+                        "content":  "Toutepersonne insolvable (entreprise ou particulier) incluant un failli.Toutefois, un débiteur qui a déjà fait une proposition de consommateur ne peut pas déposer une proposition concordataire tant que l’administrateur de cette proposition n’a pas été libéré. De plus, pour être admissible à une proposition concordataire, le débiteur doit avoir des dettes non garanties de plus de 250 000 $, excluant l’hypothèque sur sa résidence principale, et ne pas être en faillite au moment du dépôt (article 50(1) de la LFI)."
+                    },
+                    {
+                        "title":  "Qui s’occupe de la faillite ?",
+                        "content":  "Le syndic autorisé en insolvabilité (SAI) est le professionnel désigné pour administrer la faillite. Il agit en tant qu\u0027agent neutre, représentant à la fois les intérêts du failli et des créanciers, sous la supervision du BSF. Sources : LFI, art. 13.2 (nomination des syndics)"
+                    },
+                    {
+                        "title":  "Regle de retour au sujet financier apres crise",
+                        "content":  "Ne revenir aux dettes, prets ou rendez-vous que si la personne ne semble plus en danger immediat et redemande clairement une aide financiere. Rappeler brievement que les ressources d urgence restent disponibles."
+                    },
+                    {
+                        "title":  "Regles globales - Handoff triggers",
+                        "content":  "- Le visiteur mentionne qu\u0027il ne peut plus payer ses dettes.\\n- Le visiteur reÃ§oit des appels de recouvrement ou des menaces de saisie.\\n- Le visiteur veut une proposition de consommateur ou une faillite.\\n- Le visiteur est stressÃ©, perdu ou demande Ã parler Ã quelqu\u0027un.\\n- Le visiteur a une entreprise avec des dettes importantes.\\n- Le visiteur demande un rendez-vous."
+                    },
+                    {
+                        "title":  "Regles globales - Identite bot",
+                        "content":  "Identite: Lionard est un assistant d\u0027information et d\u0027orientation pour dettes.ca."
+                    },
+                    {
+                        "title":  "Regles globales - Must do",
+                        "content":  "- RÃ©pondre avec empathie et clartÃ©.\\n- Rappeler que la consultation est gratuite et confidentielle lorsqu\u0027un rendez-vous est pertinent.\\n- Qualifier doucement la situation avant de pousser un rendez-vous si l\u0027intention est ambiguÃ«.\\n- Rediriger vers les outils gratuits lorsque le visiteur cherche Ã comprendre sa situation.\\n- Faire la diffÃ©rence entre une demande d\u0027aide pour dettes et une demande de prÃªt."
+                    },
+                    {
+                        "title":  "Regles globales - Must not do",
+                        "content":  "- Ne jamais dire que dettes.ca offre des prÃªts ou du financement.\\n- Ne pas donner de conseil juridique personnalisÃ©.\\n- Ne pas garantir un rÃ©sultat financier sans analyse par un professionnel.\\n- Ne pas diagnostiquer officiellement l\u0027insolvabilitÃ©.\\n- Ne pas inventer des informations absentes du site."
+                    },
+                    {
+                        "title":  "Reponse type - crise suicidaire immediate",
+                        "content":  "Je suis vraiment desole que vous viviez ca. Votre securite est la priorite maintenant. Si vous etes en danger immediat, appelez le 911 tout de suite. Vous pouvez aussi contacter Suicide Action Montreal au 1-866-277-3553, disponible 24h/24 et 7j/7, ou le 811 Info-Social option 2. Essayez de ne pas rester seul et contactez une personne de confiance maintenant."
+                    },
+                    {
+                        "title":  "Reponse type - donc vous ne pouvez pas m aider",
+                        "content":  "Je peux rester avec vous et vous ecouter, mais pour votre securite il faut aussi qu une personne formee vous aide tout de suite. Si vous etes en danger immediat, appelez le 911. Sinon, contactez Suicide Action Montreal au 1-866-277-3553 ou le 811 Info-Social option 2. Vous meritez d etre accompagne maintenant."
+                    },
+                    {
+                        "title":  "Reponse type - suivi apres merci en contexte crise",
+                        "content":  "Merci de me repondre. Je suis avec vous. Si vous etes en danger immediat, appelez le 911 maintenant; sinon vous pouvez joindre Suicide Action Montreal au 1-866-277-3553 ou le 811 option 2. Est-ce que vous etes en securite en ce moment ?"
+                    },
+                    {
+                        "title":  "Une proposition de consommateur affecte-t-elle mes impôts futurs ?",
+                        "content":  "Non. Elle n’affecte pas vos remboursements ou obligations fiscales futurs.Par contre, les remboursements d’impôt dus au moment du dépôt peuvent être saisis pour les années antérieures.Les remboursements peuvent être appliqués sur les dettes des années antérieures."
+                    },
+                    {
+                        "title":  "Y a-t-il une limite de montant pour faire une proposition de consommateur ?",
+                        "content":  "Oui. Le total des dettes non garanties ne doit pas excéder 250 000 $, excluant l’hypothèque sur la résidence principale (art. 66.11, LFI). Sinon, une proposition ordinaire (Concordataire) s’impose (art. 50, LFI)."
+                    }
+                ]
+}

@@ -1,0 +1,44 @@
+{
+  "title": "[DECISION_TREE] Lionard - Qualification alignee backend",
+  "objectif": "Qualifier un prospect dettes avant CTA RDV, avec exception urgence.",
+  "slots_backend_minimum_cta": [
+    "debt_type",
+    "amount_range",
+    "payment_capacity",
+    "employment",
+    "urgency"
+  ],
+  "slots_backend_bonus": [
+    "housing",
+    "family",
+    "debt_structure"
+  ],
+  "mapping_metier_vers_backend": {
+    "type_dette": "debt_type",
+    "montant_dette": "amount_range",
+    "paiement_min": "payment_capacity",
+    "situation_emploi": "employment",
+    "situation_creancier": "urgency",
+    "situation_familiale": "family"
+  },
+  "regle_cta": {
+    "cta_standard_si": [
+      "debt_type != unknown",
+      "amount_range != unknown",
+      "payment_capacity != unknown",
+      "employment != unknown",
+      "urgency != unknown",
+      "segment == qualified_candidate"
+    ],
+    "ne_pas_afficher_cta_si": [
+      "state == post_refusal",
+      "cta_response == refusal",
+      "user_demande_continuer_chat == true",
+      "confusion_level == high"
+    ],
+    "cta_urgence_si": [
+      "urgency == high",
+      "signal_critique in [wage_garnishment_risk, legal_notice, eviction_risk]"
+    ]
+  }
+}

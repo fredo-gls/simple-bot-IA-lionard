@@ -5,6 +5,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 require_once LSC_PATH . 'includes/class-lsc-knowledge.php';
+require_once LSC_PATH . 'includes/class-lsc-conversations.php';
+require_once LSC_PATH . 'includes/class-lsc-formlift.php';
 require_once LSC_PATH . 'includes/class-lsc-admin.php';
 require_once LSC_PATH . 'includes/class-lsc-rest.php';
 
@@ -31,6 +33,7 @@ class LSC_Plugin {
 			add_option( self::OPTION_KEY, self::defaults() );
 		}
 		LSC_Knowledge::create_table();
+		LSC_Conversations::create_tables();
 	}
 
 	public static function defaults() {
@@ -49,7 +52,17 @@ class LSC_Plugin {
 			'panel_subtitle'     => 'Assistant virtuel dettes.ca',
 			'greeting'           => 'Bonjour, je suis Lionard. Je peux vous aider a faire le point sur votre situation et vous orienter vers la bonne prochaine etape.',
 			'prompt'             => self::default_prompt(),
-			'allowed_cta_hosts'  => "www.stag.dettes.net\nstag.dettes.net\nwww.dettes.ca\ndettes.ca\nabondance360.com",
+			'site_search'         => '1',
+			'rdv_particulier_url' => 'https://www.stag.dettes.net/formulaire-particulier/',
+			'rdv_entreprise_url'  => 'https://www.stag.dettes.net/formulaire-entreprise/',
+			'rdv_close_chat'          => '1',
+			'rdv_keep_closed'         => '1',
+			'avatar_attachment_id'    => '0',
+			'pos_desktop_side'        => 'right',
+			'pos_desktop_bottom'      => '18',
+			'pos_mobile_side'         => 'right',
+			'pos_mobile_bottom'       => '10',
+			'allowed_cta_hosts'       => "www.stag.dettes.net\nstag.dettes.net\nwww.dettes.ca\ndettes.ca\nabondance360.com",
 		);
 	}
 
@@ -107,6 +120,8 @@ PROMPT;
 
 	private function __construct() {
 		LSC_Knowledge::create_table();
+		LSC_Conversations::create_tables();
+		new LSC_FormLift();
 		new LSC_Admin();
 		new LSC_REST();
 
@@ -128,6 +143,11 @@ PROMPT;
 			LSC_VERSION
 		);
 
+		$position_css = self::generate_position_css( $settings );
+		if ( '' !== $position_css ) {
+			wp_add_inline_style( 'lionard-simple-chat', $position_css );
+		}
+
 		wp_enqueue_script(
 			'lionard-simple-chat',
 			LSC_URL . 'assets/js/front.js',
@@ -145,7 +165,11 @@ PROMPT;
 				'primaryColor' => sanitize_hex_color( $settings['primary_color'] ),
 				'accentColor'  => sanitize_hex_color( $settings['accent_color'] ),
 				'greeting'     => sanitize_textarea_field( $settings['greeting'] ),
-				'allowedHosts' => self::allowed_hosts( $settings ),
+				'allowedHosts'     => self::allowed_hosts( $settings ),
+				'rdvPersonnelUrl'  => esc_url( (string) ( $settings['rdv_particulier_url'] ?? '' ) ),
+				'rdvEntrepriseUrl' => esc_url( (string) ( $settings['rdv_entreprise_url']  ?? '' ) ),
+				'rdvCloseChat'     => ! empty( $settings['rdv_close_chat'] ),
+				'rdvKeepClosed'    => ! empty( $settings['rdv_keep_closed'] ),
 				'strings'      => array(
 					'input'   => __( 'Ecrire un message...', 'lionard-simple-chat' ),
 					'send'    => __( 'Envoyer', 'lionard-simple-chat' ),
@@ -154,6 +178,31 @@ PROMPT;
 				),
 			)
 		);
+	}
+
+	public static function generate_position_css( array $settings ): string {
+		$desktop_side   = in_array( $settings['pos_desktop_side'] ?? 'right', array( 'left', 'right' ), true )
+			? (string) $settings['pos_desktop_side'] : 'right';
+		$desktop_bottom = max( 0, min( 200, (int) ( $settings['pos_desktop_bottom'] ?? 18 ) ) );
+		$mobile_side    = in_array( $settings['pos_mobile_side'] ?? 'right', array( 'left', 'center', 'right' ), true )
+			? (string) $settings['pos_mobile_side'] : 'right';
+		$mobile_bottom  = max( 0, min( 200, (int) ( $settings['pos_mobile_bottom'] ?? 10 ) ) );
+		$opp_desktop    = 'right' === $desktop_side ? 'left' : 'right';
+
+		$launcher_margin = 'right' === $mobile_side
+			? 'margin-left:auto;margin-right:0;'
+			: ( 'left' === $mobile_side ? 'margin-left:0;margin-right:auto;' : 'margin-left:auto;margin-right:auto;' );
+
+		return '.lsc-shell,.lsc-panel{'
+			. $desktop_side . ':' . $desktop_bottom . 'px;'
+			. $opp_desktop . ':auto;'
+			. 'bottom:' . $desktop_bottom . 'px;'
+			. '}'
+			. '@media(max-width:640px){'
+			. '.lsc-shell{right:10px;left:10px;bottom:' . $mobile_bottom . 'px;}'
+			. '.lsc-panel{right:10px;left:10px;bottom:' . $mobile_bottom . 'px;}'
+			. '.lsc-launcher{' . $launcher_margin . '}'
+			. '}';
 	}
 
 	public static function allowed_hosts( array $settings ) {
@@ -169,6 +218,13 @@ PROMPT;
 			},
 			$hosts
 		);
+		$hosts = array_values( array_filter( array_unique( $hosts ) ) );
+
+		$home_host = wp_parse_url( home_url(), PHP_URL_HOST );
+		if ( is_string( $home_host ) && '' !== $home_host ) {
+			$hosts[] = strtolower( $home_host );
+		}
+
 		$hosts = array_values( array_filter( array_unique( $hosts ) ) );
 		return $hosts;
 	}
@@ -203,17 +259,29 @@ PROMPT;
 			esc_attr( sanitize_hex_color( $settings['primary_color'] ) ?: '#1652f0' ),
 			esc_attr( sanitize_hex_color( $settings['accent_color'] ) ?: '#f59e0b' )
 		);
+		$avatar_id  = absint( $settings['avatar_attachment_id'] ?? 0 );
+		$avatar_src = $avatar_id > 0 ? wp_get_attachment_image_src( $avatar_id, array( 84, 84 ) ) : false;
 		?>
 		<div class="lsc-shell" style="<?php echo esc_attr( $shell_style ); ?>">
 			<button type="button" class="lsc-launcher" aria-expanded="false" aria-controls="lsc-panel">
-				<span class="lsc-launcher__pulse" aria-hidden="true"></span>
+				<?php if ( $avatar_src ) : ?>
+					<img src="<?php echo esc_url( $avatar_src[0] ); ?>" alt="" width="42" height="42" loading="lazy" class="lsc-launcher__avatar">
+				<?php else : ?>
+					<span class="lsc-launcher__pulse" aria-hidden="true"></span>
+				<?php endif; ?>
 				<span class="lsc-launcher__label"><?php echo esc_html( $settings['launcher_label'] ); ?></span>
 			</button>
 
 			<section id="lsc-panel" class="lsc-panel" hidden>
 				<button type="button" class="lsc-close" aria-label="<?php esc_attr_e( 'Fermer', 'lionard-simple-chat' ); ?>">&times;</button>
 				<header class="lsc-header">
-					<div class="lsc-avatar" aria-hidden="true">L</div>
+					<div class="lsc-avatar" aria-hidden="true">
+						<?php if ( $avatar_src ) : ?>
+							<img src="<?php echo esc_url( $avatar_src[0] ); ?>" alt="" width="42" height="42" loading="lazy">
+						<?php else : ?>
+							L
+						<?php endif; ?>
+					</div>
 					<div class="lsc-header__copy">
 						<strong><?php echo esc_html( $settings['panel_title'] ); ?></strong>
 						<span><?php echo esc_html( $settings['panel_subtitle'] ); ?></span>
@@ -236,4 +304,3 @@ PROMPT;
 		<?php
 	}
 }
-

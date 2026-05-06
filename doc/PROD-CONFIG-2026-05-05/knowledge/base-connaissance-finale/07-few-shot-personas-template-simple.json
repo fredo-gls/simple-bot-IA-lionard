@@ -1,0 +1,175 @@
+{
+  "_meta": {
+    "description": "Template simple a remplir par l'equipe marketing/commerciale pour les few-shot Lionard.",
+    "instructions": [
+      "Remplir en francais, avec des phrases naturelles de clients.",
+      "1 question max par reponse Lionard.",
+      "Reprendre les mots du prospect avant de poser la question suivante.",
+      "Si refus de RDV: continuer dans le chat sans insister.",
+      "Si urgence (huissier, saisie, mise en demeure): proposer RDV rapidement.",
+      "Conserver le titre qui commence par [FEW_SHOT]."
+    ],
+    "updated": "2026-05-04"
+  },
+  "title": "[FEW_SHOT] Conversations de reference Lionard",
+  "language": "fr",
+  "entries": [
+    {
+      "title": "[FEW_SHOT] Persona 1 - Cas standard",
+      "objectif": "Ex: qualifier un prospect avec dettes cartes/marge",
+      "profil_client": "Ex: locataire, emploi temps plein, stress modere",
+      "signaux_attendus": [
+        "montant_dette",
+        "type_dette",
+        "capacite_paiement",
+        "urgence"
+      ],
+      "conversation": [
+        {
+          "role": "Prospect",
+          "message": ""
+        },
+        {
+          "role": "Lionard",
+          "message": ""
+        },
+        {
+          "role": "Prospect",
+          "message": ""
+        },
+        {
+          "role": "Lionard",
+          "message": ""
+        }
+      ],
+      "fin_attendue": "Ex: resume + proposition RDV"
+    },
+    {
+      "title": "[FEW_SHOT] Persona 2 - Recouvrement actif",
+      "objectif": "",
+      "profil_client": "",
+      "signaux_attendus": [
+        "appels_creanciers",
+        "retards",
+        "niveau_urgence"
+      ],
+      "conversation": [
+        {
+          "role": "Prospect",
+          "message": ""
+        },
+        {
+          "role": "Lionard",
+          "message": ""
+        }
+      ],
+      "fin_attendue": ""
+    },
+    {
+      "title": "[FEW_SHOT] Persona 3 - Honte / blocage",
+      "objectif": "",
+      "profil_client": "",
+      "signaux_attendus": [
+        "emotion",
+        "montant_dette"
+      ],
+      "conversation": [
+        {
+          "role": "Prospect",
+          "message": ""
+        },
+        {
+          "role": "Lionard",
+          "message": ""
+        }
+      ],
+      "fin_attendue": ""
+    },
+    {
+      "title": "[FEW_SHOT] Persona 4 - Refus RDV",
+      "objectif": "",
+      "profil_client": "",
+      "signaux_attendus": [
+        "refus_rdv",
+        "continuation_chat"
+      ],
+      "conversation": [
+        {
+          "role": "Prospect",
+          "message": ""
+        },
+        {
+          "role": "Lionard",
+          "message": ""
+        }
+      ],
+      "fin_attendue": ""
+    },
+    {
+      "title": "[FEW_SHOT] Persona 5 - Hesitation",
+      "objectif": "",
+      "profil_client": "",
+      "signaux_attendus": [
+        "objection_cout_ou_jugement",
+        "reassurance"
+      ],
+      "conversation": [
+        {
+          "role": "Prospect",
+          "message": ""
+        },
+        {
+          "role": "Lionard",
+          "message": ""
+        }
+      ],
+      "fin_attendue": ""
+    },
+    {
+      "title": "[FEW_SHOT] Persona 6 - Stress eleve",
+      "objectif": "",
+      "profil_client": "",
+      "signaux_attendus": [
+        "stress",
+        "qualification_progressive"
+      ],
+      "conversation": [
+        {
+          "role": "Prospect",
+          "message": ""
+        },
+        {
+          "role": "Lionard",
+          "message": ""
+        }
+      ],
+      "fin_attendue": ""
+    },
+    {
+      "title": "[FEW_SHOT] Persona 7 - Lead chaud",
+      "objectif": "",
+      "profil_client": "",
+      "signaux_attendus": [
+        "demande_rdv_immediate"
+      ],
+      "conversation": [
+        {
+          "role": "Prospect",
+          "message": ""
+        },
+        {
+          "role": "Lionard",
+          "message": ""
+        }
+      ],
+      "fin_attendue": "Ex: envoi direct du lien RDV"
+    }
+  ],
+  "checklist_validation": [
+    "Chaque persona contient au moins 4 tours (Prospect/Lionard) sauf lead chaud.",
+    "Une seule question par message Lionard.",
+    "Pas de ton robotique ou repetitif.",
+    "Le vocabulaire client est realiste (paroles du terrain).",
+    "Le titre de chaque bloc commence par [FEW_SHOT]."
+  ]
+}

@@ -99,6 +99,146 @@ class LSC_Knowledge {
 		return $wpdb->delete( self::table_name(), array( 'id' => $id ), array( '%d' ) );
 	}
 
+	public static function delete_all() {
+		global $wpdb;
+		$table = self::table_name();
+		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		return $wpdb->query( "TRUNCATE TABLE `{$table}`" );
+	}
+
+	/**
+	 * Search published WordPress posts/pages relevant to the user's message.
+	 * Returns a formatted context string with titles, URLs, and excerpts.
+	 *
+	 * Scoring (higher = more relevant):
+	 *   + type_weight * 2  (page=3, post=1, filterable via lsc_site_search_type_weights)
+	 *   + title_hits * 3   (each keyword found in title)
+	 *   + content_hits     (each keyword found in content)
+	 *   + position_score   (WP_Query rank: earlier = better)
+	 */
+	public static function search_site_content( string $message, int $max_results = 4 ): string {
+		if ( '' === trim( $message ) ) {
+			return '';
+		}
+
+		$type_weights = apply_filters(
+			'lsc_site_search_type_weights',
+			array(
+				'page' => 3,
+				'post' => 1,
+			)
+		);
+		$type_weights = is_array( $type_weights ) ? $type_weights : array( 'page' => 3, 'post' => 1 );
+
+		$query = new WP_Query(
+			array(
+				's'              => $message,
+				'post_type'      => array_keys( $type_weights ),
+				'post_status'    => 'publish',
+				'posts_per_page' => $max_results * 4,
+				'no_found_rows'  => true,
+				'fields'         => 'ids',
+			)
+		);
+
+		if ( ! $query->have_posts() ) {
+			return '';
+		}
+
+		// Extract search words once for scoring
+		$words = preg_split( '/[\s\-_]+/u', mb_strtolower( $message, 'UTF-8' ) );
+		$words = array_filter(
+			is_array( $words ) ? $words : array(),
+			static function ( $w ) {
+				return mb_strlen( (string) $w, 'UTF-8' ) >= 3;
+			}
+		);
+		$words = array_values( array_unique( $words ) );
+
+		$scored = array();
+		foreach ( array_values( $query->posts ) as $position => $post_id ) {
+			$post = get_post( (int) $post_id );
+			if ( ! ( $post instanceof WP_Post ) ) {
+				continue;
+			}
+
+			$type_weight   = (int) ( $type_weights[ $post->post_type ] ?? 1 );
+			$title_lower   = mb_strtolower( (string) $post->post_title, 'UTF-8' );
+			$content_lower = mb_strtolower( wp_strip_all_tags( (string) $post->post_content ), 'UTF-8' );
+
+			$title_hits   = 0;
+			$content_hits = 0;
+			foreach ( $words as $word ) {
+				if ( false !== mb_strpos( $title_lower, (string) $word, 0, 'UTF-8' ) ) {
+					$title_hits++;
+				}
+				if ( false !== mb_strpos( $content_lower, (string) $word, 0, 'UTF-8' ) ) {
+					$content_hits++;
+				}
+			}
+
+			$position_score = ( $max_results * 4 ) - $position;
+			$score          = ( $type_weight * 2 ) + ( $title_hits * 3 ) + $content_hits + $position_score;
+
+			$scored[] = array(
+				'post'  => $post,
+				'score' => $score,
+			);
+		}
+
+		usort(
+			$scored,
+			static function ( $a, $b ) {
+				return $b['score'] - $a['score'];
+			}
+		);
+
+		$parts       = array();
+		$total_chars = 0;
+		$max_chars   = 2000;
+
+		foreach ( array_slice( $scored, 0, $max_results ) as $item ) {
+			$post    = $item['post'];
+			$title   = wp_strip_all_tags( (string) $post->post_title );
+			$url     = (string) get_permalink( $post );
+			$excerpt = self::get_post_excerpt( $post );
+
+			$block     = "Titre: {$title}\nURL: {$url}";
+			if ( '' !== $excerpt ) {
+				$block .= "\nResume: {$excerpt}";
+			}
+
+			$block_len = mb_strlen( $block, 'UTF-8' );
+			if ( $total_chars + $block_len > $max_chars ) {
+				break;
+			}
+
+			$parts[]      = $block;
+			$total_chars += $block_len;
+		}
+
+		if ( empty( $parts ) ) {
+			return '';
+		}
+
+		return "Pages du site pertinentes (utiliser uniquement les URL exactes ci-dessous) :\n\n" . implode( "\n\n---\n\n", $parts );
+	}
+
+	private static function get_post_excerpt( WP_Post $post ): string {
+		$raw = '' !== trim( (string) $post->post_excerpt )
+			? (string) $post->post_excerpt
+			: (string) $post->post_content;
+
+		// Strip shortcodes, HTML, then decode entities
+		$text = (string) preg_replace( '/\[[^\]]+\]/', ' ', $raw );
+		$text = wp_strip_all_tags( $text );
+		$text = html_entity_decode( $text, ENT_QUOTES | ENT_HTML5, 'UTF-8' );
+		$text = (string) preg_replace( '/\s+/u', ' ', $text );
+		$text = trim( $text );
+
+		return wp_trim_words( $text, 35, '...' );
+	}
+
 	public static function toggle_active( int $id ) {
 		global $wpdb;
 		$table = self::table_name();
@@ -293,4 +433,6 @@ class LSC_Knowledge {
 
 		return $text;
 	}
+
 }
+

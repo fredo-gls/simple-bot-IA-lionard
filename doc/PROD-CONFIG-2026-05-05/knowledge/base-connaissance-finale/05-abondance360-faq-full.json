@@ -1,0 +1,331 @@
+{
+  "_meta": {
+    "version": "1.0",
+    "updated": "2026-05-03",
+    "description": "Base de connaissance Abondance360 — FAQ complète (64 entrées)",
+    "source": "a360-ai-support-faq-data.php",
+    "import_command": "php artisan knowledge:import-json Doc/knowledge/base-connaissance-finale/05-abondance360-faq-full.json --source=abondance360-faq"
+  },
+  "entries": [
+    {
+      "title": "C est quoi Abondance 360 ?",
+      "content": "Abondance 360 est une plateforme quebecoise de formation en ligne et de coaching en developpement personnel, financier et emotionnel. Elle aide a transformer le rapport a l argent, depasser les croyances limitantes et construire une vie plus stable et abondante.",
+      "keywords": "abondance 360,c est quoi,qui etes vous,presentation,plateforme"
+    },
+    {
+      "title": "Quelle est la mission d Abondance 360 ?",
+      "content": "La mission est de transformer les tensions financieres en leviers d evolution, avec des solutions educatives et holistiques qui aident chacun a reprendre le pouvoir sur ses finances en alignement avec ses valeurs.",
+      "keywords": "mission,vision,valeurs,objectif"
+    },
+    {
+      "title": "Qui sont les fondateurs et intervenants ?",
+      "content": "La plateforme est animee par Keyla Ibie, coach en transformation interieure, et Pierre Leblanc, specialiste en strategie financiere, dossier de credit et gestion des dettes.",
+      "keywords": "fondateurs,equipe,keyla,pierre,intervenants"
+    },
+    {
+      "title": "A qui s adresse Abondance 360 ?",
+      "content": "Abondance 360 s adresse aux personnes qui vivent des tensions autour de leurs finances, veulent reduire leurs dettes, mieux gerer leur budget ou depasser leurs croyances limitantes pour avancer avec plus de confiance.",
+      "keywords": "pour qui,a qui s adresse,public,cible"
+    },
+    {
+      "title": "En quoi Abondance 360 est differente ?",
+      "content": "Abondance 360 combine mindset, outils concrets et clarte financiere, avec une approche structuree, une communaute vivante et une vision engagee qui fait de l argent un outil de liberte et de sens.",
+      "keywords": "difference,pourquoi vous,different,particularite"
+    },
+    {
+      "title": "Comment creer un compte ?",
+      "content": "Pour creer un compte, utilisez la page d inscription des apprenants. L inscription est gratuite et donne acces a votre espace personnel.",
+      "keywords": "creer un compte,inscription,s inscrire,ouvrir un compte,register"
+    },
+    {
+      "title": "Comment se connecter ?",
+      "content": "Pour vous connecter, utilisez la page d inscription des apprenants.",
+      "keywords": "connexion,login,se connecter,acceder a mon compte"
+    },
+    {
+      "title": "Comment se deconnecter ?",
+      "content": "Lorsque vous etes connecte, cliquez sur le bouton Deconnexion en haut a droite du site.",
+      "keywords": "deconnexion,se deconnecter,logout"
+    },
+    {
+      "title": "Mot de passe oublie",
+      "content": "Si vous avez oublie votre mot de passe, utilisez la page de reinitialisation puis entrez l email de votre compte pour recevoir les instructions.",
+      "keywords": "mot de passe,password,oublie,reinitialiser,reset,retrieve password"
+    },
+    {
+      "title": "Comment modifier mon profil ?",
+      "content": "Connectez-vous puis ouvrez votre tableau de bord. Dans le menu lateral, allez dans Mon profil pour modifier vos informations personnelles.",
+      "keywords": "profil,modifier profil,changer mon profil,mes informations"
+    },
+    {
+      "title": "Comment est organise le menu principal ?",
+      "content": "Le menu principal contient Accueil, A propos, Nos Offres et Blog. En haut a droite, vous trouvez aussi la recherche, le panier et la connexion ou deconnexion.",
+      "keywords": "menu,navigation,menu principal,site organise"
+    },
+    {
+      "title": "Ou trouver la FAQ officielle ?",
+      "content": "La FAQ officielle est accessible depuis A propos puis Foire aux questions.",
+      "keywords": "faq,foire aux questions,aide officielle"
+    },
+    {
+      "title": "Comment utiliser la recherche ?",
+      "content": "Cliquez sur l icone loupe en haut a droite, tapez un mot-cle puis validez pour afficher les resultats correspondants.",
+      "keywords": "recherche,loupe,chercher sur le site"
+    },
+    {
+      "title": "Comment acceder a mon panier ?",
+      "content": "Cliquez sur l icone panier en haut a droite ou ouvrez directement la page du panier.",
+      "keywords": "panier,cart,boutique panier"
+    },
+    {
+      "title": "Comment lire le blog ?",
+      "content": "Le blog est accessible depuis le menu principal. Vous y trouverez des articles sur les finances, les croyances limitantes et le developpement personnel.",
+      "keywords": "blog,articles,contenu,lecture"
+    },
+    {
+      "title": "Quelles formations sont disponibles ?",
+      "content": "Abondance 360 propose des parcours guides et des parcours complementaires, dont Renaissance Financiere, Briser ses croyances limitantes, 7 jours vers la liberte financiere, Reussir sa vie financiere, Dossier de credit et Maitriser l incertitude.",
+      "keywords": "formations disponibles,cours,programmes,offres"
+    },
+    {
+      "title": "Comment s inscrire a une formation ?",
+      "content": "Sur la page de la formation, cliquez sur le bouton S inscrire. Pour une formation gratuite, l acces est immediat apres inscription. Pour une formation payante, vous serez dirige vers le paiement.",
+      "keywords": "inscription formation,s inscrire a un cours,commencer une formation"
+    },
+    {
+      "title": "Comment acceder a une formation deja achetee ?",
+      "content": "Connectez-vous puis allez dans votre tableau de bord, section Cours suivis. Vous pourrez reprendre votre formation la ou vous en etiez.",
+      "keywords": "acceder a ma formation,formation achetee,cours suivis,reprendre un cours"
+    },
+    {
+      "title": "Comment est structuree une formation ?",
+      "content": "Les formations sont organisees en modules thematiques avec des lecons video, temoignages, etudes de cas, exercices interactifs et quiz de fin de module.",
+      "keywords": "structure formation,modules,lecons,quiz"
+    },
+    {
+      "title": "Faut il des connaissances prealables ?",
+      "content": "Non. Les formations sont expliquees de maniere simple, concrete et progressive. Elles sont accessibles aux debutants.",
+      "keywords": "debutant,connaissances prealables,niveau requis"
+    },
+    {
+      "title": "Combien de temps dure une formation ?",
+      "content": "La duree varie selon le programme. Les parcours courts peuvent se suivre en quelques jours, tandis que les formations plus completes se suivent a votre rythme.",
+      "keywords": "duree,combien de temps,longueur formation"
+    },
+    {
+      "title": "Puis je suivre les formations sur mobile ?",
+      "content": "Oui. La plateforme est responsive et fonctionne sur ordinateur, tablette et smartphone, sans application a telecharger.",
+      "keywords": "mobile,telephone,smartphone,tablette,application"
+    },
+    {
+      "title": "Y a t il des supports a telecharger ?",
+      "content": "Oui. Selon les formations, des guides pratiques, modeles et outils peuvent etre proposes en telechargement.",
+      "keywords": "telecharger,supports,guides,outils,documents"
+    },
+    {
+      "title": "Est ce que je garde acces a mes formations ?",
+      "content": "Pour les abonnements annuels, vous gardez l acces tant que l abonnement est actif. Pour les formations ponctuelles, l acces reste disponible apres achat selon les conditions de l offre.",
+      "keywords": "acces indefiniment,duree acces,combien de temps acces"
+    },
+    {
+      "title": "En quoi consiste le coaching Briser ses croyances limitantes ?",
+      "content": "C est un accompagnement avec seances 1:1, soutien entre les rencontres et ressources personnalisees pour aider a sortir de l autosabotage et avancer avec clarte et confiance.",
+      "keywords": "coaching,keyla,croyances limitantes,programme coaching"
+    },
+    {
+      "title": "Combien coute le coaching Briser ses croyances limitantes ?",
+      "content": "Le tarif indique dans votre document de reference est de 347 $. Verifiez la page officielle pour confirmer le tarif en vigueur au moment de votre demande.",
+      "keywords": "prix coaching,tarif coaching,keyla prix,347"
+    },
+    {
+      "title": "Y a t il une garantie sur le coaching ?",
+      "content": "Oui, une garantie est mentionnee dans votre document de reference. Pour les details exacts et les conditions, consultez la page officielle ou les conditions de vente.",
+      "keywords": "garantie coaching,remboursement coaching,satisfaction coaching"
+    },
+    {
+      "title": "Quelle est la difference entre formation et coaching ?",
+      "content": "Une formation se suit de facon autonome a votre rythme. Un coaching est un accompagnement plus direct avec un soutien personnalise.",
+      "keywords": "difference formation coaching,coaching ou formation"
+    },
+    {
+      "title": "Comment rejoindre la liste prioritaire de Keyla ?",
+      "content": "Rendez-vous sur la page de Keyla et utilisez le formulaire ou le bouton prevu pour rejoindre la liste prioritaire.",
+      "keywords": "liste prioritaire,keyla,attente coaching"
+    },
+    {
+      "title": "Comment acceder a mon tableau de bord ?",
+      "content": "Une fois connecte, ouvrez votre tableau de bord pour retrouver vos cours, votre progression, vos commandes et vos ressources.",
+      "keywords": "tableau de bord,dashboard,mon espace"
+    },
+    {
+      "title": "Que contient le tableau de bord ?",
+      "content": "Le tableau de bord regroupe votre profil, vos cours suivis, vos trophees, vos avis, vos tentatives de quiz, votre liste de souhaits, votre historique de commande, les questions reponses et le calendrier.",
+      "keywords": "que contient le dashboard,sections tableau de bord"
+    },
+    {
+      "title": "Comment suivre ma progression ?",
+      "content": "Dans Cours suivis, chaque formation affiche une barre de progression et le nombre de lecons completees. La progression est mise a jour automatiquement.",
+      "keywords": "progression,avancement,pourcentage,barre progression"
+    },
+    {
+      "title": "C est quoi les trophees et badges ?",
+      "content": "Les trophees sont des recompenses visuelles debloquees lorsque vous atteignez certains jalons dans vos formations.",
+      "keywords": "trophees,trophes,trophee,badges,recompenses"
+    },
+    {
+      "title": "Comment laisser un avis ?",
+      "content": "Depuis votre tableau de bord, allez dans la section Avis. Vous pouvez aussi laisser un avis directement depuis la page d une formation selon son interface.",
+      "keywords": "avis,note,commentaire formation"
+    },
+    {
+      "title": "Comment acceder a mes tentatives de quiz ?",
+      "content": "Dans votre tableau de bord, utilisez la section Mes tentatives de quiz pour retrouver vos resultats.",
+      "keywords": "quiz,tentatives de quiz,resultats quiz"
+    },
+    {
+      "title": "Quelles formations sont gratuites ?",
+      "content": "D apres votre document, 7 jours vers la liberte financiere et Reussir sa vie financiere sont presentees comme gratuites. Verifiez la page officielle des offres pour confirmation.",
+      "keywords": "gratuit,formations gratuites,cours gratuits"
+    },
+    {
+      "title": "Quels sont les tarifs des offres payantes ?",
+      "content": "Les tarifs varient selon le programme. Pour confirmer un prix a jour, consultez directement la page officielle de l offre concernee.",
+      "keywords": "tarifs,prix,cout,offres payantes"
+    },
+    {
+      "title": "Que comprend l abonnement annuel a 125 dollars ?",
+      "content": "Selon votre document, l abonnement annuel donne acces a la formation choisie, a d autres programmes, a la communaute privee, a des outils pratiques et a un avantage tarifaire VIP. Verifiez la page de vente pour les details exacts.",
+      "keywords": "abonnement annuel,125,que comprend abonnement"
+    },
+    {
+      "title": "C est quoi la reduction VIP a vie ?",
+      "content": "La reduction VIP a vie est presentee comme un tarif preferentiel maintenu tant que l abonnement reste actif. Consultez la page de l offre pour confirmer les conditions exactes.",
+      "keywords": "reduction vip,tarif a vie,prix a vie"
+    },
+    {
+      "title": "Peut on payer en plusieurs fois ?",
+      "content": "D apres votre document de reference, le paiement en plusieurs fois n est pas propose pour le moment.",
+      "keywords": "payer en plusieurs fois,paiement echelonne,versements"
+    },
+    {
+      "title": "Puis je offrir une formation a quelqu un ?",
+      "content": "Oui, certaines offres comme l accompagnement en duo sont adaptees a une experience partagee. Consultez la page de l offre pour verifier les modalites.",
+      "keywords": "offrir une formation,cadeau,duo"
+    },
+    {
+      "title": "Quelle est la politique de remboursement des formations ?",
+      "content": "Votre document mentionne un remboursement possible dans les 7 jours suivant l achat selon certaines conditions d utilisation. Pour les details exacts, consultez la politique officielle.",
+      "keywords": "remboursement formation,politique remboursement,annulation formation"
+    },
+    {
+      "title": "Quelle est la garantie pour le coaching individuel ?",
+      "content": "Votre document mentionne une garantie de satisfaction de 2 semaines pour le coaching individuel, sous certaines conditions. Consultez la politique officielle pour les details exacts.",
+      "keywords": "garantie coaching individuel,remboursement coaching individuel"
+    },
+    {
+      "title": "Comment annuler ou reporter une seance de coaching ?",
+      "content": "Votre document indique que vous pouvez annuler ou reporter une seance sans frais si vous prevenez au moins 24 heures a l avance.",
+      "keywords": "annuler seance,reporter coaching,24h,no show"
+    },
+    {
+      "title": "Quels sont les delais de retractation ?",
+      "content": "Votre document mentionne un delai de retractation de 7 jours pour le mensuel et 15 jours pour l annuel. Consultez les conditions officielles pour confirmation.",
+      "keywords": "retractation,delai retractation,annulation abonnement"
+    },
+    {
+      "title": "Peut on annuler son abonnement ?",
+      "content": "Oui. Pour eviter le renouvellement automatique, l annulation doit etre effectuee avant la prochaine date de facturation. L acces reste disponible jusqu a la fin de la periode deja payee.",
+      "keywords": "annuler abonnement,resilier,renouvellement automatique"
+    },
+    {
+      "title": "Comment demander un remboursement ?",
+      "content": "Envoyez un courriel a bonjour@abondance360.com avec votre nom, l email utilise lors de l achat, la date d achat, le programme concerne et une breve explication.",
+      "keywords": "demande remboursement,remboursement,email remboursement"
+    },
+    {
+      "title": "Comment rejoindre la communaute privee ?",
+      "content": "En souscrivant a certains programmes payants ou a l abonnement annuel, vous obtenez l acces a la communaute privee.",
+      "keywords": "communaute privee,rejoindre communaute,groupe prive"
+    },
+    {
+      "title": "Sur quels reseaux sociaux est present Abondance 360 ?",
+      "content": "Abondance 360 est present sur Facebook, Instagram, LinkedIn et YouTube via les liens disponibles en bas de page.",
+      "keywords": "reseaux sociaux,facebook,instagram,linkedin,youtube"
+    },
+    {
+      "title": "Comment s inscrire a la newsletter ?",
+      "content": "Sur la page d accueil, recherchez la section Restez informe, puis entrez votre prenom et votre courriel pour vous inscrire.",
+      "keywords": "newsletter,inscription newsletter,mailing"
+    },
+    {
+      "title": "Comment contacter l equipe ?",
+      "content": "Pour toute question, demande d information ou reclamation, ecrivez a bonjour@abondance360.com.",
+      "keywords": "contact,support,email,aide"
+    },
+    {
+      "title": "Ou trouver les mentions legales et politiques ?",
+      "content": "Les liens utiles se trouvent en bas de page, notamment la politique de remboursement, la politique de confidentialite et les CGU.",
+      "keywords": "mentions legales,politique,confidentialite,cgu,conditions"
+    },
+    {
+      "title": "Mes donnees personnelles sont elles protegees ?",
+      "content": "Oui. La politique de confidentialite du site detaille la protection des donnees personnelles et les conditions d utilisation.",
+      "keywords": "donnees personnelles,protection des donnees,confidentialite"
+    },
+    {
+      "title": "Je n arrive pas a acceder a ma formation apres achat",
+      "content": "Verifiez d abord que vous etes connecte avec le bon compte. Ensuite, allez dans Tableau de bord puis Cours suivis. Si la formation n apparait pas, contactez le support avec votre nom, votre courriel et le nom de la formation achetee.",
+      "keywords": "acces formation apres achat,formation absente,je ne vois pas mon cours,j ai paye"
+    },
+    {
+      "title": "Les videos ne se chargent pas",
+      "content": "Verifiez votre connexion Internet, videz le cache du navigateur ou essayez un autre navigateur moderne. Si le probleme continue, contactez le support.",
+      "keywords": "videos ne chargent pas,video bug,lecture video,cache navigateur"
+    },
+    {
+      "title": "Puis je reprendre une formation la ou je l ai laissee ?",
+      "content": "Oui. La plateforme enregistre automatiquement votre progression et vous permet de reprendre la formation la ou vous l avez interrompue.",
+      "keywords": "reprendre formation,la ou j ai laisse,progression sauvegardee"
+    },
+    {
+      "title": "Puis je utiliser plusieurs appareils ?",
+      "content": "Oui. Votre compte est accessible depuis ordinateur, tablette et telephone, avec progression synchronisee.",
+      "keywords": "plusieurs appareils,mobile,tablette,ordinateur,synchronise"
+    },
+    {
+      "title": "Accueil",
+      "content": "La page d accueil presente la plateforme, ses offres et les principaux acces utiles.",
+      "keywords": "accueil,page accueil"
+    },
+    {
+      "title": "Nos Offres",
+      "content": "La page Nos Offres regroupe les formations et programmes disponibles sur la plateforme.",
+      "keywords": "nos offres,catalogue,cours disponibles"
+    },
+    {
+      "title": "A propos",
+      "content": "La section A propos presente l univers Abondance 360, son approche et certaines pages de reference comme la FAQ.",
+      "keywords": "a propos,apropos,presentation equipe"
+    },
+    {
+      "title": "Page Keyla",
+      "content": "La page Keyla presente le coaching, la liste prioritaire et les informations liees a cet accompagnement.",
+      "keywords": "keyla,page keyla,coach,keyla ibie"
+    },
+    {
+      "title": "Politique de remboursement",
+      "content": "La politique de remboursement et d annulation est disponible sur la page officielle des conditions de vente.",
+      "keywords": "politique remboursement,condition de vente,annulation"
+    },
+    {
+      "title": "Politique de confidentialite",
+      "content": "La politique de confidentialite est disponible sur la page officielle du site.",
+      "keywords": "confidentialite,politique de confidentialite,donnees"
+    },
+    {
+      "title": "Conditions generales d utilisation",
+      "content": "Les conditions generales d utilisation sont disponibles sur la page CGU du site.",
+      "keywords": "cgu,conditions generales d utilisation"
+    }
+  ]
+}

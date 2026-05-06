@@ -1,0 +1,67 @@
+{
+    "version": "1.0",
+    "description": "Nouvelles entrées KB à ajouter — ne pas écraser les entrées existantes",
+    "entries": [
+
+        {
+            "title": "C'est quoi le dépôt volontaire (Loi Lacombe) ?",
+            "content": "Le dépôt volontaire, aussi appelé Loi Lacombe, est une procédure québécoise encadrée par le Code de procédure civile (art. 664–680 C.p.c.). Elle permet à un débiteur de déposer volontairement une portion de son revenu au greffe du tribunal pour rembourser ses créanciers de façon ordonnée. Dès le dépôt, toute saisie de salaire est suspendue et les créanciers ne peuvent plus harceler le débiteur. Le montant mensuel à déposer est calculé selon une table officielle basée sur le revenu familial. Cette solution ne réduit pas le capital dû, mais elle protège contre les saisies et organise le remboursement."
+        },
+
+        {
+            "title": "Qui peut utiliser le dépôt volontaire au Québec ?",
+            "content": "Toute personne physique résidant au Québec avec un revenu régulier (emploi, prestations, pension) et dont les dettes totales non garanties ne dépassent pas 15 000 $ (montant ajustable selon les directives du tribunal). Les dettes garanties (hypothèque, prêt-auto) ne sont pas incluses. Ce n'est pas disponible pour les entreprises."
+        },
+
+        {
+            "title": "Quels sont les avantages et inconvénients du dépôt volontaire ?",
+            "content": "Avantages : Protection immédiate contre les saisies de salaire. Paiements organisés selon votre capacité. Pas de frais d'administration importants. Pas d'impact aussi sévère que la faillite sur le crédit. Inconvénients : Ne réduit pas le capital dû (on rembourse 100 % de la dette). Durée indéterminée — peut prendre plusieurs années si les revenus sont faibles. Ne protège pas contre toutes les poursuites (ex. : pension alimentaire). Convient principalement aux petites dettes avec revenu stable."
+        },
+
+        {
+            "title": "Combien coûte le dépôt volontaire ?",
+            "content": "Les frais sont minimes — principalement des frais de greffe (quelques dizaines de dollars). Il n'y a pas d'honoraires de syndic car c'est administré par le greffe du tribunal. Le débiteur verse directement au greffe la portion calculée de son revenu, qui est ensuite distribuée aux créanciers au prorata."
+        },
+
+        {
+            "title": "Dépôt volontaire vs proposition de consommateur : quelle différence ?",
+            "content": "Le dépôt volontaire est une procédure québécoise administrée par le tribunal (C.p.c.), sans réduction de la dette totale. La proposition de consommateur est une procédure fédérale (LFI) administrée par un syndic autorisé, qui permet de rembourser seulement une portion des dettes (souvent 20 à 50 %) et d'éliminer le reste. Si les dettes sont importantes ou que la capacité de remboursement est faible, la proposition de consommateur est généralement plus avantageuse."
+        },
+
+        {
+            "title": "Comment fonctionne la négociation avec les créanciers ?",
+            "content": "La négociation directe avec les créanciers consiste à contacter chaque créancier individuellement pour demander une réduction du taux d'intérêt, un plan de paiement étalé, ou une remise partielle. Elle peut se faire seul ou avec l'aide d'un professionnel. Avantages : aucune procédure légale, pas d'impact formel sur le crédit. Inconvénients : les créanciers ne sont pas obligés d'accepter, les appels et poursuites peuvent continuer. Elle convient mieux aux situations légères avec peu de créanciers."
+        },
+
+        {
+            "title": "Dettes.ca peut-il négocier avec mes créanciers à ma place ?",
+            "content": "Non. Groupe Leblanc Syndic est un cabinet de syndics autorisés en insolvabilité — notre mandat est d'administrer des solutions légales encadrées par la Loi sur la faillite et l'insolvabilité (LFI) : proposition de consommateur, faillite personnelle. Nous évaluons votre situation globale pour déterminer la solution la plus avantageuse, ce qui peut inclure une recommandation de négociation directe si c'est le bon outil. La consultation initiale est gratuite et sans engagement."
+        },
+
+        {
+            "title": "Mon REER est-il protégé si je déclare faillite ?",
+            "content": "Oui, en grande partie. Les cotisations REER faites plus de 12 mois avant la faillite sont protégées contre les créanciers (LFI, art. 67(1)b.3)). Les cotisations des 12 derniers mois avant la faillite peuvent être saisies par le syndic. Les FERR (Fonds enregistrés de revenu de retraite) bénéficient de la même protection. Source : LFI, art. 67(1)(b.3), modifié en 2008."
+        },
+
+        {
+            "title": "Puis-je cotiser à mon REER pendant une faillite ou une proposition ?",
+            "content": "Pendant une faillite : Non, vous ne pouvez pas effectuer de nouvelles cotisations REER sans l'accord du syndic, car tous les revenus disponibles sont soumis au calcul du revenu excédentaire (LFI, art. 68). Pendant une proposition de consommateur : Oui, si votre budget le permet selon le plan de remboursement approuvé. Il n'y a pas d'interdiction légale expresse."
+        },
+
+        {
+            "title": "Puis-je inclure mes dettes étudiantes dans une faillite personnelle ?",
+            "content": "Oui, sous condition de délai. Les prêts étudiants gouvernementaux (Programme canadien de prêts aux étudiants, Aide financière aux études du Québec) ne sont libérables par la faillite que si vous avez cessé d'être étudiant à temps plein ou partiel depuis au moins 7 ans au moment de la faillite (LFI, art. 178(1)(g)). Si moins de 5 ans se sont écoulés, le tribunal peut accorder une libération en cas de bonne foi et de difficultés persistantes (LFI, art. 178(1.1)). Les prêts étudiants privés (émis par une banque ou caisse) sont libérables sans délai."
+        },
+
+        {
+            "title": "Puis-je inclure mes dettes étudiantes dans une proposition de consommateur ?",
+            "content": "Oui, avec les mêmes conditions de délai que la faillite. Si 7 ans se sont écoulés depuis la fin des études, les dettes étudiantes gouvernementales peuvent être incluses dans la proposition. Si moins de 7 ans, le gouvernement demeure un créancier non libérable, mais il peut quand même voter sur la proposition. Une proposition est souvent utile pour gérer les autres dettes en attendant que le délai soit atteint pour les prêts étudiants. Source : LFI, art. 178(1)(g), 66.11"
+        },
+
+        {
+            "title": "C'est quoi NovaPlan ?",
+            "content": "NovaPlan est un outil gratuit en ligne développé en partenariat avec dettes.ca. Il permet à une personne qui gère encore ses paiements d'analyser sa situation financière, de comparer différentes stratégies de remboursement et de visualiser un plan personnalisé pour se libérer de ses dettes. Idéal pour les profils prévention (qui payent encore mais veulent optimiser ou anticiper), NovaPlan est accessible directement à : https://app.novaplan.ca/add-debts. Ce n'est pas un remplacement à une consultation avec un syndic — si la situation est critique, une consultation gratuite avec une conseillère reste l'étape prioritaire."
+        }
+
+    ]
+}

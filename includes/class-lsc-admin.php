@@ -132,11 +132,71 @@ class LSC_Admin {
 			$out['prompt'] = $previous['prompt'] ?? $defaults['prompt'];
 		}
 
+		// RDV URLs
+		foreach ( array( 'rdv_particulier_url', 'rdv_entreprise_url' ) as $key_name ) {
+			if ( array_key_exists( $key_name, $raw ) ) {
+				$out[ $key_name ] = esc_url_raw( wp_unslash( (string) $raw[ $key_name ] ) );
+			} else {
+				$out[ $key_name ] = $previous[ $key_name ] ?? $defaults[ $key_name ];
+			}
+		}
+
+		// RDV behavior
+		foreach ( array( 'rdv_close_chat', 'rdv_keep_closed' ) as $key_name ) {
+			if ( array_key_exists( $key_name, $raw ) ) {
+				$out[ $key_name ] = ! empty( $raw[ $key_name ] ) ? '1' : '0';
+			} else {
+				$out[ $key_name ] = $previous[ $key_name ] ?? $defaults[ $key_name ];
+			}
+		}
+
+		// Site search
+		if ( array_key_exists( 'site_search', $raw ) ) {
+			$out['site_search'] = ! empty( $raw['site_search'] ) ? '1' : '0';
+		} else {
+			$out['site_search'] = $previous['site_search'] ?? $defaults['site_search'];
+		}
+
 		// Allowed CTA hosts
 		if ( array_key_exists( 'allowed_cta_hosts', $raw ) ) {
 			$out['allowed_cta_hosts'] = $this->sanitize_hosts( (string) $raw['allowed_cta_hosts'] );
 		} else {
 			$out['allowed_cta_hosts'] = $previous['allowed_cta_hosts'] ?? $defaults['allowed_cta_hosts'];
+		}
+
+		// Avatar attachment ID
+		if ( array_key_exists( 'avatar_attachment_id', $raw ) ) {
+			$out['avatar_attachment_id'] = (string) absint( $raw['avatar_attachment_id'] );
+		} else {
+			$out['avatar_attachment_id'] = $previous['avatar_attachment_id'] ?? $defaults['avatar_attachment_id'];
+		}
+
+		// Position desktop
+		if ( array_key_exists( 'pos_desktop_side', $raw ) ) {
+			$out['pos_desktop_side'] = in_array( $raw['pos_desktop_side'], array( 'left', 'right' ), true )
+				? (string) $raw['pos_desktop_side'] : 'right';
+		} else {
+			$out['pos_desktop_side'] = $previous['pos_desktop_side'] ?? $defaults['pos_desktop_side'];
+		}
+
+		if ( array_key_exists( 'pos_desktop_bottom', $raw ) ) {
+			$out['pos_desktop_bottom'] = (string) max( 0, min( 200, absint( $raw['pos_desktop_bottom'] ) ) );
+		} else {
+			$out['pos_desktop_bottom'] = $previous['pos_desktop_bottom'] ?? $defaults['pos_desktop_bottom'];
+		}
+
+		// Position mobile
+		if ( array_key_exists( 'pos_mobile_side', $raw ) ) {
+			$out['pos_mobile_side'] = in_array( $raw['pos_mobile_side'], array( 'left', 'center', 'right' ), true )
+				? (string) $raw['pos_mobile_side'] : 'right';
+		} else {
+			$out['pos_mobile_side'] = $previous['pos_mobile_side'] ?? $defaults['pos_mobile_side'];
+		}
+
+		if ( array_key_exists( 'pos_mobile_bottom', $raw ) ) {
+			$out['pos_mobile_bottom'] = (string) max( 0, min( 200, absint( $raw['pos_mobile_bottom'] ) ) );
+		} else {
+			$out['pos_mobile_bottom'] = $previous['pos_mobile_bottom'] ?? $defaults['pos_mobile_bottom'];
 		}
 
 		return $out;
@@ -156,6 +216,18 @@ class LSC_Admin {
 			}
 		}
 		return implode( "\n", array_values( array_unique( $clean ) ) );
+	}
+
+	private function get_filter_value( string $key ): string {
+		return sanitize_text_field( wp_unslash( (string) ( $_GET[ $key ] ?? '' ) ) );
+	}
+
+	private function render_reset_filters_button( string $page ): void {
+		?>
+		<a href="<?php echo esc_url( admin_url( 'admin.php?page=' . $page ) ); ?>" class="button">
+			<?php esc_html_e( 'Reinitialiser', 'lionard-simple-chat' ); ?>
+		</a>
+		<?php
 	}
 
 	private function check_access() {
@@ -282,6 +354,21 @@ class LSC_Admin {
 						<td>
 							<textarea id="lsc_allowed_hosts" class="large-text code" rows="5" name="<?php echo esc_attr( LSC_Plugin::OPTION_KEY ); ?>[allowed_cta_hosts]"><?php echo esc_textarea( $settings['allowed_cta_hosts'] ); ?></textarea>
 							<p class="description"><?php esc_html_e( 'Un domaine par ligne. Les boutons vers d\'autres domaines seront ignores par le widget.', 'lionard-simple-chat' ); ?></p>
+						</td>
+					</tr>
+				</table>
+
+				<h2><?php esc_html_e( 'Recherche site', 'lionard-simple-chat' ); ?></h2>
+				<table class="form-table" role="presentation">
+					<tr>
+						<th scope="row"><?php esc_html_e( 'Recherche native WordPress', 'lionard-simple-chat' ); ?></th>
+						<td>
+							<input type="hidden" name="<?php echo esc_attr( LSC_Plugin::OPTION_KEY ); ?>[site_search]" value="0">
+							<label>
+								<input type="checkbox" name="<?php echo esc_attr( LSC_Plugin::OPTION_KEY ); ?>[site_search]" value="1" <?php checked( $settings['site_search'] ?? '1', '1' ); ?>>
+								<?php esc_html_e( 'Injecter les pages/articles WordPress pertinents dans le contexte du bot', 'lionard-simple-chat' ); ?>
+							</label>
+							<p class="description"><?php esc_html_e( 'Le bot peut proposer des boutons vers les pages trouvees. Seuls les domaines autorises ci-dessus sont permis.', 'lionard-simple-chat' ); ?></p>
 						</td>
 					</tr>
 				</table>
@@ -440,7 +527,7 @@ class LSC_Admin {
 			$action = sanitize_key( wp_unslash( (string) $_GET['kb_action'] ) );
 			$id     = absint( $_GET['kb_id'] ?? 0 );
 
-			if ( 0 === $id ) {
+			if ( 0 === $id && 'delete_all' !== $action ) {
 				return;
 			}
 
@@ -457,6 +544,13 @@ class LSC_Admin {
 				wp_safe_redirect( add_query_arg( 'kb_notice', 'toggled', $base_url ) );
 				exit;
 			}
+
+			if ( 'delete_all' === $action ) {
+				check_admin_referer( 'lsc_kb_delete_all' );
+				LSC_Knowledge::delete_all();
+				wp_safe_redirect( add_query_arg( 'kb_notice', 'deleted_all', $base_url ) );
+				exit;
+			}
 		}
 	}
 
@@ -464,22 +558,38 @@ class LSC_Admin {
 	 * Parse a decoded JSON array/object into normalized KB entries.
 	 *
 	 * Formats accepted:
-	 *   1. Standard  : [{"type":"faq","title":"Q?","content":"R."},...]
+	 *   0. Envelope     : {"entries":[...]}, {"data":[...]}, {"items":[...]}, etc.
+	 *   1. Standard     : [{"type":"faq","title":"Q?","content":"R."},...]
 	 *   2. question/answer: [{"question":"Q?","answer":"R."},...]
-	 *   3. q/a court : [{"q":"Q?","a":"R."},...]
-	 *   4. Objet clé/valeur : {"Q?":"R.","Titre":"Texte",...}
+	 *   3. q/a court    : [{"q":"Q?","a":"R."},...]
+	 *   4. Objet map    : {"Question":"Reponse",...}
+	 *
+	 * Corrige automatiquement le mojibake UTF-8 (ex. genere par PowerShell).
 	 */
 	private function parse_json_entries( array $data ): array {
-		$entries      = array();
-		$valid_types  = array( 'faq', 'text', 'url' );
+		$entries     = array();
+		$valid_types = array( 'faq', 'text', 'url' );
 
-		// Format 4 : objet clé => valeur (les clés ne sont pas des indices numériques)
-		$keys = array_keys( $data );
+		$keys   = array_keys( $data );
 		$is_map = ! empty( $keys ) && ! is_int( $keys[0] );
+
+		// Format 0 : objet enveloppant {"entries": [...], "data": [...], ...}
+		// Detecte si une valeur est un tableau indexe -> c'est le vrai tableau d'entrees
 		if ( $is_map ) {
+			foreach ( $data as $v ) {
+				if ( is_array( $v ) && isset( $v[0] ) && is_array( $v[0] ) ) {
+					return $this->parse_json_entries( $v );
+				}
+			}
+
+			// Format 4 : objet cle => valeur simple {"Question":"Reponse",...}
 			foreach ( $data as $title => $content ) {
 				if ( is_string( $title ) && is_string( $content ) && '' !== trim( $content ) ) {
-					$entries[] = array( 'type' => 'faq', 'title' => $title, 'content' => $content );
+					$entries[] = array(
+						'type'    => 'faq',
+						'title'   => sanitize_text_field( $this->fix_encoding( $title ) ),
+						'content' => sanitize_textarea_field( $this->fix_encoding( $content ) ),
+					);
 				}
 			}
 			return $entries;
@@ -495,7 +605,7 @@ class LSC_Admin {
 			$content = '';
 			$type    = 'faq';
 
-			// Format 1 : champs standards
+			// Format 1 : champs standards (title + content)
 			if ( isset( $item['content'] ) ) {
 				$content = (string) $item['content'];
 				$title   = (string) ( $item['title'] ?? $item['question'] ?? '' );
@@ -515,13 +625,34 @@ class LSC_Admin {
 			if ( '' !== trim( $content ) ) {
 				$entries[] = array(
 					'type'    => $type,
-					'title'   => sanitize_text_field( $title ),
-					'content' => sanitize_textarea_field( $content ),
+					'title'   => sanitize_text_field( $this->fix_encoding( $title ) ),
+					'content' => sanitize_textarea_field( $this->fix_encoding( $content ) ),
 				);
 			}
 		}
 
 		return $entries;
+	}
+
+	/**
+	 * Corrige le mojibake UTF-8 genere par PowerShell ConvertTo-Json ou Excel.
+	 * Ex. "procÃ©dures" -> "procédures"
+	 * Technique : si la chaine contient des sequences UTF-8 invalides ou des
+	 * patterns de double-encodage (C3 suivi d'octets Latin), on reconvertit.
+	 */
+	private function fix_encoding( string $text ): string {
+		// Detecte le pattern typique du double-encodage : "Ã" (U+00C3) suivi
+		// d'un caractere dans la plage Latin-1 etendue (U+0082..U+00BF).
+		if ( ! preg_match( '/\xC3[\x82-\xBF]/u', $text ) ) {
+			return $text;
+		}
+		// Encode la chaine UTF-8 vers ISO-8859-1 pour recuperer les octets d'origine.
+		$candidate = mb_convert_encoding( $text, 'ISO-8859-1', 'UTF-8' );
+		// Verifie que le resultat est du UTF-8 valide avant de l'utiliser.
+		if ( false !== $candidate && mb_check_encoding( $candidate, 'UTF-8' ) ) {
+			return $candidate;
+		}
+		return $text;
 	}
 
 	// =========================================================================
@@ -537,6 +668,12 @@ class LSC_Admin {
 		$count      = LSC_Knowledge::count();
 		$active_cnt = LSC_Knowledge::count( true );
 		$base_url   = admin_url( 'admin.php?page=lionard-chat-connaissances' );
+		$filters    = array(
+			'search' => $this->get_filter_value( 'kb_search' ),
+			'type'   => $this->get_filter_value( 'kb_type_filter' ),
+			'status' => $this->get_filter_value( 'kb_status' ),
+		);
+		$filtered_count = count( $entries );
 
 		$notice    = sanitize_key( wp_unslash( (string) ( $_GET['kb_notice'] ?? '' ) ) );
 		$imported_count = absint( $_GET['kb_count'] ?? 0 );
@@ -544,6 +681,7 @@ class LSC_Admin {
 			'added'        => array( 'success', 'Entree ajoutee.' ),
 			'updated'      => array( 'success', 'Entree mise a jour.' ),
 			'deleted'      => array( 'success', 'Entree supprimee.' ),
+			'deleted_all'  => array( 'success', 'Toutes les entrees ont ete supprimees.' ),
 			'toggled'      => array( 'success', 'Statut modifie.' ),
 			'imported'     => array( 'success', $imported_count . ' entree(s) importee(s).' ),
 			'empty'        => array( 'error', 'Le contenu est requis.' ),
@@ -556,6 +694,41 @@ class LSC_Admin {
 
 		$type_labels = array( 'faq' => 'FAQ', 'text' => 'Texte', 'url' => 'URL' );
 		$current_type = $edit_entry ? (string) $edit_entry['type'] : 'text';
+
+		if ( ! empty( $entries ) ) {
+			$entries = array_values(
+				array_filter(
+					$entries,
+					function ( array $entry ) use ( $filters ): bool {
+						if ( '' !== $filters['type'] && (string) $entry['type'] !== $filters['type'] ) {
+							return false;
+						}
+
+						if ( 'active' === $filters['status'] && empty( $entry['active'] ) ) {
+							return false;
+						}
+
+						if ( 'inactive' === $filters['status'] && ! empty( $entry['active'] ) ) {
+							return false;
+						}
+
+						if ( '' !== $filters['search'] ) {
+							$haystack = strtolower(
+								trim(
+									(string) ( $entry['title'] ?? '' ) . ' ' . (string) ( $entry['content'] ?? '' )
+								)
+							);
+							if ( false === strpos( $haystack, strtolower( $filters['search'] ) ) ) {
+								return false;
+							}
+						}
+
+						return true;
+					}
+				)
+			);
+			$filtered_count = count( $entries );
+		}
 		?>
 		<div class="wrap">
 			<h1>
@@ -681,9 +854,44 @@ class LSC_Admin {
 			</div>
 
 			<!-- Liste des entrees -->
-			<?php if ( empty( $entries ) ) : ?>
+			<?php if ( 0 === $count ) : ?>
 				<p><?php esc_html_e( 'Aucune entree. Ajoutez votre premiere entree ci-dessus.', 'lionard-simple-chat' ); ?></p>
 			<?php else : ?>
+				<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+					<strong><?php echo esc_html( $filtered_count . ' / ' . $count ); ?> <?php esc_html_e( 'entree(s)', 'lionard-simple-chat' ); ?></strong>
+					<a href="<?php echo esc_url( wp_nonce_url( add_query_arg( 'kb_action', 'delete_all', $base_url ), 'lsc_kb_delete_all' ) ); ?>"
+					   class="button button-secondary"
+					   style="color:#d63638;border-color:#d63638;"
+					   onclick="return confirm('<?php esc_attr_e( 'Supprimer TOUTES les entrees ? Cette action est irreversible.', 'lionard-simple-chat' ); ?>')">
+						<?php esc_html_e( 'Vider tout', 'lionard-simple-chat' ); ?>
+					</a>
+				</div>
+				<form method="get" style="margin:0 0 12px;display:flex;gap:8px;align-items:end;flex-wrap:wrap;">
+					<input type="hidden" name="page" value="lionard-chat-connaissances">
+					<div>
+						<label for="lsc_kb_search" style="display:block;margin-bottom:4px;"><?php esc_html_e( 'Recherche', 'lionard-simple-chat' ); ?></label>
+						<input id="lsc_kb_search" class="regular-text" type="search" name="kb_search" value="<?php echo esc_attr( $filters['search'] ); ?>" placeholder="<?php esc_attr_e( 'Titre ou contenu', 'lionard-simple-chat' ); ?>">
+					</div>
+					<div>
+						<label for="lsc_kb_type_filter" style="display:block;margin-bottom:4px;"><?php esc_html_e( 'Type', 'lionard-simple-chat' ); ?></label>
+						<select id="lsc_kb_type_filter" name="kb_type_filter">
+							<option value=""><?php esc_html_e( 'Tous', 'lionard-simple-chat' ); ?></option>
+							<?php foreach ( $type_labels as $type_value => $type_label ) : ?>
+								<option value="<?php echo esc_attr( $type_value ); ?>" <?php selected( $filters['type'], $type_value ); ?>><?php echo esc_html( $type_label ); ?></option>
+							<?php endforeach; ?>
+						</select>
+					</div>
+					<div>
+						<label for="lsc_kb_status" style="display:block;margin-bottom:4px;"><?php esc_html_e( 'Statut', 'lionard-simple-chat' ); ?></label>
+						<select id="lsc_kb_status" name="kb_status">
+							<option value=""><?php esc_html_e( 'Tous', 'lionard-simple-chat' ); ?></option>
+							<option value="active" <?php selected( $filters['status'], 'active' ); ?>><?php esc_html_e( 'Actif', 'lionard-simple-chat' ); ?></option>
+							<option value="inactive" <?php selected( $filters['status'], 'inactive' ); ?>><?php esc_html_e( 'Inactif', 'lionard-simple-chat' ); ?></option>
+						</select>
+					</div>
+					<?php submit_button( __( 'Filtrer', 'lionard-simple-chat' ), 'secondary', '', false ); ?>
+					<?php $this->render_reset_filters_button( 'lionard-chat-connaissances' ); ?>
+				</form>
 				<table class="wp-list-table widefat fixed striped">
 					<thead>
 						<tr>
@@ -696,6 +904,9 @@ class LSC_Admin {
 						</tr>
 					</thead>
 					<tbody>
+					<?php if ( empty( $entries ) ) : ?>
+						<tr><td colspan="6"><?php esc_html_e( 'Aucun resultat pour ces filtres.', 'lionard-simple-chat' ); ?></td></tr>
+					<?php else : ?>
 					<?php foreach ( $entries as $entry ) :
 						$eid     = (int) $entry['id'];
 						$active  = (bool) $entry['active'];
@@ -740,6 +951,7 @@ class LSC_Admin {
 							</td>
 						</tr>
 					<?php endforeach; ?>
+					<?php endif; ?>
 					</tbody>
 				</table>
 			<?php endif; ?>
@@ -753,11 +965,125 @@ class LSC_Admin {
 
 	public function render_conversations() {
 		$this->check_access();
+		$session_key = sanitize_text_field( wp_unslash( (string) ( $_GET['session_key'] ?? '' ) ) );
+		$session     = '' !== $session_key ? LSC_Conversations::get_session_by_key( $session_key ) : null;
+		$messages    = $session ? LSC_Conversations::get_messages( $session_key ) : array();
+		$filters     = array(
+			'search'    => $this->get_filter_value( 'lsc_search' ),
+			'status'    => $this->get_filter_value( 'lsc_status' ),
+			'rdv_type'  => $this->get_filter_value( 'lsc_rdv_type' ),
+			'date_from' => $this->get_filter_value( 'lsc_date_from' ),
+			'date_to'   => $this->get_filter_value( 'lsc_date_to' ),
+		);
+		$sessions    = LSC_Conversations::get_sessions(
+			array(
+				'type'      => 'conversations',
+				'limit'     => 200,
+				'search'    => $filters['search'],
+				'status'    => $filters['status'],
+				'rdv_type'  => $filters['rdv_type'],
+				'date_from' => $filters['date_from'],
+				'date_to'   => $filters['date_to'],
+			)
+		);
+		$status_options = array(
+			'conversation' => 'conversation',
+			'rdv_clicked'  => 'rdv_clicked',
+		);
+		$rdv_type_options = array(
+			'particulier' => 'particulier',
+			'entreprise'  => 'entreprise',
+		);
 		?>
 		<div class="wrap">
 			<h1><?php esc_html_e( 'Conversations', 'lionard-simple-chat' ); ?></h1>
-			<p><?php esc_html_e( 'Historique des echanges, type detecte, RDV propose, clique, refus et erreurs.', 'lionard-simple-chat' ); ?></p>
-			<div class="notice notice-info inline"><p><?php esc_html_e( 'Fonctionnalite a venir.', 'lionard-simple-chat' ); ?></p></div>
+
+			<?php if ( $session ) : ?>
+				<p><a href="<?php echo esc_url( admin_url( 'admin.php?page=lionard-chat-conversations' ) ); ?>">&larr; <?php esc_html_e( 'Retour a la liste', 'lionard-simple-chat' ); ?></a></p>
+				<div class="card" style="max-width:1200px;padding:16px 20px;">
+					<h2 style="margin-top:0;"><?php esc_html_e( 'Detail conversation', 'lionard-simple-chat' ); ?></h2>
+					<p><strong>Session:</strong> <code><?php echo esc_html( $session['session_key'] ); ?></code></p>
+					<p><strong>Statut:</strong> <?php echo esc_html( $session['status'] ); ?></p>
+					<p><strong>Page:</strong> <code><?php echo esc_html( $session['last_page_url'] ); ?></code></p>
+					<p><strong>Derniere activite:</strong> <?php echo esc_html( $session['updated_at'] ); ?></p>
+					<hr>
+					<?php if ( empty( $messages ) ) : ?>
+						<p><?php esc_html_e( 'Aucun message enregistre.', 'lionard-simple-chat' ); ?></p>
+					<?php else : ?>
+						<?php foreach ( $messages as $message ) : ?>
+							<div style="margin:0 0 14px;padding:12px 14px;border:1px solid #e5e7eb;border-radius:14px;background:<?php echo 'user' === $message['role'] ? '#eff6ff' : '#ffffff'; ?>;">
+								<p style="margin:0 0 8px;"><strong><?php echo esc_html( ucfirst( $message['role'] ) ); ?></strong> <span style="color:#666;">• <?php echo esc_html( $message['created_at'] ); ?></span></p>
+								<div style="white-space:pre-wrap;"><?php echo esc_html( $message['content'] ); ?></div>
+							</div>
+						<?php endforeach; ?>
+					<?php endif; ?>
+				</div>
+			<?php else : ?>
+				<p><?php esc_html_e( 'Toutes les conversations non converties en rendez-vous soumis apparaissent ici.', 'lionard-simple-chat' ); ?></p>
+				<form method="get" style="margin:0 0 12px;display:flex;gap:8px;align-items:end;flex-wrap:wrap;">
+					<input type="hidden" name="page" value="lionard-chat-conversations">
+					<div>
+						<label for="lsc_conv_search" style="display:block;margin-bottom:4px;"><?php esc_html_e( 'Recherche', 'lionard-simple-chat' ); ?></label>
+						<input id="lsc_conv_search" class="regular-text" type="search" name="lsc_search" value="<?php echo esc_attr( $filters['search'] ); ?>" placeholder="<?php esc_attr_e( 'Session, page, message...', 'lionard-simple-chat' ); ?>">
+					</div>
+					<div>
+						<label for="lsc_conv_status" style="display:block;margin-bottom:4px;"><?php esc_html_e( 'Statut', 'lionard-simple-chat' ); ?></label>
+						<select id="lsc_conv_status" name="lsc_status">
+							<option value=""><?php esc_html_e( 'Tous', 'lionard-simple-chat' ); ?></option>
+							<?php foreach ( $status_options as $status_value => $status_label ) : ?>
+								<option value="<?php echo esc_attr( $status_value ); ?>" <?php selected( $filters['status'], $status_value ); ?>><?php echo esc_html( $status_label ); ?></option>
+							<?php endforeach; ?>
+						</select>
+					</div>
+					<div>
+						<label for="lsc_conv_rdv_type" style="display:block;margin-bottom:4px;"><?php esc_html_e( 'Type RDV', 'lionard-simple-chat' ); ?></label>
+						<select id="lsc_conv_rdv_type" name="lsc_rdv_type">
+							<option value=""><?php esc_html_e( 'Tous', 'lionard-simple-chat' ); ?></option>
+							<?php foreach ( $rdv_type_options as $type_value => $type_label ) : ?>
+								<option value="<?php echo esc_attr( $type_value ); ?>" <?php selected( $filters['rdv_type'], $type_value ); ?>><?php echo esc_html( ucfirst( $type_label ) ); ?></option>
+							<?php endforeach; ?>
+						</select>
+					</div>
+					<div>
+						<label for="lsc_conv_date_from" style="display:block;margin-bottom:4px;"><?php esc_html_e( 'Du', 'lionard-simple-chat' ); ?></label>
+						<input id="lsc_conv_date_from" type="date" name="lsc_date_from" value="<?php echo esc_attr( $filters['date_from'] ); ?>">
+					</div>
+					<div>
+						<label for="lsc_conv_date_to" style="display:block;margin-bottom:4px;"><?php esc_html_e( 'Au', 'lionard-simple-chat' ); ?></label>
+						<input id="lsc_conv_date_to" type="date" name="lsc_date_to" value="<?php echo esc_attr( $filters['date_to'] ); ?>">
+					</div>
+					<?php submit_button( __( 'Filtrer', 'lionard-simple-chat' ), 'secondary', '', false ); ?>
+					<?php $this->render_reset_filters_button( 'lionard-chat-conversations' ); ?>
+				</form>
+				<table class="wp-list-table widefat fixed striped">
+					<thead>
+						<tr>
+							<th><?php esc_html_e( 'Session', 'lionard-simple-chat' ); ?></th>
+							<th><?php esc_html_e( 'Statut', 'lionard-simple-chat' ); ?></th>
+							<th><?php esc_html_e( 'Type RDV', 'lionard-simple-chat' ); ?></th>
+							<th><?php esc_html_e( 'Page', 'lionard-simple-chat' ); ?></th>
+							<th><?php esc_html_e( 'Mise a jour', 'lionard-simple-chat' ); ?></th>
+							<th><?php esc_html_e( 'Action', 'lionard-simple-chat' ); ?></th>
+						</tr>
+					</thead>
+					<tbody>
+						<?php if ( empty( $sessions ) ) : ?>
+							<tr><td colspan="6"><?php esc_html_e( 'Aucune conversation enregistree.', 'lionard-simple-chat' ); ?></td></tr>
+						<?php else : ?>
+							<?php foreach ( $sessions as $row ) : ?>
+								<tr>
+									<td><code><?php echo esc_html( $row['session_key'] ); ?></code></td>
+									<td><?php echo esc_html( $row['status'] ); ?></td>
+									<td><?php echo esc_html( $row['rdv_type'] ? $row['rdv_type'] : '—' ); ?></td>
+									<td style="max-width:320px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"><code><?php echo esc_html( $row['last_page_url'] ); ?></code></td>
+									<td><?php echo esc_html( $row['updated_at'] ); ?></td>
+									<td><a href="<?php echo esc_url( add_query_arg( 'session_key', rawurlencode( $row['session_key'] ), admin_url( 'admin.php?page=lionard-chat-conversations' ) ) ); ?>"><?php esc_html_e( 'Voir', 'lionard-simple-chat' ); ?></a></td>
+								</tr>
+							<?php endforeach; ?>
+						<?php endif; ?>
+					</tbody>
+				</table>
+			<?php endif; ?>
 		</div>
 		<?php
 	}
@@ -768,11 +1094,189 @@ class LSC_Admin {
 
 	public function render_rdv() {
 		$this->check_access();
+		$settings = LSC_Plugin::get_settings();
+		$session_key = sanitize_text_field( wp_unslash( (string) ( $_GET['session_key'] ?? '' ) ) );
+		$session     = '' !== $session_key ? LSC_Conversations::get_session_by_key( $session_key ) : null;
+		$messages    = $session ? LSC_Conversations::get_messages( $session_key ) : array();
+		$filters     = array(
+			'search'    => $this->get_filter_value( 'lsc_search' ),
+			'status'    => $this->get_filter_value( 'lsc_status' ),
+			'rdv_type'  => $this->get_filter_value( 'lsc_rdv_type' ),
+			'date_from' => $this->get_filter_value( 'lsc_date_from' ),
+			'date_to'   => $this->get_filter_value( 'lsc_date_to' ),
+		);
+		$sessions    = LSC_Conversations::get_sessions(
+			array(
+				'type'      => 'rdv',
+				'limit'     => 200,
+				'search'    => $filters['search'],
+				'status'    => $filters['status'],
+				'rdv_type'  => $filters['rdv_type'],
+				'date_from' => $filters['date_from'],
+				'date_to'   => $filters['date_to'],
+			)
+		);
+		$rdv_type_options = array(
+			'particulier' => 'particulier',
+			'entreprise'  => 'entreprise',
+		);
 		?>
 		<div class="wrap">
 			<h1><?php esc_html_e( 'Rendez-vous', 'lionard-simple-chat' ); ?></h1>
-			<p><?php esc_html_e( 'Configurez les liens RDV personnel et entreprise, les textes des boutons et les regles de closing.', 'lionard-simple-chat' ); ?></p>
-			<div class="notice notice-info inline"><p><?php esc_html_e( 'Fonctionnalite a venir.', 'lionard-simple-chat' ); ?></p></div>
+
+			<?php if ( $session ) : ?>
+				<p><a href="<?php echo esc_url( admin_url( 'admin.php?page=lionard-chat-rdv' ) ); ?>">&larr; <?php esc_html_e( 'Retour a la liste', 'lionard-simple-chat' ); ?></a></p>
+				<div class="card" style="max-width:1200px;padding:16px 20px;margin-bottom:20px;">
+					<h2 style="margin-top:0;"><?php esc_html_e( 'Detail rendez-vous', 'lionard-simple-chat' ); ?></h2>
+					<p><strong>Session:</strong> <code><?php echo esc_html( $session['session_key'] ); ?></code></p>
+					<p><strong>Type:</strong> <?php echo esc_html( $session['rdv_type'] ? $session['rdv_type'] : '—' ); ?></p>
+					<p><strong>URL RDV:</strong> <code><?php echo esc_html( $session['rdv_url'] ); ?></code></p>
+					<p><strong>Soumis le:</strong> <?php echo esc_html( $session['rdv_submitted_at'] ? $session['rdv_submitted_at'] : '—' ); ?></p>
+					<p><strong>Source:</strong> <?php echo esc_html( $session['form_source'] ? $session['form_source'] : '—' ); ?></p>
+					<?php
+					$form_data = json_decode( (string) $session['form_data'], true );
+					if ( is_array( $form_data ) && ! empty( $form_data ) ) :
+					?>
+						<h3><?php esc_html_e( 'Donnees formulaire', 'lionard-simple-chat' ); ?></h3>
+						<table class="widefat striped" style="max-width:800px;">
+							<tbody>
+							<?php foreach ( $form_data as $key => $value ) : ?>
+								<tr>
+									<td style="width:220px;"><strong><?php echo esc_html( $key ); ?></strong></td>
+									<td><?php echo esc_html( is_array( $value ) ? implode( ', ', array_map( 'strval', $value ) ) : (string) $value ); ?></td>
+								</tr>
+							<?php endforeach; ?>
+							</tbody>
+						</table>
+					<?php endif; ?>
+					<h3><?php esc_html_e( 'Historique complet', 'lionard-simple-chat' ); ?></h3>
+					<?php if ( empty( $messages ) ) : ?>
+						<p><?php esc_html_e( 'Aucun message enregistre.', 'lionard-simple-chat' ); ?></p>
+					<?php else : ?>
+						<?php foreach ( $messages as $message ) : ?>
+							<div style="margin:0 0 14px;padding:12px 14px;border:1px solid #e5e7eb;border-radius:14px;background:<?php echo 'user' === $message['role'] ? '#eff6ff' : '#ffffff'; ?>;">
+								<p style="margin:0 0 8px;"><strong><?php echo esc_html( ucfirst( $message['role'] ) ); ?></strong> <span style="color:#666;">• <?php echo esc_html( $message['created_at'] ); ?></span></p>
+								<div style="white-space:pre-wrap;"><?php echo esc_html( $message['content'] ); ?></div>
+							</div>
+						<?php endforeach; ?>
+					<?php endif; ?>
+				</div>
+			<?php else : ?>
+				<div class="card" style="max-width:1200px;padding:16px 20px;margin-bottom:20px;">
+					<h2 style="margin-top:0;"><?php esc_html_e( 'Rendez-vous soumis', 'lionard-simple-chat' ); ?></h2>
+					<p><?php esc_html_e( 'Les formulaires Formlift remontes au plugin apparaissent ici avec l’historique complet de l’echange.', 'lionard-simple-chat' ); ?></p>
+					<form method="get" style="margin:0 0 12px;display:flex;gap:8px;align-items:end;flex-wrap:wrap;">
+						<input type="hidden" name="page" value="lionard-chat-rdv">
+						<div>
+							<label for="lsc_rdv_search" style="display:block;margin-bottom:4px;"><?php esc_html_e( 'Recherche', 'lionard-simple-chat' ); ?></label>
+							<input id="lsc_rdv_search" class="regular-text" type="search" name="lsc_search" value="<?php echo esc_attr( $filters['search'] ); ?>" placeholder="<?php esc_attr_e( 'Session, URL, message, formulaire...', 'lionard-simple-chat' ); ?>">
+						</div>
+						<div>
+							<label for="lsc_rdv_status" style="display:block;margin-bottom:4px;"><?php esc_html_e( 'Statut', 'lionard-simple-chat' ); ?></label>
+							<select id="lsc_rdv_status" name="lsc_status">
+								<option value=""><?php esc_html_e( 'Tous', 'lionard-simple-chat' ); ?></option>
+								<option value="rdv_submitted" <?php selected( $filters['status'], 'rdv_submitted' ); ?>><?php esc_html_e( 'rdv_submitted', 'lionard-simple-chat' ); ?></option>
+							</select>
+						</div>
+						<div>
+							<label for="lsc_rdv_type_filter" style="display:block;margin-bottom:4px;"><?php esc_html_e( 'Type RDV', 'lionard-simple-chat' ); ?></label>
+							<select id="lsc_rdv_type_filter" name="lsc_rdv_type">
+								<option value=""><?php esc_html_e( 'Tous', 'lionard-simple-chat' ); ?></option>
+								<?php foreach ( $rdv_type_options as $type_value => $type_label ) : ?>
+									<option value="<?php echo esc_attr( $type_value ); ?>" <?php selected( $filters['rdv_type'], $type_value ); ?>><?php echo esc_html( ucfirst( $type_label ) ); ?></option>
+								<?php endforeach; ?>
+							</select>
+						</div>
+						<div>
+							<label for="lsc_rdv_date_from" style="display:block;margin-bottom:4px;"><?php esc_html_e( 'Du', 'lionard-simple-chat' ); ?></label>
+							<input id="lsc_rdv_date_from" type="date" name="lsc_date_from" value="<?php echo esc_attr( $filters['date_from'] ); ?>">
+						</div>
+						<div>
+							<label for="lsc_rdv_date_to" style="display:block;margin-bottom:4px;"><?php esc_html_e( 'Au', 'lionard-simple-chat' ); ?></label>
+							<input id="lsc_rdv_date_to" type="date" name="lsc_date_to" value="<?php echo esc_attr( $filters['date_to'] ); ?>">
+						</div>
+						<?php submit_button( __( 'Filtrer', 'lionard-simple-chat' ), 'secondary', '', false ); ?>
+						<?php $this->render_reset_filters_button( 'lionard-chat-rdv' ); ?>
+					</form>
+					<table class="wp-list-table widefat fixed striped">
+						<thead>
+							<tr>
+								<th><?php esc_html_e( 'Session', 'lionard-simple-chat' ); ?></th>
+								<th><?php esc_html_e( 'Type', 'lionard-simple-chat' ); ?></th>
+								<th><?php esc_html_e( 'URL RDV', 'lionard-simple-chat' ); ?></th>
+								<th><?php esc_html_e( 'Soumis le', 'lionard-simple-chat' ); ?></th>
+								<th><?php esc_html_e( 'Action', 'lionard-simple-chat' ); ?></th>
+							</tr>
+						</thead>
+						<tbody>
+						<?php if ( empty( $sessions ) ) : ?>
+							<tr><td colspan="5"><?php esc_html_e( 'Aucun rendez-vous soumis pour le moment.', 'lionard-simple-chat' ); ?></td></tr>
+						<?php else : ?>
+							<?php foreach ( $sessions as $row ) : ?>
+								<tr>
+									<td><code><?php echo esc_html( $row['session_key'] ); ?></code></td>
+									<td><?php echo esc_html( $row['rdv_type'] ? $row['rdv_type'] : '—' ); ?></td>
+									<td style="max-width:320px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"><code><?php echo esc_html( $row['rdv_url'] ); ?></code></td>
+									<td><?php echo esc_html( $row['rdv_submitted_at'] ? $row['rdv_submitted_at'] : '—' ); ?></td>
+									<td><a href="<?php echo esc_url( add_query_arg( 'session_key', rawurlencode( $row['session_key'] ), admin_url( 'admin.php?page=lionard-chat-rdv' ) ) ); ?>"><?php esc_html_e( 'Voir', 'lionard-simple-chat' ); ?></a></td>
+								</tr>
+							<?php endforeach; ?>
+						<?php endif; ?>
+						</tbody>
+					</table>
+				</div>
+			<?php endif; ?>
+
+			<form method="post" action="options.php">
+				<?php settings_fields( 'lsc_settings_group' ); ?>
+
+				<h2><?php esc_html_e( 'Liens de prise de rendez-vous', 'lionard-simple-chat' ); ?></h2>
+				<p class="description" style="margin-bottom:12px;"><?php esc_html_e( 'Ces URL doivent aussi figurer dans la liste des domaines autorises (Reglages). Le prompt doit utiliser exactement ces URL pour que le modal se declenche.', 'lionard-simple-chat' ); ?></p>
+				<table class="form-table" role="presentation">
+					<tr>
+						<th scope="row"><label for="lsc_rdv_particulier_url"><?php esc_html_e( 'RDV particulier', 'lionard-simple-chat' ); ?></label></th>
+						<td>
+							<input id="lsc_rdv_particulier_url" class="large-text" type="url" name="<?php echo esc_attr( LSC_Plugin::OPTION_KEY ); ?>[rdv_particulier_url]" value="<?php echo esc_attr( $settings['rdv_particulier_url'] ?? '' ); ?>">
+							<p class="description"><?php esc_html_e( 'Ex. : https://www.dettes.ca/formulaire-particulier/', 'lionard-simple-chat' ); ?></p>
+						</td>
+					</tr>
+					<tr>
+						<th scope="row"><label for="lsc_rdv_entreprise_url"><?php esc_html_e( 'RDV entreprise', 'lionard-simple-chat' ); ?></label></th>
+						<td>
+							<input id="lsc_rdv_entreprise_url" class="large-text" type="url" name="<?php echo esc_attr( LSC_Plugin::OPTION_KEY ); ?>[rdv_entreprise_url]" value="<?php echo esc_attr( $settings['rdv_entreprise_url'] ?? '' ); ?>">
+							<p class="description"><?php esc_html_e( 'Ex. : https://www.dettes.ca/formulaire-entreprise/', 'lionard-simple-chat' ); ?></p>
+						</td>
+					</tr>
+				</table>
+
+				<h2><?php esc_html_e( 'Comportement au clic', 'lionard-simple-chat' ); ?></h2>
+				<table class="form-table" role="presentation">
+					<tr>
+						<th scope="row"><?php esc_html_e( 'Mode d\'ouverture', 'lionard-simple-chat' ); ?></th>
+						<td>
+							<input type="hidden" name="<?php echo esc_attr( LSC_Plugin::OPTION_KEY ); ?>[rdv_close_chat]" value="0">
+							<label>
+								<input type="checkbox" name="<?php echo esc_attr( LSC_Plugin::OPTION_KEY ); ?>[rdv_close_chat]" value="1" <?php checked( $settings['rdv_close_chat'] ?? '1', '1' ); ?>>
+								<?php esc_html_e( 'Fermer le chat et ouvrir une fenetre modale (iframe) au clic sur un bouton RDV', 'lionard-simple-chat' ); ?>
+							</label>
+							<p class="description"><?php esc_html_e( 'Desactive : le bouton RDV s\'ouvre dans un nouvel onglet comme NovaPlan.', 'lionard-simple-chat' ); ?></p>
+						</td>
+					</tr>
+					<tr>
+						<th scope="row"><?php esc_html_e( 'Apres le modal', 'lionard-simple-chat' ); ?></th>
+						<td>
+							<input type="hidden" name="<?php echo esc_attr( LSC_Plugin::OPTION_KEY ); ?>[rdv_keep_closed]" value="0">
+							<label>
+								<input type="checkbox" name="<?php echo esc_attr( LSC_Plugin::OPTION_KEY ); ?>[rdv_keep_closed]" value="1" <?php checked( $settings['rdv_keep_closed'] ?? '1', '1' ); ?>>
+								<?php esc_html_e( 'Garder le chat ferme apres la fermeture du modal (session courante)', 'lionard-simple-chat' ); ?>
+							</label>
+							<p class="description"><?php esc_html_e( 'L\'utilisateur a pris rendez-vous : le bouton flottant reste visible mais ne reouvre pas le chat.', 'lionard-simple-chat' ); ?></p>
+						</td>
+					</tr>
+				</table>
+
+				<?php submit_button( __( 'Enregistrer', 'lionard-simple-chat' ) ); ?>
+			</form>
 		</div>
 		<?php
 	}
@@ -783,47 +1287,159 @@ class LSC_Admin {
 
 	public function render_apparence() {
 		$this->check_access();
-		$settings = LSC_Plugin::get_settings();
+		wp_enqueue_media();
+		$settings      = LSC_Plugin::get_settings();
+		$avatar_id     = absint( $settings['avatar_attachment_id'] ?? 0 );
+		$avatar_src    = $avatar_id > 0 ? wp_get_attachment_image_src( $avatar_id, array( 84, 84 ) ) : false;
+		$option_key    = esc_attr( LSC_Plugin::OPTION_KEY );
 		?>
 		<div class="wrap">
 			<h1><?php esc_html_e( 'Apparence', 'lionard-simple-chat' ); ?></h1>
 			<form method="post" action="options.php">
 				<?php settings_fields( 'lsc_settings_group' ); ?>
+
+				<h2><?php esc_html_e( 'Couleurs', 'lionard-simple-chat' ); ?></h2>
 				<table class="form-table" role="presentation">
 					<tr>
 						<th scope="row"><label for="lsc_primary_color"><?php esc_html_e( 'Couleur principale', 'lionard-simple-chat' ); ?></label></th>
 						<td>
-							<input id="lsc_primary_color" type="color" name="<?php echo esc_attr( LSC_Plugin::OPTION_KEY ); ?>[primary_color]" value="<?php echo esc_attr( $settings['primary_color'] ); ?>" style="width:50px;height:34px;padding:2px;cursor:pointer;">
+							<input id="lsc_primary_color" type="color" name="<?php echo $option_key; ?>[primary_color]" value="<?php echo esc_attr( $settings['primary_color'] ); ?>" style="width:50px;height:34px;padding:2px;cursor:pointer;">
 							<code style="margin-left:8px;vertical-align:middle;"><?php echo esc_html( $settings['primary_color'] ); ?></code>
 						</td>
 					</tr>
 					<tr>
 						<th scope="row"><label for="lsc_accent_color"><?php esc_html_e( 'Couleur accent', 'lionard-simple-chat' ); ?></label></th>
 						<td>
-							<input id="lsc_accent_color" type="color" name="<?php echo esc_attr( LSC_Plugin::OPTION_KEY ); ?>[accent_color]" value="<?php echo esc_attr( $settings['accent_color'] ); ?>" style="width:50px;height:34px;padding:2px;cursor:pointer;">
+							<input id="lsc_accent_color" type="color" name="<?php echo $option_key; ?>[accent_color]" value="<?php echo esc_attr( $settings['accent_color'] ); ?>" style="width:50px;height:34px;padding:2px;cursor:pointer;">
 							<code style="margin-left:8px;vertical-align:middle;"><?php echo esc_html( $settings['accent_color'] ); ?></code>
 						</td>
 					</tr>
+				</table>
+
+				<h2><?php esc_html_e( 'Textes', 'lionard-simple-chat' ); ?></h2>
+				<table class="form-table" role="presentation">
 					<tr>
 						<th scope="row"><label for="lsc_launcher_label"><?php esc_html_e( 'Bouton flottant', 'lionard-simple-chat' ); ?></label></th>
-						<td><input id="lsc_launcher_label" class="regular-text" type="text" name="<?php echo esc_attr( LSC_Plugin::OPTION_KEY ); ?>[launcher_label]" value="<?php echo esc_attr( $settings['launcher_label'] ); ?>"></td>
+						<td><input id="lsc_launcher_label" class="regular-text" type="text" name="<?php echo $option_key; ?>[launcher_label]" value="<?php echo esc_attr( $settings['launcher_label'] ); ?>"></td>
 					</tr>
 					<tr>
 						<th scope="row"><label for="lsc_panel_title"><?php esc_html_e( 'Titre', 'lionard-simple-chat' ); ?></label></th>
-						<td><input id="lsc_panel_title" class="regular-text" type="text" name="<?php echo esc_attr( LSC_Plugin::OPTION_KEY ); ?>[panel_title]" value="<?php echo esc_attr( $settings['panel_title'] ); ?>"></td>
+						<td><input id="lsc_panel_title" class="regular-text" type="text" name="<?php echo $option_key; ?>[panel_title]" value="<?php echo esc_attr( $settings['panel_title'] ); ?>"></td>
 					</tr>
 					<tr>
 						<th scope="row"><label for="lsc_panel_subtitle"><?php esc_html_e( 'Sous-titre', 'lionard-simple-chat' ); ?></label></th>
-						<td><input id="lsc_panel_subtitle" class="regular-text" type="text" name="<?php echo esc_attr( LSC_Plugin::OPTION_KEY ); ?>[panel_subtitle]" value="<?php echo esc_attr( $settings['panel_subtitle'] ); ?>"></td>
+						<td><input id="lsc_panel_subtitle" class="regular-text" type="text" name="<?php echo $option_key; ?>[panel_subtitle]" value="<?php echo esc_attr( $settings['panel_subtitle'] ); ?>"></td>
 					</tr>
 					<tr>
 						<th scope="row"><label for="lsc_greeting"><?php esc_html_e( 'Message d\'accueil', 'lionard-simple-chat' ); ?></label></th>
-						<td><textarea id="lsc_greeting" class="large-text" rows="3" name="<?php echo esc_attr( LSC_Plugin::OPTION_KEY ); ?>[greeting]"><?php echo esc_textarea( $settings['greeting'] ); ?></textarea></td>
+						<td><textarea id="lsc_greeting" class="large-text" rows="3" name="<?php echo $option_key; ?>[greeting]"><?php echo esc_textarea( $settings['greeting'] ); ?></textarea></td>
 					</tr>
 				</table>
+
+				<h2><?php esc_html_e( 'Avatar', 'lionard-simple-chat' ); ?></h2>
+				<table class="form-table" role="presentation">
+					<tr>
+						<th scope="row"><?php esc_html_e( 'Image', 'lionard-simple-chat' ); ?></th>
+						<td>
+							<input type="hidden" id="lsc_avatar_id" name="<?php echo $option_key; ?>[avatar_attachment_id]" value="<?php echo esc_attr( $avatar_id ); ?>">
+							<div id="lsc_avatar_preview" style="margin-bottom:10px;">
+								<?php if ( $avatar_src ) : ?>
+									<img src="<?php echo esc_url( $avatar_src[0] ); ?>" width="84" height="84" style="border-radius:50%;object-fit:cover;display:block;border:3px solid #ddd;">
+								<?php else : ?>
+									<div style="width:84px;height:84px;border-radius:50%;background:linear-gradient(135deg,#fde68a,#f59e0b);display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:800;color:#0f172a;border:3px solid #ddd;">L</div>
+								<?php endif; ?>
+							</div>
+							<button type="button" id="lsc_avatar_select" class="button"><?php esc_html_e( 'Choisir une image', 'lionard-simple-chat' ); ?></button>
+							<?php if ( $avatar_id > 0 ) : ?>
+								<button type="button" id="lsc_avatar_remove" class="button" style="margin-left:6px;"><?php esc_html_e( 'Supprimer', 'lionard-simple-chat' ); ?></button>
+							<?php else : ?>
+								<button type="button" id="lsc_avatar_remove" class="button" style="margin-left:6px;display:none;"><?php esc_html_e( 'Supprimer', 'lionard-simple-chat' ); ?></button>
+							<?php endif; ?>
+							<p class="description"><?php esc_html_e( 'Image carree recommandee. Si vide, la lettre L est affichee.', 'lionard-simple-chat' ); ?></p>
+						</td>
+					</tr>
+				</table>
+
+				<h2><?php esc_html_e( 'Position du widget', 'lionard-simple-chat' ); ?></h2>
+				<table class="form-table" role="presentation">
+					<tr>
+						<th scope="row"><?php esc_html_e( 'Bureau — cote', 'lionard-simple-chat' ); ?></th>
+						<td>
+							<select name="<?php echo $option_key; ?>[pos_desktop_side]">
+								<option value="right" <?php selected( $settings['pos_desktop_side'] ?? 'right', 'right' ); ?>><?php esc_html_e( 'Droite', 'lionard-simple-chat' ); ?></option>
+								<option value="left"  <?php selected( $settings['pos_desktop_side'] ?? 'right', 'left' ); ?>><?php esc_html_e( 'Gauche', 'lionard-simple-chat' ); ?></option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<th scope="row"><label for="lsc_pos_desktop_bottom"><?php esc_html_e( 'Bureau — distance du bas (px)', 'lionard-simple-chat' ); ?></label></th>
+						<td>
+							<input id="lsc_pos_desktop_bottom" type="number" min="0" max="200" style="width:80px;" name="<?php echo $option_key; ?>[pos_desktop_bottom]" value="<?php echo esc_attr( $settings['pos_desktop_bottom'] ?? '18' ); ?>">
+						</td>
+					</tr>
+					<tr>
+						<th scope="row"><?php esc_html_e( 'Mobile — position', 'lionard-simple-chat' ); ?></th>
+						<td>
+							<select name="<?php echo $option_key; ?>[pos_mobile_side]">
+								<option value="right"  <?php selected( $settings['pos_mobile_side'] ?? 'right', 'right' ); ?>><?php esc_html_e( 'Droite', 'lionard-simple-chat' ); ?></option>
+								<option value="center" <?php selected( $settings['pos_mobile_side'] ?? 'right', 'center' ); ?>><?php esc_html_e( 'Centre', 'lionard-simple-chat' ); ?></option>
+								<option value="left"   <?php selected( $settings['pos_mobile_side'] ?? 'right', 'left' ); ?>><?php esc_html_e( 'Gauche', 'lionard-simple-chat' ); ?></option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<th scope="row"><label for="lsc_pos_mobile_bottom"><?php esc_html_e( 'Mobile — distance du bas (px)', 'lionard-simple-chat' ); ?></label></th>
+						<td>
+							<input id="lsc_pos_mobile_bottom" type="number" min="0" max="200" style="width:80px;" name="<?php echo $option_key; ?>[pos_mobile_bottom]" value="<?php echo esc_attr( $settings['pos_mobile_bottom'] ?? '10' ); ?>">
+						</td>
+					</tr>
+				</table>
+
 				<?php submit_button( __( 'Enregistrer', 'lionard-simple-chat' ) ); ?>
 			</form>
 		</div>
+
+		<script>
+		(function () {
+			var selectBtn  = document.getElementById('lsc_avatar_select');
+			var removeBtn  = document.getElementById('lsc_avatar_remove');
+			var idInput    = document.getElementById('lsc_avatar_id');
+			var preview    = document.getElementById('lsc_avatar_preview');
+			if (!selectBtn || !idInput || !preview) return;
+
+			var frame;
+
+			selectBtn.addEventListener('click', function (e) {
+				e.preventDefault();
+				if (frame) { frame.open(); return; }
+				frame = wp.media({
+					title:    '<?php esc_html_e( 'Choisir l\'avatar', 'lionard-simple-chat' ); ?>',
+					button:   { text: '<?php esc_html_e( 'Utiliser cette image', 'lionard-simple-chat' ); ?>' },
+					multiple: false,
+					library:  { type: 'image' }
+				});
+				frame.on('select', function () {
+					var attachment = frame.state().get('selection').first().toJSON();
+					var src = (attachment.sizes && attachment.sizes.thumbnail)
+						? attachment.sizes.thumbnail.url
+						: attachment.url;
+					idInput.value = attachment.id;
+					preview.innerHTML = '<img src="' + src + '" width="84" height="84" style="border-radius:50%;object-fit:cover;display:block;border:3px solid #ddd;">';
+					if (removeBtn) removeBtn.style.display = '';
+				});
+				frame.open();
+			});
+
+			if (removeBtn) {
+				removeBtn.addEventListener('click', function (e) {
+					e.preventDefault();
+					idInput.value = '0';
+					preview.innerHTML = '<div style="width:84px;height:84px;border-radius:50%;background:linear-gradient(135deg,#fde68a,#f59e0b);display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:800;color:#0f172a;border:3px solid #ddd;">L</div>';
+					removeBtn.style.display = 'none';
+				});
+			}
+		}());
+		</script>
 		<?php
 	}
 

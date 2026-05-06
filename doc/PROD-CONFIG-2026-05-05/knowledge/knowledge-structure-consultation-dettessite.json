@@ -1,0 +1,165 @@
+{
+"version": "3.0",
+"bot_name": "Lionard",
+"company": "dettes.ca - Groupe Leblanc Syndic",
+
+"business_context": {
+"mission": "Aider les visiteurs à comprendre leur situation de dettes, les qualifier et les orienter vers la bonne solution ou un rendez-vous si pertinent.",
+"does_offer": [
+"consultation gratuite",
+"proposition de consommateur",
+"faillite personnelle",
+"solutions pour dettes d’entreprise",
+"outils financiers gratuits"
+],
+"does_not_offer": [
+"prêt",
+"financement",
+"emprunt"
+]
+},
+
+"pages": [
+
+```
+{
+  "id": "solutions_dettes",
+  "title": "Solutions dettes personnelles",
+  "url": "https://www.dettes.ca/solutions-endettement/",
+  "type": "conversion",
+
+  "signals": [
+    "dettes élevées",
+    "incapacité de payer",
+    "paiements minimum",
+    "appels créanciers",
+    "stress financier",
+    "cartes de crédit max"
+  ],
+
+  "solutions": [
+    {
+      "id": "proposition_consommateur",
+      "name": "Proposition de consommateur",
+      "description": "Réduire les dettes et faire un seul paiement mensuel",
+      "url": "https://www.dettes.ca/solutions-endettement/proposition-de-consommateur/"
+    },
+    {
+      "id": "faillite_personnelle",
+      "name": "Faillite personnelle",
+      "description": "Effacer les dettes en dernier recours",
+      "url": "https://www.dettes.ca/solutions-endettement/faillite-personnelle/"
+    }
+  ]
+},
+
+{
+  "id": "pourquoi_dettes_ca",
+  "title": "Pourquoi choisir dettes.ca",
+  "url": "https://www.dettes.ca/pourquoi-dettes-ca/",
+  "type": "trust",
+
+  "points": [
+    "20 ans d’expérience",
+    "consultation gratuite",
+    "confidentiel",
+    "approche humaine",
+    "syndics autorisés"
+  ]
+},
+
+{
+  "id": "liens_pratiques",
+  "title": "Liens pratiques",
+  "url": "https://www.dettes.ca/liens-pratiques/",
+  "type": "support",
+
+  "categories": [
+    "emploi",
+    "santé mentale",
+    "séparation",
+    "urgence"
+  ]
+},
+
+{
+  "id": "contact",
+  "title": "Nous joindre",
+  "url": "https://www.dettes.ca/nous-joindre/",
+  "type": "conversion_funnel",
+
+  "steps": [
+    "profil",
+    "besoin",
+    "solution"
+  ]
+},
+
+{
+  "id": "outil_budget",
+  "title": "Budget personnel",
+  "url": "https://www.dettes.ca/nos-outils/budget-personnel-en-ligne/",
+  "type": "tool",
+
+  "data": [
+    "revenus",
+    "dépenses",
+    "dettes"
+  ]
+}
+```
+
+],
+
+"intents": [
+
+```
+{
+  "id": "dettes",
+  "keywords": ["dettes", "payer", "endetté"],
+  "score": 2
+},
+
+{
+  "id": "rdv",
+  "keywords": ["rendez-vous", "rdv"],
+  "score": 5
+},
+
+{
+  "id": "pret",
+  "keywords": ["prêt", "emprunt"],
+  "score": -2
+},
+
+{
+  "id": "stress",
+  "keywords": ["stress", "anxiété"],
+  "score": 3
+}
+```
+
+],
+
+"decision_engine": {
+
+```
+"rules": [
+  {
+    "if": "intent == pret",
+    "action": "refuse"
+  },
+  {
+    "if": "score >= 8",
+    "action": "propose_rdv"
+  },
+  {
+    "if": "score < 4",
+    "action": "propose_outils"
+  }
+]
+```
+
+}
+
+}

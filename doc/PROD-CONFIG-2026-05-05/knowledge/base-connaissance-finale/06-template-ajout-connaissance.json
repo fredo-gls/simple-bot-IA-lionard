@@ -1,0 +1,125 @@
+{
+  "_meta": {
+    "version": "1.0",
+    "updated": "2026-05-03",
+    "description": "Template de référence pour ajouter de nouvelles entrées à la base de connaissance de Lionard. Copier ce fichier, renommer (07-sujet.json, 08-sujet.json...), remplir les entrées, puis importer via artisan.",
+    "import_command": "php artisan knowledge:import-json Doc/knowledge/base-connaissance-finale/06-template-ajout-connaissance.json --source=NOM-SOURCE",
+    "dry_run_command": "php artisan knowledge:import-json Doc/knowledge/base-connaissance-finale/06-template-ajout-connaissance.json --dry-run",
+    "champs_supportes": {
+      "title": "Titre ou question (REQUIS)",
+      "content": "Réponse ou explication (REQUIS)",
+      "language": "fr (défaut) ou en",
+      "category": "Informatif seulement — non utilisé par le RAG mais utile pour vous repérer"
+    },
+    "conseils": [
+      "1 entrée = 1 sujet précis — éviter les entrées fourre-tout",
+      "Le 'content' doit être autonome : lisible sans contexte externe",
+      "Longueur idéale du content : 50 à 400 mots",
+      "Varier les formulations de title (question directe, reformulation, mot-clé)",
+      "Créer plusieurs entrées pour le même sujet sous des angles différents"
+    ]
+  },
+  "entries": [
+
+    {
+      "_categorie": "FAILLITE PERSONNELLE",
+      "title": "C'est quoi la faillite personnelle ?",
+      "content": "La faillite personnelle est un processus légal encadré par la Loi sur la faillite et l'insolvabilité (LFI). Elle permet à une personne insolvable d'être libérée de la majorité de ses dettes non garanties en échange d'une cession de certains actifs à un syndic autorisé. La durée minimale est de 9 mois pour une première faillite sans surplus de revenus. Après la libération, la plupart des dettes sont effacées. La faillite est inscrite au dossier de crédit pendant 6 ans (première faillite) ou 14 ans (deuxième faillite)."
+    },
+    {
+      "title": "Qui peut déclarer faillite au Québec ?",
+      "content": "Toute personne physique ou morale résidant au Canada qui est insolvable (incapable de payer ses dettes à échéance) et dont les dettes dépassent 1 000 $. L'emploi n'est pas requis. Il suffit d'être insolvable au sens de la LFI (art. 2)."
+    },
+    {
+      "title": "Combien de temps dure une faillite personnelle ?",
+      "content": "Première faillite sans surplus de revenus : 9 mois minimum. Première faillite avec surplus de revenus : 21 mois. Deuxième faillite sans surplus : 24 mois. Deuxième faillite avec surplus : 36 mois. Le calcul du surplus de revenus est basé sur les normes de l'OSB (Bureau du surintendant des faillites)."
+    },
+
+    {
+      "_categorie": "PROPOSITION DE CONSOMMATEUR",
+      "title": "C'est quoi la proposition de consommateur ?",
+      "content": "La proposition de consommateur est une entente légale négociée entre vous et vos créanciers, administrée par un syndic autorisé en insolvabilité. Vous proposez de rembourser une partie de vos dettes (souvent entre 20 % et 70 % du total) sur une période maximale de 5 ans. Si la majorité des créanciers (en valeur) acceptent, tous sont liés par l'entente — même ceux qui ont voté contre. C'est souvent une alternative préférable à la faillite car vous conservez vos actifs et l'impact sur le crédit est moindre (inscription pendant 3 ans après la dernière mensualité)."
+    },
+    {
+      "title": "Différence entre faillite et proposition de consommateur",
+      "content": "Faillite : vous cédez vos actifs non exemptés au syndic et êtes libéré rapidement (9 mois). Proposition : vous gardez vos actifs et remboursez une partie négociée sur 5 ans max. La faillite est plus rapide mais l'impact crédit dure plus longtemps (6 vs 3 ans). La proposition coûte généralement plus cher au total mais préserve mieux votre patrimoine. Le choix dépend de votre situation personnelle — c'est ce qu'une conseillère GLS évalue avec vous."
+    },
+
+    {
+      "_categorie": "CONSOLIDATION DE DETTES",
+      "title": "C'est quoi la consolidation de dettes ?",
+      "content": "La consolidation regroupe plusieurs dettes en un seul prêt à taux d'intérêt réduit. Vous continuez à rembourser 100 % du capital. Elle convient aux personnes qui arrivent encore à faire leurs paiements mais veulent simplifier leur situation et réduire leurs intérêts. Condition : avoir un dossier de crédit suffisamment bon pour obtenir un prêt consolidé auprès d'une banque ou d'une coopérative."
+    },
+    {
+      "title": "Quand la consolidation n'est plus une option ?",
+      "content": "Quand votre cote de crédit est trop basse pour obtenir un prêt, que vos dettes dépassent votre capacité de remboursement réelle, ou que vous ne faites plus face aux paiements minimums. Dans ces cas, une proposition de consommateur ou une faillite personnelle est généralement plus adaptée. Une conseillère GLS peut évaluer laquelle convient à votre situation."
+    },
+
+    {
+      "_categorie": "RECOUVREMENT ET CRÉANCIERS",
+      "title": "Les appels de créanciers vont-ils arrêter si je dépose une proposition ?",
+      "content": "Oui. Dès le dépôt d'une proposition de consommateur ou d'une faillite, une suspension automatique entre en vigueur (LFI art. 69.3). Tous les appels, procédures judiciaires et saisies doivent cesser immédiatement. Les créanciers ne peuvent plus vous contacter directement — ils doivent passer par le syndic."
+    },
+    {
+      "title": "Qu'est-ce qu'une saisie-salaire et comment l'arrêter ?",
+      "content": "Une saisie-salaire est une ordonnance judiciaire qui force votre employeur à retenir une partie de votre salaire pour la remettre à un créancier. Au Québec, un créancier doit d'abord obtenir un jugement, puis une ordonnance de saisie. Le dépôt d'une proposition de consommateur ou d'une faillite suspend immédiatement la saisie-salaire en vertu de la LFI. Si vous avez reçu un avis de saisie, c'est une urgence — contactez un syndic rapidement."
+    },
+    {
+      "title": "Peut-on me poursuivre en justice pour des dettes ?",
+      "content": "Oui. Un créancier peut obtenir un jugement contre vous si vous ne payez pas. Avec ce jugement, il peut saisir vos biens, votre salaire ou geler votre compte bancaire. Pour éviter d'en arriver là, il est important d'agir avant qu'une poursuite soit complétée. Une proposition de consommateur ou une faillite déposée avant le jugement final suspend les procédures."
+    },
+
+    {
+      "_categorie": "IMPACT CRÉDIT",
+      "title": "Quel est l'impact d'une faillite sur mon crédit ?",
+      "content": "Une faillite est inscrite à votre dossier de crédit (Equifax et TransUnion) pendant 6 ans après la libération pour une première faillite, et 14 ans pour une deuxième. Votre cote devient R9 (le pire score). Cela dit, des milliers de Québécois reconstruisent leur crédit progressivement après une faillite avec une carte de crédit sécurisée, des prêts REER garantis et une gestion rigoureuse. La plupart atteignent une cote acceptable en 2 à 3 ans."
+    },
+    {
+      "title": "Quel est l'impact d'une proposition de consommateur sur mon crédit ?",
+      "content": "La proposition est inscrite à votre dossier de crédit pendant 3 ans après le dernier paiement (ou 6 ans après la date de dépôt, selon le délai le plus court). La cote devient R7 pendant la durée de la proposition. L'impact est moins sévère que la faillite, et la reconstruction du crédit commence dès que la proposition est complétée."
+    },
+
+    {
+      "_categorie": "NOVAPLAN",
+      "title": "C'est quoi NovaPlan ?",
+      "content": "NovaPlan est un outil de simulation de remboursement développé par Groupe Leblanc Syndic. Il permet de visualiser différentes stratégies pour rembourser vos dettes (avalanche, boule de neige, consolidation) et de comparer leur impact sur votre budget. NovaPlan est gratuit et ne nécessite pas de rendez-vous. Il est recommandé aux personnes qui gèrent encore leurs paiements et veulent planifier avant que la situation se détériore. Accès : https://app.novaplan.ca/add-debts"
+    },
+    {
+      "title": "Quand recommander NovaPlan plutôt qu'un RDV GLS ?",
+      "content": "NovaPlan convient aux personnes qui : arrivent encore à faire leurs paiements minimums, n'ont pas de pression active de créanciers (pas d'appels, pas de mise en demeure), veulent comprendre leurs options ou anticiper, ou cherchent un plan de remboursement sans avoir besoin d'une solution d'insolvabilité. Si la situation s'aggrave après NovaPlan, un RDV GLS est toujours disponible."
+    },
+
+    {
+      "_categorie": "ABONDANCE360",
+      "title": "C'est quoi Abondance360 ?",
+      "content": "Abondance360 est la plateforme de formation en ligne de Groupe Leblanc Syndic, dédiée à la liberté financière et à la gestion de l'argent. Elle propose des formations gratuites et payantes sur la budgétisation, la reconstruction du crédit, les habitudes financières saines et la sortie du cycle d'endettement. Accès : https://abondance360.com"
+    },
+    {
+      "title": "Quand orienter vers Abondance360 ?",
+      "content": "Abondance360 est recommandé aux personnes : sans dettes problématiques actuelles, en reconstruction après avoir réglé leurs dettes (faillite ou proposition complétée), qui veulent apprendre à mieux gérer leur argent, ou qui cherchent à prévenir un futur endettement. Ce n'est pas un substitut à une consultation GLS si des dettes urgentes existent."
+    },
+
+    {
+      "_categorie": "PROCESSUS GLS / CONSULTATION",
+      "title": "Comment se passe une consultation avec Groupe Leblanc Syndic ?",
+      "content": "La consultation initiale avec une conseillère GLS est gratuite, confidentielle et sans engagement. Elle dure environ 45 minutes à 1 heure. La conseillère analyse votre situation financière complète (dettes, revenus, actifs, objectifs) et vous présente toutes les options disponibles selon votre cas. Il n'y a aucune obligation de procéder après la rencontre. Pour prendre rendez-vous : https://www.dettes.ca/clinique-liberte"
+    },
+    {
+      "title": "Est-ce que la consultation GLS est vraiment gratuite ?",
+      "content": "Oui, la consultation initiale est entièrement gratuite. Groupe Leblanc Syndic est rémunéré par les fonds distribués aux créanciers selon la réglementation fédérale — pas par les personnes qu'il accompagne. Il n'y a aucun frais pour évaluer votre situation et recevoir des conseils lors de la première rencontre."
+    },
+
+    {
+      "_categorie": "ANGLAIS — EXEMPLES (language: en)",
+      "title": "What is a consumer proposal?",
+      "content": "A consumer proposal is a legal agreement under the Bankruptcy and Insolvency Act (BIA). You offer to repay a portion of your debts (typically 20–70%) over up to 5 years. A Licensed Insolvency Trustee (LIT) administers the process. If the majority of creditors (by dollar value) accept, all are bound by the agreement. You keep your assets and the credit impact is less severe than bankruptcy (stays on your credit file for 3 years after the last payment).",
+      "language": "en"
+    },
+    {
+      "title": "How do I stop collection calls in Quebec?",
+      "content": "Once a consumer proposal or bankruptcy is filed, an automatic stay of proceedings takes effect under the BIA (s. 69.3). All collection calls, lawsuits, and wage garnishments must stop immediately. Creditors must deal directly with your trustee and cannot contact you. If you are receiving daily collection calls, this is an urgent situation — speak with a GLS advisor as soon as possible.",
+      "language": "en"
+    }
+
+  ]
+}

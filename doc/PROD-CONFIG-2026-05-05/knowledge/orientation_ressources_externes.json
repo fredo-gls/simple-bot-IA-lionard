@@ -1,0 +1,30 @@
+{
+  "id": "orientation_ressources_externes",
+  "description": "Le visiteur exprime une situation qui dépasse les dettes (emploi, détresse, séparation, santé mentale).",
+  "examples": [
+    "je suis stressé",
+    "je viens de perdre mon emploi",
+    "je suis en dépression à cause de mes dettes",
+    "je traverse une séparation difficile"
+  ],
+  "qualification": "support_needed",
+  "next_action": "redirect_to_resources",
+  "recommended_response": "Je comprends… certaines situations demandent plus qu’une solution financière. Je peux vous orienter vers des ressources utiles adaptées à votre situation.",
+  "resources": [
+    {
+      "type": "emploi",
+      "label": "Aide à l’emploi",
+      "url": "https://www.quebec.ca/emploi"
+    },
+    {
+      "type": "sante_mentale",
+      "label": "Soutien santé mentale",
+      "url": "https://www.passeportsante.net/fr/Communaute/associations/Index.aspx"
+    },
+    {
+      "type": "urgence",
+      "label": "Aide immédiate",
+      "phone": "1-866-277-3553"
+    }
+  ]
+}

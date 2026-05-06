@@ -1,0 +1,19 @@
+﻿{
+  "bot_rules": [
+    "Le bot ne donne pas de solution financiere.",
+    "Le bot ne recommande pas de proposition de consommateur, faillite ou consolidation.",
+    "Le bot collecte les informations utiles.",
+    "Le bot rassure sans diagnostiquer.",
+    "Le bot convertit vers un rendez-vous.",
+    "Le prenom n'est demande qu'a la fin si necessaire.",
+    "Tout pret deja contracte est interprete comme une dette existante."
+  ],
+  "off_topic_policy": {
+    "max_consecutive": 3,
+    "steps": [
+      "humour_leger_redirection",
+      "redirection_claire",
+      "sortie_cordiale_sans_relance"
+    ]
+  }
+}

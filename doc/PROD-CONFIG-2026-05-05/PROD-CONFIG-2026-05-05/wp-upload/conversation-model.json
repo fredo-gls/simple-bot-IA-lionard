@@ -1,0 +1,122 @@
+﻿{
+  "debt_taxonomy": {
+    "cartes_credit": {
+      "aliases": ["carte", "cartes", "carte de credit", "visa", "mastercard"],
+      "fautes_frequentes": ["cart", "credi", "carte credit"],
+      "profil": "dettes renouvelables a interets eleves",
+      "question_suivante": "Est-ce que vous arrivez a faire plus que le paiement minimum ?",
+      "garde_fou": "Ne pas proposer de solution technique ou juridique."
+    },
+    "marge_credit": {
+      "aliases": ["marge", "marge de credit", "line of credit"],
+      "fautes_frequentes": ["marje", "marg", "marge credit"],
+      "profil": "credit revolving souvent combine aux cartes",
+      "question_suivante": "Votre marge est-elle utilisee en grande partie ?",
+      "garde_fou": "Confirmer s il existe d autres dettes en parallele."
+    },
+    "pret_etudiant": {
+      "aliases": ["pret etudiant", "dette etudiante", "aide financiere"],
+      "fautes_frequentes": ["pret etudient", "pret etudian", "etudient"],
+      "profil": "dette liee aux etudes, possiblement gouvernementale",
+      "question_suivante": "Depuis combien de temps avez-vous termine vos etudes ?",
+      "garde_fou": "Ne pas promettre l effacement de dette."
+    },
+    "pret_auto": {
+      "aliases": ["pret auto", "financement auto", "paiement auto"],
+      "fautes_frequentes": ["pret otto", "preto", "auto pret"],
+      "profil": "dette garantie associee au vehicule",
+      "question_suivante": "Avez-vous des retards sur le paiement auto ?",
+      "garde_fou": "Ne pas conseiller de vendre ou conserver un actif."
+    },
+    "pret_personnel": {
+      "aliases": ["pret personnel", "emprunt personnel", "loan personnel"],
+      "fautes_frequentes": ["pret personel", "pret pers", "emprun"],
+      "profil": "dette amortissable souvent cumulee avec cartes/marge",
+      "question_suivante": "Le paiement mensuel est-il encore gerable ?",
+      "garde_fou": "Rester en qualification, pas de prescription de produit."
+    },
+    "impots": {
+      "aliases": ["impot", "impots", "arc", "revenu quebec", "taxes dues"],
+      "fautes_frequentes": ["impo", "inpot", "tax impots"],
+      "profil": "dette fiscale avec pression administrative potentielle",
+      "question_suivante": "Avez-vous recu des avis ou des relances officielles ?",
+      "garde_fou": "Ne pas donner d avis fiscal ou legal."
+    },
+    "loyer": {
+      "aliases": ["loyer", "retard loyer", "bail", "rent"],
+      "fautes_frequentes": ["loiier", "loyer en retar", "retar loyer"],
+      "profil": "pression de tresorerie et risque de logement",
+      "question_suivante": "Avez-vous des retards de loyer en ce moment ?",
+      "garde_fou": "Ne pas faire de conseil locatif juridique."
+    },
+    "recouvrement": {
+      "aliases": ["recouvrement", "agence", "collection", "creancier"],
+      "fautes_frequentes": ["recouv", "recovery", "colleciton"],
+      "profil": "pression active, appels et relances",
+      "question_suivante": "Recevez-vous des appels de creanciers regulierement ?",
+      "garde_fou": "Prioriser l urgence sans dramatiser."
+    },
+    "dettes_entreprise": {
+      "aliases": ["dette entreprise", "dettes entreprise", "commercial", "societe"],
+      "fautes_frequentes": ["dette entreprize", "det entreprise"],
+      "profil": "passif professionnel, possiblement mixe perso/pro",
+      "question_suivante": "Votre entreprise est-elle toujours active ?",
+      "garde_fou": "Basculer vers flow entreprise."
+    },
+    "multiples_dettes": {
+      "aliases": ["plusieurs dettes", "multiples dettes", "plusieurs credits"],
+      "fautes_frequentes": ["plusieur dettes", "multiple dette"],
+      "profil": "endettement diffuse multi-produits",
+      "question_suivante": "Quels sont les 2-3 types de dettes principaux ?",
+      "garde_fou": "Demander structure avant recommandation."
+    },
+    "inconnu": {
+      "aliases": ["je ne sais pas", "inconnu", "pas sur"],
+      "fautes_frequentes": ["j sais pas", "incnnu"],
+      "profil": "information insuffisante",
+      "question_suivante": "Pouvez-vous me dire le type de paiement le plus difficile en ce moment ?",
+      "garde_fou": "Ne pas inferrer une dette sans confirmation."
+    }
+  },
+  "flows": {
+    "particulier": {
+      "fields": ["type_dette", "montant_total", "retard_paiement", "appels_creanciers", "revenu_emploi", "budget_serre", "logement", "urgence", "disponibilite_rdv"]
+    },
+    "entreprise": {
+      "fields": ["type_entreprise", "type_dettes", "montant_total", "entreprise_active", "employes", "taxes_DAS", "pression_creanciers", "caution_personnelle", "objectif", "disponibilite_rdv"]
+    }
+  },
+  "intents": [
+    "intention_dette_generale",
+    "intention_carte_credit",
+    "intention_pret_etudiant",
+    "intention_dette_impot",
+    "intention_marge_credit",
+    "intention_pret_auto",
+    "intention_entreprise",
+    "intention_recouvrement",
+    "intention_rdv",
+    "intention_urgence_emotionnelle",
+    "intention_inconnu"
+  ],
+  "bot_rules": [
+    "Le bot ne donne pas de solution financiere.",
+    "Le bot ne recommande pas de proposition de consommateur, faillite ou consolidation.",
+    "Le bot collecte les informations utiles.",
+    "Le bot rassure sans diagnostiquer.",
+    "Le bot convertit vers un rendez-vous.",
+    "Le prenom n'est demande qu'a la fin si necessaire.",
+    "Tout pret deja contracte est interprete comme une dette existante."
+  ],
+  "test_scenarios": [
+    "j'ai une carte",
+    "j'ai un pret etudient",
+    "je dois de l'argent aux impots",
+    "mon entreprise a des dettes",
+    "j'ai plusieurs dettes",
+    "je recois des appels",
+    "je veux juste m'informer",
+    "je suis en retard",
+    "je ne sais pas quoi faire"
+  ]
+}

@@ -1,0 +1,15 @@
+﻿{
+  "debt_taxonomy": {
+    "cartes_credit": {"aliases": ["carte", "cartes", "carte de credit", "visa", "mastercard"], "fautes_frequentes": ["cart", "credi", "carte credit"]},
+    "marge_credit": {"aliases": ["marge", "marge de credit", "line of credit"], "fautes_frequentes": ["marje", "marg", "marge credit"]},
+    "pret_etudiant": {"aliases": ["pret etudiant", "dette etudiante", "aide financiere"], "fautes_frequentes": ["pret etudient", "pret etudian", "etudient"]},
+    "pret_auto": {"aliases": ["pret auto", "financement auto", "paiement auto"], "fautes_frequentes": ["pret otto", "preto", "auto pret"]},
+    "pret_personnel": {"aliases": ["pret personnel", "emprunt personnel", "loan personnel"], "fautes_frequentes": ["pret personel", "pret pers", "emprun"]},
+    "impots": {"aliases": ["impot", "impots", "arc", "revenu quebec", "taxes dues"], "fautes_frequentes": ["impo", "inpot", "tax impots"]},
+    "loyer": {"aliases": ["loyer", "retard loyer", "bail", "rent"], "fautes_frequentes": ["loiier", "loyer en retar", "retar loyer"]},
+    "recouvrement": {"aliases": ["recouvrement", "agence", "collection", "creancier"], "fautes_frequentes": ["recouv", "recovery", "colleciton"]},
+    "dettes_entreprise": {"aliases": ["dette entreprise", "dettes entreprise", "commercial", "societe"], "fautes_frequentes": ["dette entreprize", "det entreprise"]},
+    "multiples_dettes": {"aliases": ["plusieurs dettes", "multiples dettes", "plusieurs credits"], "fautes_frequentes": ["plusieur dettes", "multiple dette"]},
+    "inconnu": {"aliases": ["je ne sais pas", "inconnu", "pas sur"], "fautes_frequentes": ["j sais pas", "incnnu"]}
+  }
+}

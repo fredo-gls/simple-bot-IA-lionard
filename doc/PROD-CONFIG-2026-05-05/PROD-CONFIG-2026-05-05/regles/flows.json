@@ -1,0 +1,10 @@
+﻿{
+  "flows": {
+    "particulier": {
+      "fields": ["type_dette", "montant_total", "retard_paiement", "appels_creanciers", "revenu_emploi", "budget_serre", "logement", "urgence", "disponibilite_rdv"]
+    },
+    "entreprise": {
+      "fields": ["type_entreprise", "type_dettes", "montant_total", "entreprise_active", "employes", "taxes_DAS", "pression_creanciers", "caution_personnelle", "objectif", "disponibilite_rdv"]
+    }
+  }
+}
