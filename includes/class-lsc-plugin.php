@@ -4,6 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+require_once LSC_PATH . 'includes/class-lsc-knowledge.php';
 require_once LSC_PATH . 'includes/class-lsc-admin.php';
 require_once LSC_PATH . 'includes/class-lsc-rest.php';
 
@@ -29,6 +30,7 @@ class LSC_Plugin {
 		if ( false === get_option( self::OPTION_KEY ) ) {
 			add_option( self::OPTION_KEY, self::defaults() );
 		}
+		LSC_Knowledge::create_table();
 	}
 
 	public static function defaults() {
@@ -104,6 +106,7 @@ PROMPT;
 	}
 
 	private function __construct() {
+		LSC_Knowledge::create_table();
 		new LSC_Admin();
 		new LSC_REST();
 

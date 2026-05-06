@@ -9,6 +9,7 @@ class LSC_Admin {
 	public function __construct() {
 		add_action( 'admin_menu', array( $this, 'register_menu' ) );
 		add_action( 'admin_init', array( $this, 'register_settings' ) );
+		add_action( 'admin_init', array( $this, 'handle_knowledge_actions' ) );
 	}
 
 	public function register_menu() {
@@ -45,7 +46,7 @@ class LSC_Admin {
 		);
 	}
 
-	public function sanitize_settings( $raw ) {
+	public function sanitize_settings( $raw ): array {
 		$raw      = is_array( $raw ) ? $raw : array();
 		$previous = LSC_Plugin::get_settings();
 		$defaults = LSC_Plugin::defaults();
@@ -141,7 +142,7 @@ class LSC_Admin {
 		return $out;
 	}
 
-	private function sanitize_hosts( $value ) {
+	private function sanitize_hosts( string $value ): string {
 		$hosts = preg_split( '/[\r\n,]+/', wp_unslash( $value ) );
 		$hosts = is_array( $hosts ) ? $hosts : array();
 		$clean = array();
@@ -315,16 +316,433 @@ class LSC_Admin {
 	}
 
 	// =========================================================================
-	// 4. Connaissances
+	// 4. Connaissances — actions CRUD (admin_init, avant tout output)
+	// =========================================================================
+
+	public function handle_knowledge_actions() {
+		if ( ! isset( $_GET['page'] ) || 'lionard-chat-connaissances' !== $_GET['page'] ) {
+			return;
+		}
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+
+		$base_url = admin_url( 'admin.php?page=lionard-chat-connaissances' );
+
+		// ---- POST : ajouter ou mettre a jour --------------------------------
+		if ( ! empty( $_POST['lsc_kb_action'] ) ) {
+			$action = sanitize_key( wp_unslash( (string) $_POST['lsc_kb_action'] ) );
+
+			if ( 'add' === $action ) {
+				check_admin_referer( 'lsc_kb_add' );
+
+				$type    = sanitize_key( wp_unslash( (string) ( $_POST['kb_type'] ?? 'text' ) ) );
+				$title   = sanitize_text_field( wp_unslash( (string) ( $_POST['kb_title'] ?? '' ) ) );
+				$content = sanitize_textarea_field( wp_unslash( (string) ( $_POST['kb_content'] ?? '' ) ) );
+				$url     = esc_url_raw( wp_unslash( (string) ( $_POST['kb_url'] ?? '' ) ) );
+
+				if ( 'url' === $type && '' !== $url && '' === trim( $content ) ) {
+					$fetched = LSC_Knowledge::fetch_url_content( $url );
+					if ( '' === $fetched ) {
+						wp_safe_redirect( add_query_arg( 'kb_notice', 'url_error', $base_url ) );
+						exit;
+					}
+					$content = $fetched;
+				}
+
+				if ( '' === trim( $content ) ) {
+					wp_safe_redirect( add_query_arg( 'kb_notice', 'empty', $base_url ) );
+					exit;
+				}
+
+				$result = LSC_Knowledge::insert( array(
+					'type'       => $type,
+					'title'      => $title,
+					'content'    => $content,
+					'source_url' => $url,
+				) );
+
+				wp_safe_redirect( add_query_arg( 'kb_notice', $result ? 'added' : 'error', $base_url ) );
+				exit;
+			}
+
+			if ( 'update' === $action ) {
+				check_admin_referer( 'lsc_kb_update' );
+
+				$id      = absint( $_POST['kb_id'] ?? 0 );
+				$type    = sanitize_key( wp_unslash( (string) ( $_POST['kb_type'] ?? 'text' ) ) );
+				$title   = sanitize_text_field( wp_unslash( (string) ( $_POST['kb_title'] ?? '' ) ) );
+				$content = sanitize_textarea_field( wp_unslash( (string) ( $_POST['kb_content'] ?? '' ) ) );
+
+				if ( 0 === $id || '' === trim( $content ) ) {
+					wp_safe_redirect( add_query_arg( 'kb_notice', 'empty', $base_url ) );
+					exit;
+				}
+
+				$result = LSC_Knowledge::update( $id, array(
+					'type'    => $type,
+					'title'   => $title,
+					'content' => $content,
+				) );
+
+				wp_safe_redirect( add_query_arg( 'kb_notice', false !== $result ? 'updated' : 'error', $base_url ) );
+				exit;
+			}
+
+			if ( 'json_import' === $action ) {
+				check_admin_referer( 'lsc_kb_json_import' );
+
+				$file = $_FILES['kb_json_file'] ?? null;
+				if ( ! is_array( $file ) || ! isset( $file['error'] ) || UPLOAD_ERR_OK !== (int) $file['error'] ) {
+					wp_safe_redirect( add_query_arg( 'kb_notice', 'upload_error', $base_url ) );
+					exit;
+				}
+
+				$ext = strtolower( (string) pathinfo( (string) $file['name'], PATHINFO_EXTENSION ) );
+				if ( 'json' !== $ext ) {
+					wp_safe_redirect( add_query_arg( 'kb_notice', 'json_invalid', $base_url ) );
+					exit;
+				}
+
+				// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+				$raw = file_get_contents( (string) $file['tmp_name'] );
+				if ( false === $raw ) {
+					wp_safe_redirect( add_query_arg( 'kb_notice', 'upload_error', $base_url ) );
+					exit;
+				}
+
+				$data = json_decode( $raw, true );
+				if ( ! is_array( $data ) || JSON_ERROR_NONE !== json_last_error() ) {
+					wp_safe_redirect( add_query_arg( 'kb_notice', 'json_invalid', $base_url ) );
+					exit;
+				}
+
+				$entries = $this->parse_json_entries( $data );
+				if ( empty( $entries ) ) {
+					wp_safe_redirect( add_query_arg( 'kb_notice', 'json_empty', $base_url ) );
+					exit;
+				}
+
+				$imported = 0;
+				foreach ( $entries as $entry ) {
+					if ( LSC_Knowledge::insert( $entry ) ) {
+						$imported++;
+					}
+				}
+
+				wp_safe_redirect( add_query_arg( array( 'kb_notice' => 'imported', 'kb_count' => $imported ), $base_url ) );
+				exit;
+			}
+		}
+
+		// ---- GET : supprimer ou basculer ------------------------------------
+		if ( ! empty( $_GET['kb_action'] ) ) {
+			$action = sanitize_key( wp_unslash( (string) $_GET['kb_action'] ) );
+			$id     = absint( $_GET['kb_id'] ?? 0 );
+
+			if ( 0 === $id ) {
+				return;
+			}
+
+			if ( 'delete' === $action ) {
+				check_admin_referer( 'lsc_kb_delete_' . $id );
+				LSC_Knowledge::delete( $id );
+				wp_safe_redirect( add_query_arg( 'kb_notice', 'deleted', $base_url ) );
+				exit;
+			}
+
+			if ( 'toggle' === $action ) {
+				check_admin_referer( 'lsc_kb_toggle_' . $id );
+				LSC_Knowledge::toggle_active( $id );
+				wp_safe_redirect( add_query_arg( 'kb_notice', 'toggled', $base_url ) );
+				exit;
+			}
+		}
+	}
+
+	/**
+	 * Parse a decoded JSON array/object into normalized KB entries.
+	 *
+	 * Formats accepted:
+	 *   1. Standard  : [{"type":"faq","title":"Q?","content":"R."},...]
+	 *   2. question/answer: [{"question":"Q?","answer":"R."},...]
+	 *   3. q/a court : [{"q":"Q?","a":"R."},...]
+	 *   4. Objet clé/valeur : {"Q?":"R.","Titre":"Texte",...}
+	 */
+	private function parse_json_entries( array $data ): array {
+		$entries      = array();
+		$valid_types  = array( 'faq', 'text', 'url' );
+
+		// Format 4 : objet clé => valeur (les clés ne sont pas des indices numériques)
+		$keys = array_keys( $data );
+		$is_map = ! empty( $keys ) && ! is_int( $keys[0] );
+		if ( $is_map ) {
+			foreach ( $data as $title => $content ) {
+				if ( is_string( $title ) && is_string( $content ) && '' !== trim( $content ) ) {
+					$entries[] = array( 'type' => 'faq', 'title' => $title, 'content' => $content );
+				}
+			}
+			return $entries;
+		}
+
+		// Formats 1, 2, 3 : tableau d'objets
+		foreach ( $data as $item ) {
+			if ( ! is_array( $item ) ) {
+				continue;
+			}
+
+			$title   = '';
+			$content = '';
+			$type    = 'faq';
+
+			// Format 1 : champs standards
+			if ( isset( $item['content'] ) ) {
+				$content = (string) $item['content'];
+				$title   = (string) ( $item['title'] ?? $item['question'] ?? '' );
+				$type    = in_array( $item['type'] ?? '', $valid_types, true ) ? (string) $item['type'] : 'faq';
+
+			// Format 2 : question / answer
+			} elseif ( isset( $item['question'], $item['answer'] ) ) {
+				$title   = (string) $item['question'];
+				$content = (string) $item['answer'];
+
+			// Format 3 : q / a
+			} elseif ( isset( $item['q'], $item['a'] ) ) {
+				$title   = (string) $item['q'];
+				$content = (string) $item['a'];
+			}
+
+			if ( '' !== trim( $content ) ) {
+				$entries[] = array(
+					'type'    => $type,
+					'title'   => sanitize_text_field( $title ),
+					'content' => sanitize_textarea_field( $content ),
+				);
+			}
+		}
+
+		return $entries;
+	}
+
+	// =========================================================================
+	// 4. Connaissances — page d'affichage
 	// =========================================================================
 
 	public function render_connaissances() {
 		$this->check_access();
+
+		$edit_id    = absint( $_GET['kb_edit'] ?? 0 );
+		$edit_entry = $edit_id > 0 ? LSC_Knowledge::get_by_id( $edit_id ) : null;
+		$entries    = LSC_Knowledge::get_entries();
+		$count      = LSC_Knowledge::count();
+		$active_cnt = LSC_Knowledge::count( true );
+		$base_url   = admin_url( 'admin.php?page=lionard-chat-connaissances' );
+
+		$notice    = sanitize_key( wp_unslash( (string) ( $_GET['kb_notice'] ?? '' ) ) );
+		$imported_count = absint( $_GET['kb_count'] ?? 0 );
+		$notices = array(
+			'added'        => array( 'success', 'Entree ajoutee.' ),
+			'updated'      => array( 'success', 'Entree mise a jour.' ),
+			'deleted'      => array( 'success', 'Entree supprimee.' ),
+			'toggled'      => array( 'success', 'Statut modifie.' ),
+			'imported'     => array( 'success', $imported_count . ' entree(s) importee(s).' ),
+			'empty'        => array( 'error', 'Le contenu est requis.' ),
+			'url_error'    => array( 'error', 'Impossible de recuperer le contenu de l\'URL.' ),
+			'upload_error' => array( 'error', 'Erreur lors du chargement du fichier.' ),
+			'json_invalid' => array( 'error', 'Fichier JSON invalide ou mal forme.' ),
+			'json_empty'   => array( 'error', 'Aucune entree valide trouvee dans le fichier.' ),
+			'error'        => array( 'error', 'Une erreur est survenue.' ),
+		);
+
+		$type_labels = array( 'faq' => 'FAQ', 'text' => 'Texte', 'url' => 'URL' );
+		$current_type = $edit_entry ? (string) $edit_entry['type'] : 'text';
 		?>
 		<div class="wrap">
-			<h1><?php esc_html_e( 'Connaissances', 'lionard-simple-chat' ); ?></h1>
-			<p><?php esc_html_e( 'Ajoutez des FAQ, textes, PDF ou URLs pour enrichir les reponses de Lionard.', 'lionard-simple-chat' ); ?></p>
-			<div class="notice notice-info inline"><p><?php esc_html_e( 'Fonctionnalite a venir.', 'lionard-simple-chat' ); ?></p></div>
+			<h1>
+				<?php esc_html_e( 'Connaissances', 'lionard-simple-chat' ); ?>
+				<span style="font-size:13px;font-weight:400;color:#777;margin-left:8px;">
+					<?php echo esc_html( $active_cnt . ' / ' . $count ); ?> <?php esc_html_e( 'actives', 'lionard-simple-chat' ); ?>
+				</span>
+			</h1>
+
+			<?php if ( '' !== $notice && isset( $notices[ $notice ] ) ) :
+				[ $type_cls, $msg ] = $notices[ $notice ]; ?>
+				<div class="notice notice-<?php echo esc_attr( $type_cls ); ?> is-dismissible">
+					<p><?php echo esc_html( $msg ); ?></p>
+				</div>
+			<?php endif; ?>
+
+			<!-- Formulaire ajouter / modifier -->
+			<div class="card" style="max-width:800px;padding:16px 20px;margin-bottom:24px;">
+				<h2 style="margin-top:0;">
+					<?php echo $edit_entry
+						? esc_html__( 'Modifier l\'entree', 'lionard-simple-chat' )
+						: esc_html__( 'Ajouter une entree', 'lionard-simple-chat' ); ?>
+				</h2>
+				<form method="post">
+					<?php if ( $edit_entry ) :
+						wp_nonce_field( 'lsc_kb_update' ); ?>
+						<input type="hidden" name="lsc_kb_action" value="update">
+						<input type="hidden" name="kb_id" value="<?php echo esc_attr( $edit_entry['id'] ); ?>">
+					<?php else :
+						wp_nonce_field( 'lsc_kb_add' ); ?>
+						<input type="hidden" name="lsc_kb_action" value="add">
+					<?php endif; ?>
+
+					<table class="form-table" style="margin-top:0;" role="presentation">
+						<tr>
+							<th scope="row" style="width:130px;"><?php esc_html_e( 'Type', 'lionard-simple-chat' ); ?></th>
+							<td>
+								<select name="kb_type" id="lsc_kb_type">
+									<?php foreach ( $type_labels as $val => $label ) : ?>
+										<option value="<?php echo esc_attr( $val ); ?>" <?php selected( $current_type, $val ); ?>>
+											<?php echo esc_html( $label ); ?>
+										</option>
+									<?php endforeach; ?>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<th scope="row"><?php esc_html_e( 'Titre / Question', 'lionard-simple-chat' ); ?></th>
+							<td>
+								<input class="large-text" type="text" name="kb_title"
+									value="<?php echo esc_attr( (string) ( $edit_entry['title'] ?? '' ) ); ?>"
+									placeholder="<?php esc_attr_e( 'Titre ou question (optionnel pour Texte)', 'lionard-simple-chat' ); ?>">
+							</td>
+						</tr>
+						<tr id="lsc_kb_url_row" style="display:<?php echo 'url' === $current_type ? 'table-row' : 'none'; ?>;">
+							<th scope="row"><?php esc_html_e( 'URL a importer', 'lionard-simple-chat' ); ?></th>
+							<td>
+								<input class="large-text" type="url" name="kb_url"
+									value="<?php echo esc_attr( (string) ( $edit_entry['source_url'] ?? '' ) ); ?>"
+									placeholder="https://...">
+								<p class="description"><?php esc_html_e( 'Le contenu de la page sera importe et nettoye. Laissez le champ Contenu vide pour l\'importer automatiquement.', 'lionard-simple-chat' ); ?></p>
+							</td>
+						</tr>
+						<tr>
+							<th scope="row"><?php esc_html_e( 'Contenu / Reponse', 'lionard-simple-chat' ); ?></th>
+							<td>
+								<textarea class="large-text code" name="kb_content" rows="6"
+									placeholder="<?php esc_attr_e( 'Texte de la reponse ou information...', 'lionard-simple-chat' ); ?>"><?php echo esc_textarea( (string) ( $edit_entry['content'] ?? '' ) ); ?></textarea>
+							</td>
+						</tr>
+					</table>
+
+					<?php submit_button(
+						$edit_entry ? __( 'Mettre a jour', 'lionard-simple-chat' ) : __( 'Ajouter', 'lionard-simple-chat' ),
+						'primary', 'submit', false
+					); ?>
+					<?php if ( $edit_entry ) : ?>
+						<a href="<?php echo esc_url( $base_url ); ?>" class="button" style="margin-left:8px;">
+							<?php esc_html_e( 'Annuler', 'lionard-simple-chat' ); ?>
+						</a>
+					<?php endif; ?>
+				</form>
+			</div>
+
+			<script>
+			(function () {
+				var sel = document.getElementById('lsc_kb_type');
+				var row = document.getElementById('lsc_kb_url_row');
+				if (!sel || !row) return;
+				sel.addEventListener('change', function () {
+					row.style.display = (this.value === 'url') ? 'table-row' : 'none';
+				});
+			}());
+			</script>
+
+			<!-- Import JSON -->
+			<div class="card" style="max-width:800px;padding:16px 20px;margin-bottom:24px;">
+				<h2 style="margin-top:0;"><?php esc_html_e( 'Importer un fichier JSON', 'lionard-simple-chat' ); ?></h2>
+				<form method="post" enctype="multipart/form-data">
+					<?php wp_nonce_field( 'lsc_kb_json_import' ); ?>
+					<input type="hidden" name="lsc_kb_action" value="json_import">
+					<table class="form-table" style="margin-top:0;" role="presentation">
+						<tr>
+							<th scope="row" style="width:130px;"><label for="lsc_kb_json_file"><?php esc_html_e( 'Fichier .json', 'lionard-simple-chat' ); ?></label></th>
+							<td>
+								<input id="lsc_kb_json_file" type="file" name="kb_json_file" accept=".json,application/json">
+								<p class="description">
+									<?php esc_html_e( 'Formats acceptes :', 'lionard-simple-chat' ); ?>
+									<br><strong><?php esc_html_e( '1. Standard', 'lionard-simple-chat' ); ?></strong>
+									<code>[{"type":"faq","title":"Q?","content":"R."},...]</code>
+									<br><strong><?php esc_html_e( '2. question/answer', 'lionard-simple-chat' ); ?></strong>
+									<code>[{"question":"Q?","answer":"R."},...]</code>
+									<br><strong><?php esc_html_e( '3. q/a court', 'lionard-simple-chat' ); ?></strong>
+									<code>[{"q":"Q?","a":"R."},...]</code>
+									<br><strong><?php esc_html_e( '4. Objet cle/valeur', 'lionard-simple-chat' ); ?></strong>
+									<code>{"Titre ou question":"Contenu ou reponse",...}</code>
+								</p>
+							</td>
+						</tr>
+					</table>
+					<?php submit_button( __( 'Importer', 'lionard-simple-chat' ), 'secondary', 'submit', false ); ?>
+				</form>
+			</div>
+
+			<!-- Liste des entrees -->
+			<?php if ( empty( $entries ) ) : ?>
+				<p><?php esc_html_e( 'Aucune entree. Ajoutez votre premiere entree ci-dessus.', 'lionard-simple-chat' ); ?></p>
+			<?php else : ?>
+				<table class="wp-list-table widefat fixed striped">
+					<thead>
+						<tr>
+							<th style="width:44px;">ID</th>
+							<th style="width:60px;"><?php esc_html_e( 'Type', 'lionard-simple-chat' ); ?></th>
+							<th style="width:30%;"><?php esc_html_e( 'Titre', 'lionard-simple-chat' ); ?></th>
+							<th><?php esc_html_e( 'Contenu (apercu)', 'lionard-simple-chat' ); ?></th>
+							<th style="width:72px;"><?php esc_html_e( 'Statut', 'lionard-simple-chat' ); ?></th>
+							<th style="width:200px;"><?php esc_html_e( 'Actions', 'lionard-simple-chat' ); ?></th>
+						</tr>
+					</thead>
+					<tbody>
+					<?php foreach ( $entries as $entry ) :
+						$eid     = (int) $entry['id'];
+						$active  = (bool) $entry['active'];
+						$preview = mb_substr( (string) $entry['content'], 0, 110, 'UTF-8' );
+						if ( mb_strlen( (string) $entry['content'], 'UTF-8' ) > 110 ) {
+							$preview .= '…';
+						}
+						$toggle_url = wp_nonce_url(
+							add_query_arg( array( 'kb_action' => 'toggle', 'kb_id' => $eid ), $base_url ),
+							'lsc_kb_toggle_' . $eid
+						);
+						$delete_url = wp_nonce_url(
+							add_query_arg( array( 'kb_action' => 'delete', 'kb_id' => $eid ), $base_url ),
+							'lsc_kb_delete_' . $eid
+						);
+						$edit_url = add_query_arg( 'kb_edit', $eid, $base_url );
+					?>
+						<tr>
+							<td><?php echo esc_html( $eid ); ?></td>
+							<td><?php echo esc_html( $type_labels[ $entry['type'] ] ?? $entry['type'] ); ?></td>
+							<td><?php echo esc_html( '' !== $entry['title'] ? $entry['title'] : '—' ); ?></td>
+							<td style="color:#666;font-size:12px;"><?php echo esc_html( $preview ); ?></td>
+							<td>
+								<?php if ( $active ) : ?>
+									<span style="color:#00a32a;">&#9679; <?php esc_html_e( 'Actif', 'lionard-simple-chat' ); ?></span>
+								<?php else : ?>
+									<span style="color:#aaa;">&#9675; <?php esc_html_e( 'Inactif', 'lionard-simple-chat' ); ?></span>
+								<?php endif; ?>
+							</td>
+							<td>
+								<a href="<?php echo esc_url( $edit_url ); ?>"><?php esc_html_e( 'Modifier', 'lionard-simple-chat' ); ?></a>
+								&nbsp;|&nbsp;
+								<a href="<?php echo esc_url( $toggle_url ); ?>">
+									<?php echo esc_html( $active ? __( 'Desactiver', 'lionard-simple-chat' ) : __( 'Activer', 'lionard-simple-chat' ) ); ?>
+								</a>
+								&nbsp;|&nbsp;
+								<a href="<?php echo esc_url( $delete_url ); ?>"
+									style="color:#d63638;"
+									onclick="return confirm('<?php esc_attr_e( 'Supprimer cette entree ?', 'lionard-simple-chat' ); ?>')">
+									<?php esc_html_e( 'Supprimer', 'lionard-simple-chat' ); ?>
+								</a>
+							</td>
+						</tr>
+					<?php endforeach; ?>
+					</tbody>
+				</table>
+			<?php endif; ?>
 		</div>
 		<?php
 	}
