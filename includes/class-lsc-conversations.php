@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class LSC_Conversations {
 
-	const DB_VERSION = '1';
+	const DB_VERSION = '2';
 
 	public static function session_table_name() {
 		global $wpdb;
@@ -18,15 +18,21 @@ class LSC_Conversations {
 		return $wpdb->prefix . 'lsc_messages';
 	}
 
+	public static function cta_events_table_name() {
+		global $wpdb;
+		return $wpdb->prefix . 'lsc_cta_events';
+	}
+
 	public static function create_tables() {
 		if ( get_option( 'lsc_conversations_db_version' ) === self::DB_VERSION ) {
 			return;
 		}
 
 		global $wpdb;
-		$sessions_table = self::session_table_name();
-		$messages_table = self::message_table_name();
-		$charset        = $wpdb->get_charset_collate();
+		$sessions_table    = self::session_table_name();
+		$messages_table    = self::message_table_name();
+		$cta_events_table  = self::cta_events_table_name();
+		$charset           = $wpdb->get_charset_collate();
 
 		$sql_sessions = "CREATE TABLE {$sessions_table} (
 			id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -63,9 +69,22 @@ class LSC_Conversations {
 			KEY idx_created_at (created_at)
 		) {$charset};";
 
+		$sql_cta_events = "CREATE TABLE {$cta_events_table} (
+			id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+			session_key VARCHAR(64) NOT NULL DEFAULT '',
+			cta_type VARCHAR(32) NOT NULL DEFAULT 'autre',
+			cta_url VARCHAR(2083) NOT NULL DEFAULT '',
+			page_url VARCHAR(2083) NOT NULL DEFAULT '',
+			created_at DATETIME NOT NULL,
+			PRIMARY KEY (id),
+			KEY idx_cta_type (cta_type),
+			KEY idx_created_at (created_at)
+		) {$charset};";
+
 		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 		dbDelta( $sql_sessions );
 		dbDelta( $sql_messages );
+		dbDelta( $sql_cta_events );
 		update_option( 'lsc_conversations_db_version', self::DB_VERSION );
 	}
 
