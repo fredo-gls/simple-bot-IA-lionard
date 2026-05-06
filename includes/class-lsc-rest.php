@@ -40,6 +40,26 @@ class LSC_REST {
 				'permission_callback' => array( $this, 'permission_chat' ),
 			)
 		);
+
+		register_rest_route(
+			'lionard-simple/v1',
+			'/collect-email',
+			array(
+				'methods'             => WP_REST_Server::CREATABLE,
+				'callback'            => array( $this, 'handle_collect_email' ),
+				'permission_callback' => array( $this, 'permission_chat' ),
+			)
+		);
+
+		register_rest_route(
+			'lionard-simple/v1',
+			'/cta-event',
+			array(
+				'methods'             => WP_REST_Server::CREATABLE,
+				'callback'            => array( $this, 'handle_cta_event' ),
+				'permission_callback' => array( $this, 'permission_chat' ),
+			)
+		);
 	}
 
 	public function permission_chat( WP_REST_Request $request ) {
@@ -216,6 +236,48 @@ class LSC_REST {
 		return new WP_REST_Response( array( 'ok' => true ), 200 );
 	}
 
+	public function handle_collect_email( WP_REST_Request $request ) {
+		$session_id = sanitize_text_field( (string) $request->get_param( 'session_id' ) );
+		$email      = sanitize_email( (string) $request->get_param( 'email' ) );
+
+		if ( '' === $session_id || ! is_email( $email ) ) {
+			return new WP_REST_Response( array( 'message' => 'Donnees invalides.' ), 400 );
+		}
+
+		$context = array(
+			'ip'         => $this->get_client_ip(),
+			'user_agent' => isset( $_SERVER['HTTP_USER_AGENT'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) ) : '',
+			'page_url'   => esc_url_raw( (string) $request->get_param( 'page_url' ) ),
+		);
+
+		if ( class_exists( 'LSC_Conversations' ) ) {
+			LSC_Conversations::ensure_session( $session_id, $context );
+			LSC_Conversations::set_visitor_email( $session_id, $email );
+		}
+
+		return new WP_REST_Response( array( 'ok' => true ), 200 );
+	}
+
+	public function handle_cta_event( WP_REST_Request $request ) {
+		$session_id = sanitize_text_field( (string) $request->get_param( 'session_id' ) );
+		if ( '' === $session_id ) {
+			return new WP_REST_Response( array( 'message' => 'Session manquante.' ), 400 );
+		}
+
+		if ( class_exists( 'LSC_Conversations' ) ) {
+			LSC_Conversations::log_cta_event(
+				$session_id,
+				array(
+					'cta_type' => sanitize_key( (string) $request->get_param( 'cta_type' ) ),
+					'cta_url'  => esc_url_raw( (string) $request->get_param( 'cta_url' ) ),
+					'page_url' => esc_url_raw( (string) $request->get_param( 'page_url' ) ),
+				)
+			);
+		}
+
+		return new WP_REST_Response( array( 'ok' => true ), 200 );
+	}
+
 	private function build_instructions( array $settings, string $kb_context = '', string $site_context = '' ) {
 		$prompt = trim( (string) ( $settings['prompt'] ?? '' ) );
 		if ( '' === $prompt ) {
@@ -380,11 +442,6 @@ class LSC_REST {
 	}
 
 	private function get_client_ip() {
-		$cf = sanitize_text_field( wp_unslash( (string) ( $_SERVER['HTTP_CF_CONNECTING_IP'] ?? '' ) ) );
-		if ( '' !== $cf && filter_var( $cf, FILTER_VALIDATE_IP ) ) {
-			return $cf;
-		}
-
 		$remote = sanitize_text_field( wp_unslash( (string) ( $_SERVER['REMOTE_ADDR'] ?? '' ) ) );
 		if ( '' !== $remote && filter_var( $remote, FILTER_VALIDATE_IP ) ) {
 			return $remote;

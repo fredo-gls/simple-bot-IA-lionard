@@ -4,6 +4,7 @@
   const config = window.LionardSimpleChat || {};
   const STORAGE_KEY = "lionard_simple_chat_history_v1";
   const SESSION_KEY = "lionard_simple_chat_session_v1";
+  const EMAIL_KEY   = "lionard_simple_chat_email_v1";
 
   function init() {
     attachFormliftContextFromQuery();
@@ -15,24 +16,81 @@
       document.body.appendChild(shell);
     }
 
-    const launcher = shell.querySelector(".lsc-launcher");
-    const panel    = shell.querySelector(".lsc-panel");
-    const close    = shell.querySelector(".lsc-close");
-    const messages = shell.querySelector(".lsc-messages");
-    const form     = shell.querySelector(".lsc-form");
-    const input    = shell.querySelector(".lsc-input");
-    const send     = shell.querySelector(".lsc-send");
-    const restart  = shell.querySelector(".lsc-restart");
+    const launcher   = shell.querySelector(".lsc-launcher");
+    const panel      = shell.querySelector(".lsc-panel");
+    const close      = shell.querySelector(".lsc-close");
+    const messages   = shell.querySelector(".lsc-messages");
+    const form       = shell.querySelector(".lsc-form");
+    const input      = shell.querySelector(".lsc-input");
+    const send       = shell.querySelector(".lsc-send");
+    const restart    = shell.querySelector(".lsc-restart");
+    const footer     = shell.querySelector(".lsc-footer");
+    const emailGate  = shell.querySelector(".lsc-email-gate");
+    const emailForm  = emailGate  ? emailGate.querySelector(".lsc-email-gate__form")  : null;
+    const emailInput = emailGate  ? emailGate.querySelector(".lsc-email-gate__input") : null;
+    const emailBtn   = emailGate  ? emailGate.querySelector(".lsc-email-gate__btn")   : null;
+    const emailError = emailGate  ? emailGate.querySelector(".lsc-email-gate__error") : null;
 
     if (!launcher || !panel || !messages || !form || !input || !send) return;
 
     shell.style.setProperty("--lsc-primary", config.primaryColor || "#1652f0");
     shell.style.setProperty("--lsc-accent",  config.accentColor  || "#f59e0b");
 
-    let history    = loadHistory();
-    let sending    = false;
-    let stayClosed = false; // locked after RDV click when rdvKeepClosed is true
-    const sessionId = getOrCreateSessionId();
+    let history        = loadHistory();
+    let sending        = false;
+    let stayClosed     = false;
+    let collectedEmail = loadStoredEmail();
+    let sessionId      = getOrCreateSessionId();
+
+    // ── Email gate ─────────────────────────────────────────────────────────
+
+    function needsEmailGate() {
+      return !!config.emailGateEnabled && !collectedEmail && !!emailGate;
+    }
+
+    function showEmailGate() {
+      if (!emailGate) return;
+      emailGate.hidden = false;
+      form.hidden      = true;
+      if (footer) footer.hidden = true;
+      if (emailInput) requestAnimationFrame(() => emailInput.focus());
+    }
+
+    function closeEmailGate(email) {
+      collectedEmail = email;
+      saveStoredEmail(email);
+      if (emailGate) emailGate.hidden = true;
+      form.hidden = false;
+      if (footer) footer.hidden = false;
+      focusInput();
+    }
+
+    if (emailForm) {
+      emailForm.addEventListener("submit", async function (e) {
+        e.preventDefault();
+        if (!emailInput) return;
+        const email = emailInput.value.trim();
+        if (!isValidEmail(email)) {
+          emailInput.classList.add("is-invalid");
+          if (emailError) emailError.hidden = false;
+          emailInput.focus();
+          return;
+        }
+        emailInput.classList.remove("is-invalid");
+        if (emailError) emailError.hidden = true;
+        if (emailBtn) emailBtn.disabled = true;
+
+        await fetch((config.restUrl || "") + "/collect-email", {
+          method: "POST",
+          credentials: "same-origin",
+          headers: { "Content-Type": "application/json", "X-WP-Nonce": config.nonce || "" },
+          body: JSON.stringify({ session_id: sessionId, email: email, page_url: window.location.href })
+        }).catch(() => {});
+
+        if (emailBtn) emailBtn.disabled = false;
+        closeEmailGate(email);
+      });
+    }
 
     // ── Panel ──────────────────────────────────────────────────────────────
 
@@ -43,7 +101,11 @@
         panel.classList.add("is-open");
         shell.classList.add("is-open");
         launcher.setAttribute("aria-expanded", "true");
-        focusInput();
+        if (needsEmailGate()) {
+          showEmailGate();
+        } else {
+          focusInput();
+        }
       });
     }
 
@@ -79,6 +141,7 @@
       const targetUrl = buildAppointmentUrl(url);
       logRdvEvent(targetUrl);
       sendRdvEvent(targetUrl);
+      sendCtaEvent("rdv_" + detectRdvType(url), url);
       closePanel();
       if (config.rdvKeepClosed) stayClosed = true;
       openAppointmentModal(targetUrl, () => {
@@ -102,6 +165,8 @@
     restart?.addEventListener("click", () => {
       history = [];
       saveHistory(history);
+      sessionId = createSessionId();
+      try { window.localStorage.setItem(SESSION_KEY, sessionId); } catch (_e) {}
       renderInitial();
       focusInput();
     });
@@ -129,7 +194,8 @@
             session_id: sessionId,
             page_url: window.location.href,
             message: text,
-            history: requestHistory
+            history: requestHistory,
+            visitor_email: collectedEmail || ""
           }),
         });
 
@@ -197,7 +263,11 @@
       bubble.className = "lsc-bubble";
 
       if (role === "assistant") {
-        renderBotContent(String(text || ""), bubble, { isRdv: isRdvUrl, onRdvClick: onAppointmentClick });
+        renderBotContent(String(text || ""), bubble, {
+        isRdv: isRdvUrl,
+        onRdvClick: onAppointmentClick,
+        onCtaClick: function(url) { sendCtaEvent(detectCtaType(url), url); }
+      });
       } else {
         appendTextWithBreaks(bubble, String(text || ""));
       }
@@ -228,6 +298,7 @@
     }
 
     renderInitial();
+    if (needsEmailGate()) showEmailGate();
     bindFormliftMessages();
 
     function sendRdvEvent(url) {
@@ -243,6 +314,23 @@
           page_url: window.location.href,
           rdv_url: url,
           rdv_type: detectRdvType(url)
+        })
+      }).catch(() => {});
+    }
+
+    function sendCtaEvent(ctaType, url) {
+      fetch((config.restUrl || "") + "/cta-event", {
+        method: "POST",
+        credentials: "same-origin",
+        headers: {
+          "Content-Type": "application/json",
+          "X-WP-Nonce": config.nonce || ""
+        },
+        body: JSON.stringify({
+          session_id: sessionId,
+          page_url: window.location.href,
+          cta_type: String(ctaType || "autre"),
+          cta_url: String(url || "")
         })
       }).catch(() => {});
     }
@@ -291,6 +379,9 @@
         target.searchParams.set("lsc_rdv_url", String(url || ""));
         target.searchParams.set("lsc_form_source", "lionard-simple-chat");
         target.searchParams.set("lsc_page_url", window.location.href);
+        if (collectedEmail) {
+          target.searchParams.set("lsc_visitor_email", collectedEmail);
+        }
         return target.href;
       } catch (_error) {
         return url;
@@ -332,6 +423,9 @@
         link.target     = "_blank";
         link.rel        = "noopener noreferrer";
         link.textContent = label;
+        if (opts && opts.onCtaClick) {
+          link.addEventListener("click", function() { opts.onCtaClick(url); });
+        }
         container.appendChild(link);
       }
       renderedButton = true;
@@ -405,6 +499,17 @@
     });
   }
 
+  function detectCtaType(url) {
+    try {
+      const parsed = new URL(url);
+      const host   = parsed.hostname.toLowerCase();
+      const path   = parsed.pathname.toLowerCase();
+      if (host.includes("abondance360")) return "abondance360";
+      if (path.includes("novaplan") || host.includes("novaplan")) return "novaplan";
+    } catch (_e) {}
+    return "autre";
+  }
+
   function sanitizeAllowedUrl(value) {
     try {
       const parsed  = new URL(value, window.location.origin);
@@ -433,6 +538,18 @@
     try {
       window.localStorage.setItem(STORAGE_KEY, JSON.stringify(history.slice(-20)));
     } catch (_error) {}
+  }
+
+  function loadStoredEmail() {
+    try { return window.localStorage.getItem(EMAIL_KEY) || ""; } catch (_e) { return ""; }
+  }
+
+  function saveStoredEmail(email) {
+    try { window.localStorage.setItem(EMAIL_KEY, String(email || "")); } catch (_e) {}
+  }
+
+  function isValidEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(email || ""));
   }
 
   function removeNode(node) {
@@ -467,12 +584,23 @@
       const forms = document.querySelectorAll("form.formlift-form-container, .formlift-form-container form");
       if (!forms.length) return;
 
+      const visitorEmail = params.get("lsc_visitor_email") || "";
+
       forms.forEach((form) => {
         ensureHiddenField(form, "lsc_session_id", sessionId);
         ensureHiddenField(form, "lsc_rdv_type", params.get("lsc_rdv_type") || "");
         ensureHiddenField(form, "lsc_rdv_url", params.get("lsc_rdv_url") || window.location.href);
         ensureHiddenField(form, "lsc_form_source", params.get("lsc_form_source") || "lionard-simple-chat");
         ensureHiddenField(form, "lsc_page_url", params.get("lsc_page_url") || window.location.href);
+
+        if (visitorEmail && isValidEmail(visitorEmail)) {
+          const emailField = form.querySelector('input[type="email"], input[name*="email"], input[id*="email"]');
+          if (emailField && !emailField.value) {
+            emailField.value = visitorEmail;
+            emailField.dispatchEvent(new Event("input",  { bubbles: true }));
+            emailField.dispatchEvent(new Event("change", { bubbles: true }));
+          }
+        }
       });
     } catch (_error) {
       // ignore

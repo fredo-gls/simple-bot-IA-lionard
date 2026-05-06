@@ -164,6 +164,34 @@ class LSC_Admin {
 			$out['allowed_cta_hosts'] = $previous['allowed_cta_hosts'] ?? $defaults['allowed_cta_hosts'];
 		}
 
+		// Email gate
+		if ( array_key_exists( 'email_gate', $raw ) ) {
+			$out['email_gate'] = ! empty( $raw['email_gate'] ) ? '1' : '0';
+		} else {
+			$out['email_gate'] = $previous['email_gate'] ?? $defaults['email_gate'];
+		}
+
+		if ( array_key_exists( 'email_gate_title', $raw ) ) {
+			$out['email_gate_title'] = sanitize_textarea_field( wp_unslash( (string) $raw['email_gate_title'] ) );
+			if ( '' === trim( $out['email_gate_title'] ) ) {
+				$out['email_gate_title'] = $defaults['email_gate_title'];
+			}
+		} else {
+			$out['email_gate_title'] = $previous['email_gate_title'] ?? $defaults['email_gate_title'];
+		}
+
+		if ( array_key_exists( 'rdv_email_notifications', $raw ) ) {
+			$out['rdv_email_notifications'] = ! empty( $raw['rdv_email_notifications'] ) ? '1' : '0';
+		} else {
+			$out['rdv_email_notifications'] = $previous['rdv_email_notifications'] ?? $defaults['rdv_email_notifications'];
+		}
+
+		if ( array_key_exists( 'rdv_notification_emails', $raw ) ) {
+			$out['rdv_notification_emails'] = $this->sanitize_emails( (string) $raw['rdv_notification_emails'] );
+		} else {
+			$out['rdv_notification_emails'] = $previous['rdv_notification_emails'] ?? $defaults['rdv_notification_emails'];
+		}
+
 		// Avatar attachment ID
 		if ( array_key_exists( 'avatar_attachment_id', $raw ) ) {
 			$out['avatar_attachment_id'] = (string) absint( $raw['avatar_attachment_id'] );
@@ -218,6 +246,21 @@ class LSC_Admin {
 		return implode( "\n", array_values( array_unique( $clean ) ) );
 	}
 
+	private function sanitize_emails( string $value ): string {
+		$emails = preg_split( '/[\r\n,;]+/', wp_unslash( $value ) );
+		$emails = is_array( $emails ) ? $emails : array();
+		$clean  = array();
+
+		foreach ( $emails as $email ) {
+			$email = sanitize_email( trim( (string) $email ) );
+			if ( '' !== $email && is_email( $email ) ) {
+				$clean[] = $email;
+			}
+		}
+
+		return implode( "\n", array_values( array_unique( $clean ) ) );
+	}
+
 	private function get_filter_value( string $key ): string {
 		return sanitize_text_field( wp_unslash( (string) ( $_GET[ $key ] ?? '' ) ) );
 	}
@@ -227,6 +270,206 @@ class LSC_Admin {
 		<a href="<?php echo esc_url( admin_url( 'admin.php?page=' . $page ) ); ?>" class="button">
 			<?php esc_html_e( 'Reinitialiser', 'lionard-simple-chat' ); ?>
 		</a>
+		<?php
+	}
+
+	private function normalize_summary_text( string $text ): string {
+		$text = wp_strip_all_tags( $text );
+		$text = preg_replace( '/\s+/', ' ', $text );
+		return trim( (string) $text );
+	}
+
+	private function find_first_user_message( array $messages ): string {
+		foreach ( $messages as $message ) {
+			if ( 'user' !== ( $message['role'] ?? '' ) ) {
+				continue;
+			}
+			$content = $this->normalize_summary_text( (string) ( $message['content'] ?? '' ) );
+			if ( '' !== $content ) {
+				return $content;
+			}
+		}
+
+		return '';
+	}
+
+	private function extract_amounts_from_messages( array $messages ): array {
+		$amounts = array();
+
+		foreach ( $messages as $message ) {
+			$content = (string) ( $message['content'] ?? '' );
+			if ( preg_match_all( '/\b\d[\d\s.,]{0,12}\s*\$|\$\s*\d[\d\s.,]{0,12}\b/u', $content, $matches ) ) {
+				foreach ( $matches[0] as $amount ) {
+					$amount = trim( preg_replace( '/\s+/', ' ', (string) $amount ) );
+					if ( '' !== $amount ) {
+						$amounts[] = $amount;
+					}
+				}
+			}
+		}
+
+		return array_values( array_unique( $amounts ) );
+	}
+
+	private function detect_debt_types( string $text ): array {
+		$map = array(
+			'cartes de credit' => array( 'carte', 'cartes', 'credit card', 'carte de credit' ),
+			'marge de credit'  => array( 'marge de credit', 'marge' ),
+			'pret auto'        => array( 'auto', 'vehicule', 'voiture' ),
+			'impots'           => array( 'impot', 'revenu quebec', 'arc', 'cra' ),
+			'pret etudiant'    => array( 'pret etudiant', 'etudiant' ),
+			'dettes entreprise'=> array( 'entreprise', 'compagnie', 'commerce' ),
+		);
+
+		$found = array();
+		foreach ( $map as $label => $keywords ) {
+			foreach ( $keywords as $keyword ) {
+				if ( false !== strpos( $text, $keyword ) ) {
+					$found[] = $label;
+					break;
+				}
+			}
+		}
+
+		return array_values( array_unique( $found ) );
+	}
+
+	private function extract_form_summary( array $form_data ): array {
+		$summary = array();
+		$field_map = array(
+			'prenom'            => 'Prenom',
+			'first_name'        => 'Prenom',
+			'name_first'        => 'Prenom',
+			'nom'               => 'Nom',
+			'last_name'         => 'Nom',
+			'name_last'         => 'Nom',
+			'telephone'         => 'Telephone',
+			'phone'             => 'Telephone',
+			'tel'               => 'Telephone',
+			'courriel'          => 'Courriel',
+			'email'             => 'Courriel',
+			'email_address'     => 'Courriel',
+			'ville'             => 'Ville',
+			'city'              => 'Ville',
+		);
+
+		foreach ( $form_data as $key => $value ) {
+			$key_norm = strtolower( sanitize_key( (string) $key ) );
+			if ( ! isset( $field_map[ $key_norm ] ) ) {
+				continue;
+			}
+
+			$rendered = is_array( $value ) ? implode( ', ', array_map( 'strval', $value ) ) : (string) $value;
+			$rendered = $this->normalize_summary_text( $rendered );
+			if ( '' !== $rendered ) {
+				$summary[ $field_map[ $key_norm ] ] = $rendered;
+			}
+		}
+
+		return $summary;
+	}
+
+	private function build_conversation_summary( ?array $session, array $messages ): array {
+		$summary      = array();
+		$user_texts   = array();
+		$assistant_cta = '';
+
+		foreach ( $messages as $message ) {
+			$content = $this->normalize_summary_text( (string) ( $message['content'] ?? '' ) );
+			if ( '' === $content ) {
+				continue;
+			}
+
+			if ( 'user' === ( $message['role'] ?? '' ) ) {
+				$user_texts[] = $content;
+			} elseif ( '' === $assistant_cta && false !== stripos( $content, 'rendez-vous' ) ) {
+				$assistant_cta = $content;
+			}
+		}
+
+		$user_blob_lower = strtolower( implode( ' ', $user_texts ) );
+		$first_message   = $this->find_first_user_message( $messages );
+		$amounts         = $this->extract_amounts_from_messages( $messages );
+		$debt_types      = $this->detect_debt_types( $user_blob_lower );
+		$form_data       = is_array( json_decode( (string) ( $session['form_data'] ?? '' ), true ) ) ? json_decode( (string) $session['form_data'], true ) : array();
+		$form_summary    = $this->extract_form_summary( $form_data );
+
+		if ( '' !== $first_message ) {
+			$summary['Demande initiale'] = $first_message;
+		}
+
+		if ( ! empty( $debt_types ) ) {
+			$summary['Type de dettes mentionne'] = implode( ', ', $debt_types );
+		}
+
+		if ( ! empty( $amounts ) ) {
+			$summary['Montants mentionnes'] = implode( ', ', array_slice( $amounts, 0, 4 ) );
+		}
+
+		if ( false !== strpos( $user_blob_lower, 'retard' ) || false !== strpos( $user_blob_lower, 'en retard' ) ) {
+			$summary['Paiements'] = 'Retard de paiement mentionne.';
+		} elseif ( false !== strpos( $user_blob_lower, 'minimum' ) ) {
+			$summary['Paiements'] = 'Paiement minimum mentionne.';
+		} elseif ( false !== strpos( $user_blob_lower, 'a jour' ) ) {
+			$summary['Paiements'] = 'Paiements a jour mentionnes.';
+		}
+
+		if ( false !== strpos( $user_blob_lower, 'creancier' ) || false !== strpos( $user_blob_lower, 'appel' ) || false !== strpos( $user_blob_lower, 'recouvrement' ) ) {
+			$summary['Pression des creanciers'] = 'Des appels, creanciers ou recouvrement sont mentionnes.';
+		}
+
+		if ( false !== strpos( $user_blob_lower, 'stress' ) || false !== strpos( $user_blob_lower, 'anx' ) || false !== strpos( $user_blob_lower, 'angoiss' ) || false !== strpos( $user_blob_lower, 'peur' ) ) {
+			$summary['Etat emotionnel'] = 'Du stress ou de l\'anxiete est mentionne.';
+		}
+
+		if ( ! empty( $form_summary ) ) {
+			$identity = array();
+			foreach ( array( 'Prenom', 'Nom', 'Telephone', 'Courriel', 'Ville' ) as $label ) {
+				if ( ! empty( $form_summary[ $label ] ) ) {
+					$identity[] = $label . ': ' . $form_summary[ $label ];
+				}
+			}
+			if ( ! empty( $identity ) ) {
+				$summary['Coordonnees formulaire'] = implode( ' | ', $identity );
+			}
+		}
+
+		if ( ! empty( $session['rdv_type'] ) ) {
+			$summary['Orientation'] = 'Rendez-vous ' . sanitize_text_field( (string) $session['rdv_type'] ) . '.';
+		}
+
+		if ( ! empty( $session['rdv_submitted'] ) ) {
+			$summary['Prochaine etape'] = 'Le rendez-vous a ete soumis depuis le formulaire.';
+		} elseif ( 'rdv_clicked' === ( $session['status'] ?? '' ) ) {
+			$summary['Prochaine etape'] = 'Le lien de rendez-vous a ete clique, sans soumission confirmee.';
+		} elseif ( '' !== $assistant_cta ) {
+			$summary['Prochaine etape'] = 'Le bot a oriente vers une prise de rendez-vous.';
+		}
+
+		return $summary;
+	}
+
+	private function render_conversation_summary_block( ?array $session, array $messages ): void {
+		unset( $messages );
+
+		if ( ! is_array( $session ) || empty( $session['rdv_submitted'] ) ) {
+			return;
+		}
+
+		$summary_text = trim( (string) ( $session['rdv_summary'] ?? '' ) );
+		if ( '' === $summary_text ) {
+			return;
+		}
+
+		?>
+		<div class="card" style="max-width:1200px;padding:16px 20px;margin-top:20px;border-left:4px solid #1d4ed8;">
+			<h3 style="margin-top:0;"><?php esc_html_e( 'Resume conseiller', 'lionard-simple-chat' ); ?></h3>
+			<p style="margin-top:0;color:#555;"><?php esc_html_e( 'Synthese OpenAI generee a la soumission du rendez-vous.', 'lionard-simple-chat' ); ?></p>
+			<?php if ( ! empty( $session['rdv_summary_generated_at'] ) ) : ?>
+				<p style="margin-top:0;color:#555;"><strong><?php esc_html_e( 'Genere le', 'lionard-simple-chat' ); ?> :</strong> <?php echo esc_html( $session['rdv_summary_generated_at'] ); ?></p>
+			<?php endif; ?>
+			<div style="white-space:pre-wrap;line-height:1.6;"><?php echo esc_html( $summary_text ); ?></div>
+		</div>
 		<?php
 	}
 
@@ -358,6 +601,26 @@ class LSC_Admin {
 					</tr>
 				</table>
 
+				<h2><?php esc_html_e( 'Capture e-mail', 'lionard-simple-chat' ); ?></h2>
+				<table class="form-table" role="presentation">
+					<tr>
+						<th scope="row"><?php esc_html_e( 'Activer', 'lionard-simple-chat' ); ?></th>
+						<td>
+							<input type="hidden" name="<?php echo esc_attr( LSC_Plugin::OPTION_KEY ); ?>[email_gate]" value="0">
+							<label>
+								<input type="checkbox" name="<?php echo esc_attr( LSC_Plugin::OPTION_KEY ); ?>[email_gate]" value="1" <?php checked( $settings['email_gate'] ?? '1', '1' ); ?>>
+								<?php esc_html_e( 'Demander l\'adresse e-mail avant de demarrer la conversation', 'lionard-simple-chat' ); ?>
+							</label>
+						</td>
+					</tr>
+					<tr>
+						<th scope="row"><label for="lsc_email_gate_title"><?php esc_html_e( 'Texte de la invite', 'lionard-simple-chat' ); ?></label></th>
+						<td>
+							<textarea id="lsc_email_gate_title" class="large-text" rows="3" name="<?php echo esc_attr( LSC_Plugin::OPTION_KEY ); ?>[email_gate_title]"><?php echo esc_textarea( $settings['email_gate_title'] ?? '' ); ?></textarea>
+						</td>
+					</tr>
+				</table>
+
 				<h2><?php esc_html_e( 'Recherche site', 'lionard-simple-chat' ); ?></h2>
 				<table class="form-table" role="presentation">
 					<tr>
@@ -369,6 +632,72 @@ class LSC_Admin {
 								<?php esc_html_e( 'Injecter les pages/articles WordPress pertinents dans le contexte du bot', 'lionard-simple-chat' ); ?>
 							</label>
 							<p class="description"><?php esc_html_e( 'Le bot peut proposer des boutons vers les pages trouvees. Seuls les domaines autorises ci-dessus sont permis.', 'lionard-simple-chat' ); ?></p>
+						</td>
+					</tr>
+				</table>
+
+				<h2><?php esc_html_e( 'Rendez-vous', 'lionard-simple-chat' ); ?></h2>
+				<p class="description" style="margin-bottom:12px;"><?php esc_html_e( 'Ces URL doivent aussi figurer dans la liste des domaines autorises ci-dessus. Le prompt doit utiliser exactement ces URL pour que le modal se declenche.', 'lionard-simple-chat' ); ?></p>
+				<table class="form-table" role="presentation">
+					<tr>
+						<th scope="row"><label for="lsc_rdv_particulier_url"><?php esc_html_e( 'RDV particulier', 'lionard-simple-chat' ); ?></label></th>
+						<td>
+							<input id="lsc_rdv_particulier_url" class="large-text" type="url" name="<?php echo esc_attr( LSC_Plugin::OPTION_KEY ); ?>[rdv_particulier_url]" value="<?php echo esc_attr( $settings['rdv_particulier_url'] ?? '' ); ?>">
+							<p class="description"><?php esc_html_e( 'Ex. : https://www.dettes.ca/formulaire-particulier/', 'lionard-simple-chat' ); ?></p>
+						</td>
+					</tr>
+					<tr>
+						<th scope="row"><label for="lsc_rdv_entreprise_url"><?php esc_html_e( 'RDV entreprise', 'lionard-simple-chat' ); ?></label></th>
+						<td>
+							<input id="lsc_rdv_entreprise_url" class="large-text" type="url" name="<?php echo esc_attr( LSC_Plugin::OPTION_KEY ); ?>[rdv_entreprise_url]" value="<?php echo esc_attr( $settings['rdv_entreprise_url'] ?? '' ); ?>">
+							<p class="description"><?php esc_html_e( 'Ex. : https://www.dettes.ca/formulaire-entreprise/', 'lionard-simple-chat' ); ?></p>
+						</td>
+					</tr>
+				</table>
+
+				<h2><?php esc_html_e( 'Comportement au clic RDV', 'lionard-simple-chat' ); ?></h2>
+				<table class="form-table" role="presentation">
+					<tr>
+						<th scope="row"><?php esc_html_e( 'Mode d\'ouverture', 'lionard-simple-chat' ); ?></th>
+						<td>
+							<input type="hidden" name="<?php echo esc_attr( LSC_Plugin::OPTION_KEY ); ?>[rdv_close_chat]" value="0">
+							<label>
+								<input type="checkbox" name="<?php echo esc_attr( LSC_Plugin::OPTION_KEY ); ?>[rdv_close_chat]" value="1" <?php checked( $settings['rdv_close_chat'] ?? '1', '1' ); ?>>
+								<?php esc_html_e( 'Fermer le chat et ouvrir une fenetre modale (iframe) au clic sur un bouton RDV', 'lionard-simple-chat' ); ?>
+							</label>
+							<p class="description"><?php esc_html_e( 'Desactive : le bouton RDV s\'ouvre dans un nouvel onglet comme NovaPlan.', 'lionard-simple-chat' ); ?></p>
+						</td>
+					</tr>
+					<tr>
+						<th scope="row"><?php esc_html_e( 'Apres le modal', 'lionard-simple-chat' ); ?></th>
+						<td>
+							<input type="hidden" name="<?php echo esc_attr( LSC_Plugin::OPTION_KEY ); ?>[rdv_keep_closed]" value="0">
+							<label>
+								<input type="checkbox" name="<?php echo esc_attr( LSC_Plugin::OPTION_KEY ); ?>[rdv_keep_closed]" value="1" <?php checked( $settings['rdv_keep_closed'] ?? '1', '1' ); ?>>
+								<?php esc_html_e( 'Garder le chat ferme apres la fermeture du modal (session courante)', 'lionard-simple-chat' ); ?>
+							</label>
+							<p class="description"><?php esc_html_e( 'L\'utilisateur a pris rendez-vous : le bouton flottant reste visible mais ne reouvre pas le chat.', 'lionard-simple-chat' ); ?></p>
+						</td>
+					</tr>
+				</table>
+
+				<h2><?php esc_html_e( 'Notifications RDV', 'lionard-simple-chat' ); ?></h2>
+				<table class="form-table" role="presentation">
+					<tr>
+						<th scope="row"><?php esc_html_e( 'Activer', 'lionard-simple-chat' ); ?></th>
+						<td>
+							<input type="hidden" name="<?php echo esc_attr( LSC_Plugin::OPTION_KEY ); ?>[rdv_email_notifications]" value="0">
+							<label>
+								<input type="checkbox" name="<?php echo esc_attr( LSC_Plugin::OPTION_KEY ); ?>[rdv_email_notifications]" value="1" <?php checked( $settings['rdv_email_notifications'] ?? '0', '1' ); ?>>
+								<?php esc_html_e( 'Envoyer un e-mail a chaque rendez-vous converti', 'lionard-simple-chat' ); ?>
+							</label>
+						</td>
+					</tr>
+					<tr>
+						<th scope="row"><label for="lsc_rdv_notification_emails"><?php esc_html_e( 'Destinataires', 'lionard-simple-chat' ); ?></label></th>
+						<td>
+							<textarea id="lsc_rdv_notification_emails" class="large-text code" rows="4" name="<?php echo esc_attr( LSC_Plugin::OPTION_KEY ); ?>[rdv_notification_emails]"><?php echo esc_textarea( $settings['rdv_notification_emails'] ?? '' ); ?></textarea>
+							<p class="description"><?php esc_html_e( 'Un e-mail par ligne. Le message inclura le resume OpenAI et les informations de contact remplies dans FormLift.', 'lionard-simple-chat' ); ?></p>
 						</td>
 					</tr>
 				</table>
@@ -1161,6 +1490,7 @@ class LSC_Admin {
 						<?php endforeach; ?>
 					<?php endif; ?>
 				</div>
+				<?php $this->render_conversation_summary_block( $session, $messages ); ?>
 			<?php else : ?>
 				<div class="card" style="max-width:1200px;padding:16px 20px;margin-bottom:20px;">
 					<h2 style="margin-top:0;"><?php esc_html_e( 'Rendez-vous soumis', 'lionard-simple-chat' ); ?></h2>
@@ -1226,57 +1556,6 @@ class LSC_Admin {
 					</table>
 				</div>
 			<?php endif; ?>
-
-			<form method="post" action="options.php">
-				<?php settings_fields( 'lsc_settings_group' ); ?>
-
-				<h2><?php esc_html_e( 'Liens de prise de rendez-vous', 'lionard-simple-chat' ); ?></h2>
-				<p class="description" style="margin-bottom:12px;"><?php esc_html_e( 'Ces URL doivent aussi figurer dans la liste des domaines autorises (Reglages). Le prompt doit utiliser exactement ces URL pour que le modal se declenche.', 'lionard-simple-chat' ); ?></p>
-				<table class="form-table" role="presentation">
-					<tr>
-						<th scope="row"><label for="lsc_rdv_particulier_url"><?php esc_html_e( 'RDV particulier', 'lionard-simple-chat' ); ?></label></th>
-						<td>
-							<input id="lsc_rdv_particulier_url" class="large-text" type="url" name="<?php echo esc_attr( LSC_Plugin::OPTION_KEY ); ?>[rdv_particulier_url]" value="<?php echo esc_attr( $settings['rdv_particulier_url'] ?? '' ); ?>">
-							<p class="description"><?php esc_html_e( 'Ex. : https://www.dettes.ca/formulaire-particulier/', 'lionard-simple-chat' ); ?></p>
-						</td>
-					</tr>
-					<tr>
-						<th scope="row"><label for="lsc_rdv_entreprise_url"><?php esc_html_e( 'RDV entreprise', 'lionard-simple-chat' ); ?></label></th>
-						<td>
-							<input id="lsc_rdv_entreprise_url" class="large-text" type="url" name="<?php echo esc_attr( LSC_Plugin::OPTION_KEY ); ?>[rdv_entreprise_url]" value="<?php echo esc_attr( $settings['rdv_entreprise_url'] ?? '' ); ?>">
-							<p class="description"><?php esc_html_e( 'Ex. : https://www.dettes.ca/formulaire-entreprise/', 'lionard-simple-chat' ); ?></p>
-						</td>
-					</tr>
-				</table>
-
-				<h2><?php esc_html_e( 'Comportement au clic', 'lionard-simple-chat' ); ?></h2>
-				<table class="form-table" role="presentation">
-					<tr>
-						<th scope="row"><?php esc_html_e( 'Mode d\'ouverture', 'lionard-simple-chat' ); ?></th>
-						<td>
-							<input type="hidden" name="<?php echo esc_attr( LSC_Plugin::OPTION_KEY ); ?>[rdv_close_chat]" value="0">
-							<label>
-								<input type="checkbox" name="<?php echo esc_attr( LSC_Plugin::OPTION_KEY ); ?>[rdv_close_chat]" value="1" <?php checked( $settings['rdv_close_chat'] ?? '1', '1' ); ?>>
-								<?php esc_html_e( 'Fermer le chat et ouvrir une fenetre modale (iframe) au clic sur un bouton RDV', 'lionard-simple-chat' ); ?>
-							</label>
-							<p class="description"><?php esc_html_e( 'Desactive : le bouton RDV s\'ouvre dans un nouvel onglet comme NovaPlan.', 'lionard-simple-chat' ); ?></p>
-						</td>
-					</tr>
-					<tr>
-						<th scope="row"><?php esc_html_e( 'Apres le modal', 'lionard-simple-chat' ); ?></th>
-						<td>
-							<input type="hidden" name="<?php echo esc_attr( LSC_Plugin::OPTION_KEY ); ?>[rdv_keep_closed]" value="0">
-							<label>
-								<input type="checkbox" name="<?php echo esc_attr( LSC_Plugin::OPTION_KEY ); ?>[rdv_keep_closed]" value="1" <?php checked( $settings['rdv_keep_closed'] ?? '1', '1' ); ?>>
-								<?php esc_html_e( 'Garder le chat ferme apres la fermeture du modal (session courante)', 'lionard-simple-chat' ); ?>
-							</label>
-							<p class="description"><?php esc_html_e( 'L\'utilisateur a pris rendez-vous : le bouton flottant reste visible mais ne reouvre pas le chat.', 'lionard-simple-chat' ); ?></p>
-						</td>
-					</tr>
-				</table>
-
-				<?php submit_button( __( 'Enregistrer', 'lionard-simple-chat' ) ); ?>
-			</form>
 		</div>
 		<?php
 	}
@@ -1449,11 +1728,122 @@ class LSC_Admin {
 
 	public function render_statistiques() {
 		$this->check_access();
+
+		$date_from = $this->get_filter_value( 'lsc_date_from' );
+		$date_to   = $this->get_filter_value( 'lsc_date_to' );
+
+		$rows = class_exists( 'LSC_Conversations' )
+			? LSC_Conversations::get_cta_stats( array( 'date_from' => $date_from, 'date_to' => $date_to ) )
+			: array();
+
+		$labels = array(
+			'rdv_particulier' => 'RDV Particulier',
+			'rdv_entreprise'  => 'RDV Entreprise',
+			'novaplan'        => 'NovaPlan',
+			'abondance360'    => 'Abondance360',
+			'autre'           => 'Autre',
+		);
+
+		// Index par type pour les cartes
+		$by_type = array();
+		$grand_total = 0;
+		foreach ( $rows as $row ) {
+			$by_type[ (string) $row['cta_type'] ] = (int) $row['total'];
+			$grand_total += (int) $row['total'];
+		}
+
+		$card_types = array( 'rdv_particulier', 'rdv_entreprise', 'novaplan', 'abondance360' );
 		?>
 		<div class="wrap">
 			<h1><?php esc_html_e( 'Statistiques', 'lionard-simple-chat' ); ?></h1>
-			<p><?php esc_html_e( 'Conversations, clics RDV, taux de closing, NovaPlan et Abondance360.', 'lionard-simple-chat' ); ?></p>
-			<div class="notice notice-info inline"><p><?php esc_html_e( 'Fonctionnalite a venir.', 'lionard-simple-chat' ); ?></p></div>
+
+			<!-- Filtre periode -->
+			<form method="get" style="margin:16px 0;display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap;">
+				<input type="hidden" name="page" value="lionard-chat-statistiques">
+				<div>
+					<label style="display:block;margin-bottom:4px;font-weight:600;"><?php esc_html_e( 'Du', 'lionard-simple-chat' ); ?></label>
+					<input type="date" name="lsc_date_from" value="<?php echo esc_attr( $date_from ); ?>">
+				</div>
+				<div>
+					<label style="display:block;margin-bottom:4px;font-weight:600;"><?php esc_html_e( 'Au', 'lionard-simple-chat' ); ?></label>
+					<input type="date" name="lsc_date_to" value="<?php echo esc_attr( $date_to ); ?>">
+				</div>
+				<?php submit_button( __( 'Filtrer', 'lionard-simple-chat' ), 'secondary', '', false ); ?>
+				<?php if ( '' !== $date_from || '' !== $date_to ) : ?>
+					<a href="<?php echo esc_url( admin_url( 'admin.php?page=lionard-chat-statistiques' ) ); ?>" class="button">
+						<?php esc_html_e( 'Reinitialiser', 'lionard-simple-chat' ); ?>
+					</a>
+				<?php endif; ?>
+			</form>
+
+			<!-- Cartes totaux -->
+			<div style="display:flex;gap:14px;flex-wrap:wrap;margin-bottom:28px;">
+				<?php foreach ( $card_types as $type ) :
+					$count = $by_type[ $type ] ?? 0;
+					$colors = array(
+						'rdv_particulier' => array( '#1652f0', '#eff4ff' ),
+						'rdv_entreprise'  => array( '#0b2f9e', '#eef2ff' ),
+						'novaplan'        => array( '#059669', '#ecfdf5' ),
+						'abondance360'    => array( '#d97706', '#fffbeb' ),
+					);
+					[$fg, $bg] = $colors[ $type ] ?? array( '#374151', '#f9fafb' );
+				?>
+				<div class="card" style="min-width:160px;padding:16px 20px;background:<?php echo esc_attr( $bg ); ?>;border-left:4px solid <?php echo esc_attr( $fg ); ?>;">
+					<p style="margin:0 0 6px;font-size:12px;font-weight:600;color:<?php echo esc_attr( $fg ); ?>;text-transform:uppercase;letter-spacing:.04em;">
+						<?php echo esc_html( $labels[ $type ] ); ?>
+					</p>
+					<p style="margin:0;font-size:32px;font-weight:800;color:<?php echo esc_attr( $fg ); ?>;line-height:1;">
+						<?php echo esc_html( number_format_i18n( $count ) ); ?>
+					</p>
+					<p style="margin:4px 0 0;font-size:11px;color:#6b7280;"><?php esc_html_e( 'clics', 'lionard-simple-chat' ); ?></p>
+				</div>
+				<?php endforeach; ?>
+
+				<div class="card" style="min-width:160px;padding:16px 20px;">
+					<p style="margin:0 0 6px;font-size:12px;font-weight:600;color:#374151;text-transform:uppercase;letter-spacing:.04em;">
+						<?php esc_html_e( 'Total CTA', 'lionard-simple-chat' ); ?>
+					</p>
+					<p style="margin:0;font-size:32px;font-weight:800;color:#101828;line-height:1;">
+						<?php echo esc_html( number_format_i18n( $grand_total ) ); ?>
+					</p>
+					<p style="margin:4px 0 0;font-size:11px;color:#6b7280;"><?php esc_html_e( 'clics', 'lionard-simple-chat' ); ?></p>
+				</div>
+			</div>
+
+			<!-- Tableau detail -->
+			<h2 style="margin-bottom:10px;"><?php esc_html_e( 'Detail par bouton', 'lionard-simple-chat' ); ?></h2>
+			<?php if ( empty( $rows ) ) : ?>
+				<p><?php esc_html_e( 'Aucun clic enregistre pour cette periode.', 'lionard-simple-chat' ); ?></p>
+			<?php else : ?>
+			<table class="wp-list-table widefat fixed striped" style="max-width:680px;">
+				<thead>
+					<tr>
+						<th><?php esc_html_e( 'Bouton', 'lionard-simple-chat' ); ?></th>
+						<th style="width:120px;text-align:right;"><?php esc_html_e( 'Clics', 'lionard-simple-chat' ); ?></th>
+						<th style="width:180px;"><?php esc_html_e( 'Dernier clic', 'lionard-simple-chat' ); ?></th>
+					</tr>
+				</thead>
+				<tbody>
+				<?php foreach ( $rows as $row ) :
+					$type  = (string) $row['cta_type'];
+					$label = $labels[ $type ] ?? esc_html( $type );
+				?>
+					<tr>
+						<td><strong><?php echo esc_html( $label ); ?></strong></td>
+						<td style="text-align:right;font-size:16px;font-weight:700;"><?php echo esc_html( number_format_i18n( (int) $row['total'] ) ); ?></td>
+						<td style="color:#667085;font-size:12px;"><?php echo esc_html( $row['last_click'] ); ?></td>
+					</tr>
+				<?php endforeach; ?>
+				</tbody>
+				<tfoot>
+					<tr style="border-top:2px solid #e5e7eb;">
+						<th><?php esc_html_e( 'Total', 'lionard-simple-chat' ); ?></th>
+						<th style="text-align:right;font-size:16px;"><?php echo esc_html( number_format_i18n( $grand_total ) ); ?></th>
+						<th></th>
+					</tr>
+				</tfoot>
+			</table>
+			<?php endif; ?>
 		</div>
 		<?php
 	}

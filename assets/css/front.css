@@ -1,49 +1,33 @@
-/* ── Box-model reset inside the shell ──────────────────────────────────── */
-
-.lsc-shell *,
-.lsc-shell *::before,
-.lsc-shell *::after {
-  box-sizing: border-box;
-}
-
-/* ── Shell (root) ───────────────────────────────────────────────────────── */
-
 .lsc-shell {
   --lsc-primary: #1652f0;
   --lsc-accent: #f59e0b;
   --lsc-ink: #101828;
   --lsc-muted: #667085;
   --lsc-line: rgba(16, 24, 40, 0.1);
-  position: fixed !important;
+  position: fixed;
   right: 18px;
   bottom: 18px;
-  z-index: 99999 !important;
+  z-index: 99999;
   font-family: "Trebuchet MS", "Segoe UI", sans-serif;
-  font-size: 14px;
-  line-height: 1.4;
 }
 
-/* ── Launcher button ────────────────────────────────────────────────────── */
-
-.lsc-shell .lsc-launcher {
+.lsc-launcher {
   position: relative;
-  display: inline-flex !important;
+  display: inline-flex;
   align-items: center;
   gap: 12px;
   min-height: 54px;
   padding: 13px 18px;
-  border: 0 !important;
-  border-radius: 999px !important;
-  color: #fff !important;
-  background: linear-gradient(135deg, var(--lsc-primary), #0b2f9e 72%) !important;
+  border: 0;
+  border-radius: 999px;
+  color: #fff;
+  background: linear-gradient(135deg, var(--lsc-primary), #0b2f9e 72%);
   box-shadow: 0 18px 44px rgba(22, 82, 240, 0.28);
-  cursor: pointer !important;
+  cursor: pointer;
   transition: transform 180ms ease, box-shadow 180ms ease, opacity 180ms ease;
-  text-decoration: none;
-  outline: none;
 }
 
-.lsc-shell .lsc-launcher:hover {
+.lsc-launcher:hover {
   transform: translateY(-2px);
   box-shadow: 0 24px 56px rgba(22, 82, 240, 0.34);
 }
@@ -53,17 +37,16 @@
   pointer-events: none;
 }
 
-.lsc-shell .lsc-launcher__pulse {
+.lsc-launcher__pulse {
   width: 11px;
   height: 11px;
   border-radius: 50%;
   background: var(--lsc-accent);
   box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.56);
   animation: lscPulse 2s infinite;
-  flex-shrink: 0;
 }
 
-.lsc-shell .lsc-launcher__avatar {
+.lsc-launcher__avatar {
   width: 42px;
   height: 42px;
   border: 2px solid rgba(255, 255, 255, 0.8);
@@ -71,90 +54,79 @@
   object-fit: cover;
   display: block;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  flex-shrink: 0;
 }
 
-.lsc-shell .lsc-launcher__copy {
+.lsc-launcher__copy {
   display: flex;
   flex-direction: column;
   gap: 2px;
   text-align: left;
 }
 
-.lsc-shell .lsc-launcher__label {
-  color: #fff !important;
+.lsc-launcher__label {
+  color: #fff;
   font-size: 15px;
   font-weight: 700;
   line-height: 1.2;
   text-align: left;
 }
 
-.lsc-shell .lsc-launcher__subtitle {
-  color: rgba(255, 255, 255, 0.85) !important;
+.lsc-launcher__subtitle {
+  color: rgba(255, 255, 255, 0.85);
   font-size: 12px;
   font-weight: 400;
   line-height: 1.2;
   text-align: left;
 }
 
-/* ── Panel ──────────────────────────────────────────────────────────────── */
-
-.lsc-shell .lsc-panel {
-  position: fixed !important;
+.lsc-panel {
+  position: fixed;
   right: 18px;
   bottom: 18px;
-  display: flex !important;
+  display: flex;
   flex-direction: column;
   width: min(408px, calc(100vw - 20px));
   height: min(720px, calc(100dvh - 36px));
   overflow: hidden;
-  border: 1px solid rgba(22, 82, 240, 0.36) !important;
-  border-radius: 30px !important;
-  background: #f8fafc !important;
+  border: 1px solid rgba(22, 82, 240, 0.36);
+  border-radius: 30px;
+  background: #f8fafc;
   box-shadow: 0 28px 70px rgba(15, 23, 42, 0.22);
   color: var(--lsc-ink);
   transform: translateY(20px) scale(0.97);
   opacity: 0;
   transition: transform 220ms ease, opacity 220ms ease;
-  z-index: 99999 !important;
-  font-family: "Trebuchet MS", "Segoe UI", sans-serif;
 }
 
-.lsc-shell .lsc-panel.is-open {
+.lsc-panel.is-open {
   transform: translateY(0) scale(1);
   opacity: 1;
 }
 
-/* ── Close button ───────────────────────────────────────────────────────── */
-
-.lsc-shell .lsc-close {
+.lsc-close {
   position: absolute;
   top: 10px;
   right: 10px;
   z-index: 10;
-  display: inline-flex !important;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   width: 34px;
   height: 34px;
-  padding: 0 !important;
-  border: 1px solid rgba(16, 24, 40, 0.14) !important;
-  border-radius: 50% !important;
-  background: rgba(255, 255, 255, 0.92) !important;
-  color: #344054 !important;
+  border: 1px solid rgba(16, 24, 40, 0.14);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.92);
+  color: #344054;
   font-size: 22px;
   line-height: 1;
-  cursor: pointer !important;
-  text-decoration: none;
+  cursor: pointer;
 }
 
-.lsc-shell .lsc-close:hover {
-  background: #fff !important;
+.lsc-close:hover {
+  background: #fff;
 }
 
-/* ── Header ─────────────────────────────────────────────────────────────── */
-
-.lsc-shell .lsc-header {
+.lsc-header {
   display: flex;
   align-items: center;
   gap: 12px;
@@ -163,10 +135,9 @@
   background:
     radial-gradient(circle at top left, rgba(255, 255, 255, 0.16), transparent 24%),
     linear-gradient(180deg, var(--lsc-primary), #1248dc);
-  flex-shrink: 0;
 }
 
-.lsc-shell .lsc-avatar {
+.lsc-avatar {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -183,35 +154,33 @@
   overflow: hidden;
 }
 
-.lsc-shell .lsc-avatar img {
+.lsc-avatar img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
 }
 
-.lsc-shell .lsc-header__copy {
+.lsc-header__copy {
   min-width: 0;
   display: flex;
   flex-direction: column;
   gap: 3px;
 }
 
-.lsc-shell .lsc-header__copy strong {
-  color: #fff !important;
+.lsc-header__copy strong {
+  color: #fff;
   font-size: 18px;
   line-height: 1.12;
 }
 
-.lsc-shell .lsc-header__copy span {
-  color: rgba(255, 255, 255, 0.82) !important;
+.lsc-header__copy span {
+  color: rgba(255, 255, 255, 0.82);
   font-size: 12px;
   line-height: 1.3;
 }
 
-/* ── Messages ───────────────────────────────────────────────────────────── */
-
-.lsc-shell .lsc-messages {
+.lsc-messages {
   flex: 1 1 auto;
   min-height: 0;
   overflow-y: auto;
@@ -220,85 +189,78 @@
   scrollbar-width: thin;
 }
 
-.lsc-shell .lsc-message {
+.lsc-message {
   display: flex;
   margin: 0 0 12px;
 }
 
-.lsc-shell .lsc-message--assistant {
+.lsc-message--assistant {
   justify-content: flex-start;
 }
 
-.lsc-shell .lsc-message--user {
+.lsc-message--user {
   justify-content: flex-end;
 }
 
-.lsc-shell .lsc-bubble {
+.lsc-bubble {
   max-width: 88%;
-  border-radius: 22px !important;
+  border-radius: 22px;
   padding: 12px 14px;
   font-size: 14px;
   line-height: 1.45;
   word-break: break-word;
 }
 
-.lsc-shell .lsc-message--assistant .lsc-bubble {
+.lsc-message--assistant .lsc-bubble {
   color: #1d2939;
   background: #fff;
   border: 1px solid var(--lsc-line);
   box-shadow: 0 10px 30px rgba(16, 24, 40, 0.06);
 }
 
-.lsc-shell .lsc-message--user .lsc-bubble {
+.lsc-message--user .lsc-bubble {
   color: #fff;
   background: linear-gradient(135deg, var(--lsc-primary), #0b2f9e);
   box-shadow: 0 12px 28px rgba(22, 82, 240, 0.18);
 }
 
-.lsc-shell .lsc-bubble.has-cta {
+.lsc-bubble.has-cta {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 8px;
 }
 
-/* ── CTA buttons / links ────────────────────────────────────────────────── */
-
-.lsc-shell .lsc-cta {
-  display: inline-flex !important;
+.lsc-cta {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   min-height: 38px;
   max-width: 100%;
-  padding: 9px 14px !important;
-  border: 0 !important;
-  border-radius: 999px !important;
+  padding: 9px 14px;
+  border-radius: 999px;
   color: #fff !important;
-  background: linear-gradient(135deg, var(--lsc-primary), #0b2f9e 72%) !important;
+  background: linear-gradient(135deg, var(--lsc-primary), #0b2f9e 72%);
   box-shadow: 0 10px 22px rgba(22, 82, 240, 0.18);
   font-size: 13px;
   font-weight: 700;
   line-height: 1.2;
   text-decoration: none !important;
-  cursor: pointer !important;
 }
 
-.lsc-shell .lsc-cta:hover {
+.lsc-cta:hover {
   color: #fff !important;
   transform: translateY(-1px);
-  text-decoration: none !important;
 }
 
-/* ── Typing indicator ───────────────────────────────────────────────────── */
-
-.lsc-shell .lsc-typing {
+.lsc-typing {
   display: inline-flex;
   align-items: center;
   gap: 6px;
   min-width: 58px;
 }
 
-.lsc-shell .lsc-typing span {
+.lsc-typing span {
   width: 8px;
   height: 8px;
   border-radius: 50%;
@@ -306,100 +268,88 @@
   animation: lscTyping 1.2s ease-in-out infinite;
 }
 
-.lsc-shell .lsc-typing span:nth-child(2) {
+.lsc-typing span:nth-child(2) {
   animation-delay: 0.16s;
 }
 
-.lsc-shell .lsc-typing span:nth-child(3) {
+.lsc-typing span:nth-child(3) {
   animation-delay: 0.32s;
 }
 
-/* ── Form ───────────────────────────────────────────────────────────────── */
-
-.lsc-shell .lsc-form {
+.lsc-form {
   display: flex;
   align-items: center;
   gap: 8px;
   padding: 12px;
   border-top: 1px solid rgba(16, 24, 40, 0.08);
   background: #fff;
-  flex-shrink: 0;
 }
 
-.lsc-shell .lsc-input {
+.lsc-input {
   flex: 1 1 auto;
   min-width: 0;
   height: 44px;
-  padding: 0 14px !important;
-  border: 1px solid rgba(16, 24, 40, 0.12) !important;
-  border-radius: 999px !important;
-  color: var(--lsc-ink) !important;
-  background: #f8fafc !important;
+  padding: 0 14px;
+  border: 1px solid rgba(16, 24, 40, 0.12);
+  border-radius: 999px;
+  color: var(--lsc-ink);
+  background: #f8fafc;
   font: inherit;
   font-size: 14px;
   outline: none;
-  box-shadow: none !important;
 }
 
-.lsc-shell .lsc-input:focus {
-  border-color: var(--lsc-primary) !important;
-  box-shadow: 0 0 0 3px rgba(22, 82, 240, 0.12) !important;
-  outline: none;
+.lsc-input:focus {
+  border-color: var(--lsc-primary);
+  box-shadow: 0 0 0 3px rgba(22, 82, 240, 0.12);
 }
 
-.lsc-shell .lsc-send {
-  display: inline-flex !important;
+.lsc-send {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   flex: 0 0 auto;
   width: 44px;
   height: 44px;
-  padding: 0 !important;
-  border: 0 !important;
-  border-radius: 50% !important;
-  color: #fff !important;
-  background: linear-gradient(135deg, var(--lsc-primary), #0b2f9e) !important;
-  cursor: pointer !important;
+  border: 0;
+  border-radius: 50%;
+  color: #fff;
+  background: linear-gradient(135deg, var(--lsc-primary), #0b2f9e);
+  cursor: pointer;
 }
 
-.lsc-shell .lsc-send:disabled {
-  cursor: wait !important;
+.lsc-send:disabled {
+  cursor: wait;
   opacity: 0.68;
 }
 
-.lsc-shell .lsc-send svg {
+.lsc-send svg {
   width: 20px;
   height: 20px;
   fill: currentColor;
 }
 
-/* ── Footer ─────────────────────────────────────────────────────────────── */
-
-.lsc-shell .lsc-footer {
+.lsc-footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-  padding: 8px 14px 12px;
+  padding: 2px 25px 20px;
   background: #fff;
   color: var(--lsc-muted);
   font-size: 11px;
-  flex-shrink: 0;
 }
 
-.lsc-shell .lsc-restart {
-  padding: 0 !important;
-  border: 0 !important;
-  color: var(--lsc-primary) !important;
-  background: transparent !important;
+.lsc-restart {
+  padding: 0;
+  border: 0;
+  color: var(--lsc-primary);
+  background: transparent;
   font: inherit;
   font-size: 12px;
   font-weight: 700;
-  cursor: pointer !important;
-  text-decoration: none;
+  cursor: pointer;
 }
-
-/* ── Keyframes ──────────────────────────────────────────────────────────── */
 
 @keyframes lscPulse {
   0% {
@@ -424,83 +374,171 @@
   }
 }
 
-/* ── Modal RDV ──────────────────────────────────────────────────────────── */
+/* ── Email gate ────────────────────────────────────────────────────────── */
+
+.lsc-email-gate {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 28px 24px 24px;
+  background: #fff;
+  border-top: 1px solid rgba(16, 24, 40, 0.08);
+  text-align: center;
+}
+
+.lsc-email-gate__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #eff4ff;
+  color: var(--lsc-primary);
+  margin-bottom: 14px;
+  flex-shrink: 0;
+}
+
+.lsc-email-gate__text {
+  font-size: 14px;
+  line-height: 1.55;
+  color: #374151;
+  margin: 0 0 18px;
+  max-width: 300px;
+}
+
+.lsc-email-gate__form {
+  width: 100%;
+}
+
+.lsc-email-gate__input {
+  display: block;
+  width: 100%;
+  height: 50px;
+  padding: 0 16px;
+  border: 1px solid rgba(16, 24, 40, 0.18);
+  border-radius: 12px;
+  color: var(--lsc-ink);
+  background: #f8fafc;
+  font: inherit;
+  font-size: 15px;
+  outline: none;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
+
+.lsc-email-gate__input:focus {
+  border-color: var(--lsc-primary);
+  box-shadow: 0 0 0 3px rgba(22, 82, 240, 0.12);
+}
+
+.lsc-email-gate__input.is-invalid {
+  border-color: #d63638;
+  box-shadow: 0 0 0 3px rgba(214, 54, 56, 0.12);
+}
+
+.lsc-email-gate__error {
+  font-size: 12px;
+  color: #d63638;
+  margin: -4px 0 10px;
+  text-align: left;
+}
+
+.lsc-email-gate__btn {
+  display: block;
+  width: 100%;
+  height: 50px;
+  border: 0;
+  border-radius: 12px;
+  background: #16a34a;
+  color: #fff;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 150ms ease;
+}
+
+.lsc-email-gate__btn:hover {
+  background: #15803d;
+}
+
+.lsc-email-gate__btn:disabled {
+  opacity: 0.65;
+  cursor: wait;
+}
+
+/* ── Modal RDV ─────────────────────────────────────────────────────────── */
 
 .lsc-modal-overlay {
-  position: fixed !important;
+  position: fixed;
   inset: 0;
-  z-index: 999999 !important;
-  display: flex !important;
+  z-index: 999999;
+  display: flex;
   align-items: center;
   justify-content: center;
   padding: 16px;
-  background: rgba(15, 23, 42, 0.55) !important;
+  background: rgba(15, 23, 42, 0.55);
   opacity: 0;
   transition: opacity 220ms ease;
-  font-family: "Trebuchet MS", "Segoe UI", sans-serif;
 }
 
 .lsc-modal-overlay.is-open {
   opacity: 1;
 }
 
-.lsc-modal-overlay .lsc-modal-box {
+.lsc-modal-box {
   position: relative;
   display: flex;
   flex-direction: column;
   width: 100%;
   max-width: 680px;
   height: min(720px, calc(100dvh - 32px));
-  border-radius: 24px !important;
+  border-radius: 24px;
   overflow: hidden;
-  background: #fff !important;
+  background: #fff;
   box-shadow: 0 32px 80px rgba(15, 23, 42, 0.28);
   transform: translateY(16px) scale(0.98);
   transition: transform 220ms ease;
-  border: 0 !important;
 }
 
 .lsc-modal-overlay.is-open .lsc-modal-box {
   transform: translateY(0) scale(1);
 }
 
-.lsc-modal-overlay .lsc-modal-close {
+.lsc-modal-close {
   position: absolute;
   top: 12px;
   right: 12px;
   z-index: 10;
-  display: inline-flex !important;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   width: 36px;
   height: 36px;
-  padding: 0 !important;
-  border: 1px solid rgba(16, 24, 40, 0.14) !important;
-  border-radius: 50% !important;
-  background: rgba(255, 255, 255, 0.92) !important;
-  color: #344054 !important;
+  border: 1px solid rgba(16, 24, 40, 0.14);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.92);
+  color: #344054;
   font-size: 22px;
   line-height: 1;
-  cursor: pointer !important;
-  text-decoration: none;
+  cursor: pointer;
 }
 
-.lsc-modal-overlay .lsc-modal-close:hover {
-  background: #fff !important;
+.lsc-modal-close:hover {
+  background: #fff;
 }
 
-.lsc-modal-overlay .lsc-modal-iframe {
+.lsc-modal-iframe {
   flex: 1 1 auto;
   width: 100%;
-  border: 0 !important;
+  border: 0;
 }
 
-.lsc-shell .lsc-cta--rdv {
+.lsc-cta--rdv {
   font-family: inherit;
-  cursor: pointer !important;
+  cursor: pointer;
 }
-
-/* ── Responsive ─────────────────────────────────────────────────────────── */
 
 @media (max-width: 640px) {
   .lsc-shell {
@@ -509,24 +547,24 @@
     left: 10px;
   }
 
-  .lsc-shell .lsc-launcher {
+  .lsc-launcher {
     margin-left: auto;
   }
 
-  .lsc-shell .lsc-panel {
+  .lsc-panel {
     right: 10px;
     left: 10px;
     bottom: 10px;
     width: auto;
     height: min(680px, calc(100dvh - 20px));
-    border-radius: 24px !important;
+    border-radius: 24px;
   }
 
-  .lsc-shell .lsc-bubble {
+  .lsc-bubble {
     max-width: 92%;
   }
 
-  .lsc-shell .lsc-footer span {
+  .lsc-footer span {
     display: none;
   }
 }
@@ -537,8 +575,8 @@
     align-items: flex-end;
   }
 
-  .lsc-modal-overlay .lsc-modal-box {
-    border-radius: 20px 20px 0 0 !important;
+  .lsc-modal-box {
+    border-radius: 20px 20px 0 0;
     height: min(90dvh, 720px);
   }
 }

@@ -63,6 +63,10 @@ class LSC_Plugin {
 			'pos_mobile_side'         => 'right',
 			'pos_mobile_bottom'       => '10',
 			'allowed_cta_hosts'       => "www.stag.dettes.net\nstag.dettes.net\nwww.dettes.ca\ndettes.ca\nabondance360.com",
+			'email_gate'              => '1',
+			'email_gate_title'        => 'Veuillez saisir votre adresse e-mail pour que nous puissions mieux suivre votre demande.',
+			'rdv_email_notifications' => '0',
+			'rdv_notification_emails' => '',
 		);
 	}
 
@@ -170,6 +174,8 @@ PROMPT;
 				'rdvEntrepriseUrl' => esc_url( (string) ( $settings['rdv_entreprise_url']  ?? '' ) ),
 				'rdvCloseChat'     => ! empty( $settings['rdv_close_chat'] ),
 				'rdvKeepClosed'    => ! empty( $settings['rdv_keep_closed'] ),
+				'emailGateEnabled' => ! empty( $settings['email_gate'] ) && '1' === (string) $settings['email_gate'],
+				'emailGateTitle'   => sanitize_textarea_field( (string) ( $settings['email_gate_title'] ?? '' ) ),
 				'strings'      => array(
 					'input'   => __( 'Ecrire un message...', 'lionard-simple-chat' ),
 					'send'    => __( 'Envoyer', 'lionard-simple-chat' ),
@@ -291,6 +297,24 @@ PROMPT;
 					</div>
 				</header>
 				<div class="lsc-messages" role="log" aria-live="polite"></div>
+				<div class="lsc-email-gate" hidden aria-live="polite">
+					<div class="lsc-email-gate__icon" aria-hidden="true">
+						<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="28" height="28" aria-hidden="true">
+							<rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect>
+							<polyline points="2,7 12,14 22,7"></polyline>
+						</svg>
+					</div>
+					<p class="lsc-email-gate__text"><?php echo esc_html( $settings['email_gate_title'] ?? '' ); ?></p>
+					<form class="lsc-email-gate__form" novalidate>
+						<input class="lsc-email-gate__input" type="email" maxlength="254" autocomplete="email"
+							placeholder="<?php esc_attr_e( 'votre@email.com', 'lionard-simple-chat' ); ?>"
+							aria-label="<?php esc_attr_e( 'Adresse e-mail', 'lionard-simple-chat' ); ?>">
+						<p class="lsc-email-gate__error" hidden><?php esc_html_e( 'Veuillez entrer une adresse e-mail valide.', 'lionard-simple-chat' ); ?></p>
+						<button class="lsc-email-gate__btn" type="submit">
+							<?php esc_html_e( 'Demarrer la conversation', 'lionard-simple-chat' ); ?>
+						</button>
+					</form>
+				</div>
 				<form class="lsc-form">
 					<input class="lsc-input" type="text" maxlength="1200" autocomplete="off" placeholder="<?php esc_attr_e( 'Ecrire un message...', 'lionard-simple-chat' ); ?>" />
 					<button class="lsc-send" type="submit" aria-label="<?php esc_attr_e( 'Envoyer', 'lionard-simple-chat' ); ?>">
