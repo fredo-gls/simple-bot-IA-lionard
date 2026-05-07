@@ -171,6 +171,13 @@ class LSC_Admin {
 			$out['email_gate'] = $previous['email_gate'] ?? $defaults['email_gate'];
 		}
 
+		// Export chat button
+		if ( array_key_exists( 'export_chat_enabled', $raw ) ) {
+			$out['export_chat_enabled'] = ! empty( $raw['export_chat_enabled'] ) ? '1' : '0';
+		} else {
+			$out['export_chat_enabled'] = $previous['export_chat_enabled'] ?? $defaults['export_chat_enabled'];
+		}
+
 		if ( array_key_exists( 'email_gate_title', $raw ) ) {
 			$out['email_gate_title'] = sanitize_textarea_field( wp_unslash( (string) $raw['email_gate_title'] ) );
 			if ( '' === trim( $out['email_gate_title'] ) ) {
@@ -1612,6 +1619,19 @@ class LSC_Admin {
 					<tr>
 						<th scope="row"><label for="lsc_greeting"><?php esc_html_e( 'Message d\'accueil', 'lionard-simple-chat' ); ?></label></th>
 						<td><textarea id="lsc_greeting" class="large-text" rows="3" name="<?php echo $option_key; ?>[greeting]"><?php echo esc_textarea( $settings['greeting'] ); ?></textarea></td>
+					</tr>
+				</table>
+
+				<h2><?php esc_html_e( 'Actions du widget', 'lionard-simple-chat' ); ?></h2>
+				<table class="form-table" role="presentation">
+					<tr>
+						<th scope="row"><?php esc_html_e( 'Export de conversation', 'lionard-simple-chat' ); ?></th>
+						<td>
+							<label>
+								<input type="checkbox" name="<?php echo $option_key; ?>[export_chat_enabled]" value="1" <?php checked( $settings['export_chat_enabled'] ?? '0', '1' ); ?>>
+								<?php esc_html_e( 'Afficher le bouton "Exporter .txt" a cote de "Recommencer"', 'lionard-simple-chat' ); ?>
+							</label>
+						</td>
 					</tr>
 				</table>
 

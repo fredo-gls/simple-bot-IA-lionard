@@ -24,6 +24,7 @@
     const input      = shell.querySelector(".lsc-input");
     const send       = shell.querySelector(".lsc-send");
     const restart    = shell.querySelector(".lsc-restart");
+    const exportBtn  = shell.querySelector(".lsc-export");
     const footer     = shell.querySelector(".lsc-footer");
     const emailGate  = shell.querySelector(".lsc-email-gate");
     const emailForm  = emailGate  ? emailGate.querySelector(".lsc-email-gate__form")  : null;
@@ -41,6 +42,13 @@
     let stayClosed     = false;
     let collectedEmail = loadStoredEmail();
     let sessionId      = getOrCreateSessionId();
+
+    if (exportBtn) {
+      exportBtn.hidden = !config.exportChatEnabled;
+      if (config.strings && config.strings.export) {
+        exportBtn.textContent = String(config.strings.export);
+      }
+    }
 
     // ── Email gate ─────────────────────────────────────────────────────────
 
@@ -171,6 +179,11 @@
       focusInput();
     });
 
+    exportBtn?.addEventListener("click", () => {
+      const content = buildConversationExport();
+      downloadConversationText(content);
+    });
+
     form.addEventListener("submit", async (event) => {
       event.preventDefault();
       const text = input.value.trim();
@@ -236,6 +249,60 @@
       }
       appendMessage("assistant", config.greeting || "Bonjour, je suis Lionard. Comment puis-je vous aider ?", false);
       focusInput();
+    }
+
+    function buildConversationExport() {
+      const rows = [];
+      const items = messages.querySelectorAll(".lsc-message");
+      items.forEach((item) => {
+        const isUser = item.classList.contains("lsc-message--user");
+        const role = isUser ? "Vous" : "Lionard";
+        const bubble = item.querySelector(".lsc-bubble");
+        if (!bubble) return;
+        const text = String(bubble.innerText || "").trim();
+        if (!text) return;
+        rows.push(role + " : " + text);
+      });
+
+      if (!rows.length) {
+        rows.push("Aucun message.");
+      }
+
+      const date = new Date().toLocaleString();
+      return [
+        "Conversation Lionard",
+        "Exportee le : " + date,
+        "",
+        rows.join("\n\n")
+      ].join("\n");
+    }
+
+    function downloadConversationText(content) {
+      const now = new Date();
+      const stamp = [
+        now.getFullYear(),
+        pad2(now.getMonth() + 1),
+        pad2(now.getDate()),
+        "_",
+        pad2(now.getHours()),
+        pad2(now.getMinutes()),
+        pad2(now.getSeconds())
+      ].join("");
+      const filename = "conversation-lionard-" + stamp + ".txt";
+
+      const blob = new Blob([content], { type: "text/plain;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    function pad2(num) {
+      return String(num).padStart(2, "0");
     }
 
     function setSending(value) {

@@ -67,6 +67,7 @@ class LSC_Plugin {
 			'email_gate_title'        => 'Veuillez saisir votre adresse e-mail pour que nous puissions mieux suivre votre demande.',
 			'rdv_email_notifications' => '0',
 			'rdv_notification_emails' => '',
+			'export_chat_enabled'     => '0',
 		);
 	}
 
@@ -176,10 +177,12 @@ PROMPT;
 				'rdvKeepClosed'    => ! empty( $settings['rdv_keep_closed'] ),
 				'emailGateEnabled' => ! empty( $settings['email_gate'] ) && '1' === (string) $settings['email_gate'],
 				'emailGateTitle'   => sanitize_textarea_field( (string) ( $settings['email_gate_title'] ?? '' ) ),
+				'exportChatEnabled'=> ! empty( $settings['export_chat_enabled'] ) && '1' === (string) $settings['export_chat_enabled'],
 				'strings'      => array(
 					'input'   => __( 'Ecrire un message...', 'lionard-simple-chat' ),
 					'send'    => __( 'Envoyer', 'lionard-simple-chat' ),
 					'restart' => __( 'Recommencer', 'lionard-simple-chat' ),
+					'export'  => __( 'Exporter .txt', 'lionard-simple-chat' ),
 					'error'   => __( 'Le service est momentanément indisponible, revenez plus tard.', 'lionard-simple-chat' ),
 				),
 			)
@@ -281,9 +284,9 @@ PROMPT;
 				</div>
 			</button>
 
-			<section id="lsc-panel" class="lsc-panel" hidden>
+			<div id="lsc-panel" class="lsc-panel" hidden>
 				<button type="button" class="lsc-close" aria-label="<?php esc_attr_e( 'Fermer', 'lionard-simple-chat' ); ?>">&times;</button>
-				<header class="lsc-header">
+				<div class="lsc-header">
 					<div class="lsc-avatar" aria-hidden="true">
 						<?php if ( $avatar_src ) : ?>
 							<img src="<?php echo esc_url( $avatar_src[0] ); ?>" alt="" width="42" height="42" loading="lazy">
@@ -295,7 +298,7 @@ PROMPT;
 						<strong><?php echo esc_html( $settings['panel_title'] ); ?></strong>
 						<span><?php echo esc_html( $settings['panel_subtitle'] ); ?></span>
 					</div>
-				</header>
+				</div>
 				<div class="lsc-messages" role="log" aria-live="polite"></div>
 				<div class="lsc-email-gate" hidden aria-live="polite">
 					<div class="lsc-email-gate__icon" aria-hidden="true">
@@ -325,8 +328,9 @@ PROMPT;
 				</form>
 				<div class="lsc-footer">
 					<button type="button" class="lsc-restart"><?php esc_html_e( 'Recommencer', 'lionard-simple-chat' ); ?></button>
+					<button type="button" class="lsc-export" hidden><?php esc_html_e( 'Exporter .txt', 'lionard-simple-chat' ); ?></button>
 				</div>
-			</section>
+			</div>
 		</div>
 		<?php
 	}
